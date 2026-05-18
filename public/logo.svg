@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- Three overlapping shards in triangle formation -->
+  <!-- Orange shard (top) -->
+  <path d="M16 2 L22 10 L16 18 L10 10 Z" fill="#f97316" opacity="0.9"/>
+  <!-- Purple shard (bottom left) -->
+  <path d="M6 12 L12 20 L6 28 L0 20 Z" fill="#8b5cf6" opacity="0.9"/>
+  <!-- Teal shard (bottom right) -->
+  <path d="M26 12 L32 20 L26 28 L20 20 Z" fill="#14b8a6" opacity="0.9"/>
+</svg>

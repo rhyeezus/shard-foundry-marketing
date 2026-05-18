@@ -1,65 +1,147 @@
-import Image from "next/image";
+'use client';
+
+import Image from 'next/image';
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <div className="min-h-screen bg-white">
+      {/* Navigation */}
+      <nav className="fixed top-0 w-full bg-white/95 backdrop-blur-sm z-50 border-b border-gray-200">
+        <div className="max-w-[1100px] mx-auto px-6 py-4 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <Image src="/logo.svg" alt="Shard Learning" width={24} height={24} />
+            <span className="font-semibold text-gray-900">Shard Learning</span>
+          </div>
+          <div className="hidden md:flex items-center gap-8">
+            <a href="#platform" className="text-sm text-gray-600 hover:text-gray-900">Platform</a>
+            <a href="#technologies" className="text-sm text-gray-600 hover:text-gray-900">Digital Technologies</a>
+            <a href="#mission" className="text-sm text-gray-600 hover:text-gray-900">Mission</a>
+            <a href="#team" className="text-sm text-gray-600 hover:text-gray-900">Team</a>
+            <a href="#schools" className="text-sm text-gray-600 hover:text-gray-900">For Schools</a>
+          </div>
+          <div className="flex items-center gap-3">
+            <button className="px-4 py-2 text-sm text-gray-600 border border-gray-300 rounded">Sign In</button>
+            <button className="px-4 py-2 text-sm bg-orange-500 text-white rounded">Get in Touch</button>
+          </div>
+        </div>
+      </nav>
+
+      {/* Hero */}
+      <section className="pt-32 pb-16 px-6 bg-gradient-to-b from-white to-gray-50">
+        <div className="max-w-[1100px] mx-auto text-center">
+          <h1 className="text-6xl font-bold text-orange-500 mb-6">Shard Foundry</h1>
+          <p className="text-xl text-gray-700 max-w-2xl mx-auto mb-8">
+            Quality education, interactive and curriculum-aligned.<br />
+            Made for teachers by teachers.
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </section>
+
+      {/* The Platform */}
+      <section id="platform" className="py-20 px-6 bg-white">
+        <div className="max-w-[1100px] mx-auto">
+          <h2 className="text-4xl font-bold text-gray-900 text-center mb-16">The Platform</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[
+              { title: 'Curriculum-Aligned Content', description: 'Content matched to Australian Curriculum standards' },
+              { title: 'Teacher Dashboards', description: 'Track student progress and manage classes' },
+              { title: 'Interactive Learning Tools', description: 'Engaging, interactive lessons for students' },
+              { title: 'Partner Content', description: 'Integrated content from educational partners' },
+            ].map((feature, i) => (
+              <div key={i} className="p-6 border border-gray-200 rounded-lg bg-white">
+                <div className="w-12 h-12 bg-gradient-to-br from-orange-100 to-orange-50 rounded mb-4"></div>
+                <h3 className="font-semibold text-gray-900 mb-2">{feature.title}</h3>
+                <p className="text-gray-600 text-sm">{feature.description}</p>
+              </div>
+            ))}
+          </div>
         </div>
-      </main>
+      </section>
+
+      {/* Digital Technologies */}
+      <section id="technologies" className="py-20 px-6 bg-gray-50">
+        <div className="max-w-[1100px] mx-auto text-center">
+          <h2 className="text-4xl font-bold text-gray-900 mb-6">Digital Technologies</h2>
+          <p className="text-lg text-gray-700 mb-8 max-w-2xl mx-auto">
+            Comprehensive digital literacy curriculum aligned with national standards
+          </p>
+          <button className="px-8 py-3 bg-orange-500 text-white rounded font-medium">Join the Pilot</button>
+        </div>
+      </section>
+
+      {/* Our Mission */}
+      <section id="mission" className="py-20 px-6 bg-white">
+        <div className="max-w-[1100px] mx-auto text-center">
+          <h2 className="text-4xl font-bold text-gray-900 mb-8">Our Mission</h2>
+          <p className="text-lg text-gray-700 max-w-2xl mx-auto leading-relaxed">
+            We believe quality education should be accessible, interactive, and curriculum-aligned.
+            Shard Foundry empowers teachers with tools to deliver engaging digital literacy education
+            that meets national standards while respecting classroom realities.
+          </p>
+        </div>
+      </section>
+
+      {/* Founding Team & Partners */}
+      <section id="team" className="py-20 px-6 bg-gray-50">
+        <div className="max-w-[1100px] mx-auto">
+          <h2 className="text-4xl font-bold text-gray-900 text-center mb-16">Founding Team & Partners</h2>
+
+          {/* Team Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+            {[
+              { name: 'Team Member 1', role: 'Co-Founder' },
+              { name: 'Team Member 2', role: 'Co-Founder' },
+              { name: 'Team Member 3', role: 'Co-Founder' },
+            ].map((member, i) => (
+              <div key={i} className="p-8 border border-gray-200 rounded-lg bg-white text-center">
+                <div className="w-16 h-16 bg-gray-300 rounded-full mx-auto mb-4"></div>
+                <h3 className="font-semibold text-gray-900 mb-1">{member.name}</h3>
+                <p className="text-orange-500 text-sm font-medium mb-4">{member.role}</p>
+                <p className="text-gray-600 text-sm">
+                  Experienced educator and curriculum specialist
+                </p>
+              </div>
+            ))}
+          </div>
+
+          {/* Partner Card */}
+          <div className="max-w-md mx-auto p-8 border border-gray-200 rounded-lg bg-white text-center">
+            <div className="w-32 h-12 bg-gray-300 rounded mx-auto mb-4"></div>
+            <p className="text-gray-600 mb-4">
+              Our strategic partner in educational innovation
+            </p>
+            <a href="#" className="text-teal-500 font-medium text-sm">Learn more →</a>
+          </div>
+        </div>
+      </section>
+
+      {/* Get in Touch */}
+      <section className="py-20 px-6 bg-white">
+        <div className="max-w-[1100px] mx-auto">
+          <h2 className="text-4xl font-bold text-gray-900 text-center mb-12">Get in Touch</h2>
+          <form className="max-w-2xl mx-auto space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <input type="text" placeholder="Your Name" className="px-4 py-3 border border-gray-300 rounded" />
+              <input type="email" placeholder="Your Email" className="px-4 py-3 border border-gray-300 rounded" />
+            </div>
+            <input type="text" placeholder="School or Organisation" className="w-full px-4 py-3 border border-gray-300 rounded" />
+            <textarea placeholder="Message" rows={6} className="w-full px-4 py-3 border border-gray-300 rounded"></textarea>
+            <button className="w-full px-6 py-3 bg-orange-500 text-white rounded font-medium">Send Message</button>
+          </form>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-gray-900 text-gray-400 py-8 px-6">
+        <div className="max-w-[1100px] mx-auto flex justify-between items-center text-sm">
+          <p>&copy; 2026 Shard Learning. All rights reserved.</p>
+          <div className="flex gap-6">
+            <a href="#" className="hover:text-white">Privacy</a>
+            <a href="#" className="hover:text-white">Terms</a>
+            <a href="#" className="hover:text-white">Contact</a>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
