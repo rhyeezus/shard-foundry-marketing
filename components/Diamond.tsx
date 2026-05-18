@@ -22,12 +22,14 @@ function DiamondMesh() {
     if (groupRef.current) groupRef.current.rotation.y += 0.005;
   });
 
-  const geometry = useMemo(() => {
-    const base = new THREE.OctahedronGeometry(1, 0);
-    // Reduce y from 1.2 → 1.05: keeps the diamond shape but takes the edge off the sharp apex
-    base.applyMatrix4(new THREE.Matrix4().makeScale(1, 1.2, 1));
+  const baseGeometry = useMemo(() => {
+    const geo = new THREE.OctahedronGeometry(1, 0);
+    geo.applyMatrix4(new THREE.Matrix4().makeScale(1, 1.2, 1));
+    return geo;
+  }, []);
 
-    const geo = base.toNonIndexed();
+  const facetGeometry = useMemo(() => {
+    const geo = baseGeometry.toNonIndexed();
     const pos = geo.attributes.position as THREE.BufferAttribute;
     const buf = new Float32Array(pos.count * 3);
 
@@ -49,19 +51,23 @@ function DiamondMesh() {
 
     geo.setAttribute('color', new THREE.BufferAttribute(buf, 3));
     return geo;
-  }, []);
+  }, [baseGeometry]);
 
   return (
     <group ref={groupRef} rotation={[0.15, 0, 0]}>
-      <mesh geometry={geometry} scale={0.7}>
+      <mesh geometry={facetGeometry} scale={0.7}>
         <meshBasicMaterial
           vertexColors={true}
           polygonOffset={true}
           polygonOffsetFactor={2}
           polygonOffsetUnits={2}
         />
-        {/* lineWidth doubled — works via Line2 in drei v10 */}
-        <Edges threshold={15} lineWidth={2} color="#ffffff" />
+        {/* Outer halo — soft spread */}
+        <Edges threshold={15} lineWidth={18} color="#4c1d95" opacity={0.08} transparent />
+        {/* Mid bloom */}
+        <Edges threshold={15} lineWidth={9} color="#6d28d9" opacity={0.20} transparent />
+        {/* Crisp core stroke */}
+        <Edges threshold={15} lineWidth={2} color="#8b5cf6" opacity={0.85} transparent />
       </mesh>
     </group>
   );
