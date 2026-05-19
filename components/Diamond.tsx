@@ -62,12 +62,7 @@ function DiamondMesh() {
           polygonOffsetFactor={2}
           polygonOffsetUnits={2}
         />
-        {/* Outer halo — soft spread */}
-        <Edges threshold={15} lineWidth={18} color="#4c1d95" opacity={0.08} transparent />
-        {/* Mid bloom */}
-        <Edges threshold={15} lineWidth={9} color="#6d28d9" opacity={0.20} transparent />
-        {/* Crisp core stroke */}
-        <Edges threshold={15} lineWidth={2} color="#8b5cf6" opacity={0.85} transparent />
+        <Edges threshold={15} lineWidth={4} color="#4c1d95" opacity={0.9} transparent />
       </mesh>
     </group>
   );

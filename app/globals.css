@@ -25,36 +25,87 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-.hero-gradient {
-  background: #2e1065;
-  animation: none;
+/* ============================================================
+   DESIGN SYSTEM — Mesh Gradient Surfaces
+   ============================================================
+   Two palette variants sharing the same blob motion.
+   Use .mesh-gradient-purple  → deep violet hero (dark UI)
+   Use .mesh-gradient-light   → white/grey surface (light UI)
+   ============================================================ */
+
+/*
+  Z-INDEX PRINCIPLE — Gradient blobs are always layer 0.
+  Any foreground content must use position:relative + z-index ≥ 1.
+  Use the .surface-content wrapper to enforce this automatically.
+*/
+.mesh-gradient-purple,
+.mesh-gradient-light {
+  isolation: isolate; /* creates a new stacking context */
 }
 
-.hero-gradient::before,
-.hero-gradient::after {
+.mesh-gradient-purple::before,
+.mesh-gradient-purple::after,
+.mesh-gradient-light::before,
+.mesh-gradient-light::after {
   content: '';
   position: absolute;
   inset: -50%;
   width: 200%;
   height: 200%;
   border-radius: 50%;
-  opacity: 0.85;
+  z-index: 0;
+  pointer-events: none;
 }
 
-.hero-gradient::before {
+/* Foreground wrapper — ensures content is always above blobs */
+.surface-content {
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Purple variant ───────────────────────────────────────── */
+.mesh-gradient-purple {
+  background: #2e1065;
+}
+
+.mesh-gradient-purple::before {
+  opacity: 0.85;
   background:
     radial-gradient(ellipse 55% 45% at 30% 30%, #8b5cf6 0%, transparent 65%),
     radial-gradient(ellipse 50% 55% at 75% 65%, #4c1d95 0%, transparent 65%);
   animation: blob-a 16s ease-in-out infinite alternate;
 }
 
-.hero-gradient::after {
+.mesh-gradient-purple::after {
+  opacity: 0.85;
   background:
     radial-gradient(ellipse 60% 45% at 65% 20%, #7c3aed 0%, transparent 60%),
     radial-gradient(ellipse 45% 60% at 20% 75%, #5b21b6 0%, transparent 65%);
   animation: blob-b 22s ease-in-out infinite alternate;
 }
 
+/* ── Light variant ────────────────────────────────────────── */
+.mesh-gradient-light {
+  background: #f8fafc;
+}
+
+.mesh-gradient-light::before {
+  opacity: 0.70;
+  background:
+    radial-gradient(ellipse 55% 45% at 30% 30%, #e2e8f0 0%, transparent 65%),
+    radial-gradient(ellipse 50% 55% at 75% 65%, #f1f5f9 0%, transparent 65%);
+  animation: blob-a 16s ease-in-out infinite alternate;
+}
+
+.mesh-gradient-light::after {
+  opacity: 0.70;
+  background:
+    radial-gradient(ellipse 60% 45% at 65% 20%, #dde3ed 0%, transparent 60%),
+    radial-gradient(ellipse 45% 60% at 20% 75%, #e8edf5 0%, transparent 65%);
+  animation: blob-b 22s ease-in-out infinite alternate;
+}
+
+/* ── Shared motion ────────────────────────────────────────── */
 @keyframes blob-a {
   0%   { transform: translate(0%, 0%) rotate(0deg) scale(1); }
   33%  { transform: translate(8%, -10%) rotate(30deg) scale(1.1); }
@@ -67,4 +118,30 @@ body {
   33%  { transform: translate(-8%, 10%) rotate(-25deg) scale(0.95); }
   66%  { transform: translate(10%, -8%) rotate(20deg) scale(1.1); }
   100% { transform: translate(-5%, -12%) rotate(-15deg) scale(1.05); }
+}
+
+/* Legacy alias — keep hero section working */
+.hero-gradient { background: #2e1065; }
+.hero-gradient::before,
+.hero-gradient::after {
+  content: '';
+  position: absolute;
+  inset: -50%;
+  width: 200%;
+  height: 200%;
+  border-radius: 50%;
+  opacity: 0.85;
+  z-index: 0;
+}
+.hero-gradient::before {
+  background:
+    radial-gradient(ellipse 55% 45% at 30% 30%, #8b5cf6 0%, transparent 65%),
+    radial-gradient(ellipse 50% 55% at 75% 65%, #4c1d95 0%, transparent 65%);
+  animation: blob-a 16s ease-in-out infinite alternate;
+}
+.hero-gradient::after {
+  background:
+    radial-gradient(ellipse 60% 45% at 65% 20%, #7c3aed 0%, transparent 60%),
+    radial-gradient(ellipse 45% 60% at 20% 75%, #5b21b6 0%, transparent 65%);
+  animation: blob-b 22s ease-in-out infinite alternate;
 }
