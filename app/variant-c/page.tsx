@@ -90,9 +90,9 @@ export default function VariantC() {
       <section className="relative min-h-screen overflow-hidden flex flex-col">
         {/* Gradient mesh — upper two-thirds */}
         <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-0 left-0 right-0 h-[65%] bg-gradient-to-br from-[#162550] via-[#1e3a6e] to-[#6080ff]/25" />
-          <div className="absolute top-0 right-0 w-2/5 h-[65%] bg-gradient-to-bl from-[#6080ff]/35 to-transparent" />
-          <div className="absolute top-0 left-0 w-2/5 h-[65%] bg-gradient-to-br from-[#162550]/80 to-transparent" />
+          <div className="absolute top-0 left-0 right-0 h-[65%] bg-gradient-to-br from-[#141312] via-[#2d1066] to-[#7B4BFF]/25" />
+          <div className="absolute top-0 right-0 w-2/5 h-[65%] bg-gradient-to-bl from-[#7B4BFF]/35 to-transparent" />
+          <div className="absolute top-0 left-0 w-2/5 h-[65%] bg-gradient-to-br from-[#141312]/80 to-transparent" />
         </div>
 
         {/* Diamond in the gradient */}
@@ -217,7 +217,7 @@ export default function VariantC() {
                 Join the Pilot
               </Button>
             </div>
-            <div className="bg-[#162550] rounded-2xl p-8">
+            <div className="bg-[#141312] rounded-2xl p-8">
               <p className="text-xs font-semibold text-orange-400 tracking-widest uppercase mb-6">
                 Curriculum Coverage
               </p>
@@ -239,7 +239,7 @@ export default function VariantC() {
       </section>
 
       {/* ── Mission — navy CTA band ── */}
-      <section id="mission" className="py-24 px-6 bg-[#162550]">
+      <section id="mission" className="py-24 px-6 bg-[#141312]">
         <div className="max-w-4xl mx-auto text-center">
           <p className="text-xs font-semibold text-orange-400 tracking-widest uppercase mb-4">
             Our Mission
@@ -310,14 +310,14 @@ export default function VariantC() {
           </div>
 
           {/* Partner */}
-          <div className="max-w-md mx-auto mt-12 p-8 bg-gradient-to-br from-[#162550]/5 to-[#6080ff]/8 border border-gray-200 rounded-xl text-center">
+          <div className="max-w-md mx-auto mt-12 p-8 bg-gradient-to-br from-[#141312]/5 to-[#7B4BFF]/8 border border-gray-200 rounded-xl text-center">
             <div className="w-32 h-10 bg-gray-200/60 rounded mx-auto mb-4" />
             <p className="text-sm text-gray-600 mb-4">
               Strategic partner in Australian educational innovation.
             </p>
             <a
               href="#"
-              className="text-[#6080ff] hover:text-[#7b96ff] font-medium text-sm transition-colors duration-150"
+              className="text-[#7B4BFF] hover:text-[#9b6bff] font-medium text-sm transition-colors duration-150"
             >
               Learn more →
             </a>

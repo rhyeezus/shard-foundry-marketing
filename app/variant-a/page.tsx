@@ -66,7 +66,7 @@ const team = [
 
 export default function VariantA() {
   return (
-    <div className="min-h-screen bg-[#162550] text-white">
+    <div className="min-h-screen bg-[#141312] text-white">
       <Nav theme="dark" />
 
       {/* ── Hero ── */}
@@ -107,7 +107,7 @@ export default function VariantA() {
       </section>
 
       {/* ── The Platform ── */}
-      <section id="platform" className="py-24 px-6 bg-[#162550]">
+      <section id="platform" className="py-24 px-6 bg-[#141312]">
         <div className="max-w-7xl mx-auto">
           <div className="mb-16">
             <p className="text-xs font-semibold text-orange-400 tracking-widest uppercase mb-4">
@@ -143,7 +143,7 @@ export default function VariantA() {
       </section>
 
       {/* ── Digital Technologies ── */}
-      <section id="technologies" className="py-24 px-6 bg-[#1e3a6e]">
+      <section id="technologies" className="py-24 px-6 bg-[#2d1066]">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div>
@@ -184,7 +184,7 @@ export default function VariantA() {
       </section>
 
       {/* ── Mission ── */}
-      <section id="mission" className="py-24 px-6 bg-[#162550]">
+      <section id="mission" className="py-24 px-6 bg-[#141312]">
         <div className="max-w-4xl mx-auto text-center">
           <p className="text-xs font-semibold text-orange-400 tracking-widest uppercase mb-4">
             Our Mission
@@ -203,7 +203,7 @@ export default function VariantA() {
       </section>
 
       {/* ── Team ── */}
-      <section id="team" className="py-24 px-6 bg-[#1e3a6e]">
+      <section id="team" className="py-24 px-6 bg-[#2d1066]">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <p className="text-xs font-semibold text-orange-400 tracking-widest uppercase mb-4">
@@ -236,7 +236,7 @@ export default function VariantA() {
       </section>
 
       {/* ── Contact ── */}
-      <section id="schools" className="py-24 px-6 bg-[#162550]">
+      <section id="schools" className="py-24 px-6 bg-[#141312]">
         <div className="max-w-2xl mx-auto">
           <div className="text-center mb-12">
             <p className="text-xs font-semibold text-orange-400 tracking-widest uppercase mb-4">
@@ -320,7 +320,7 @@ export default function VariantA() {
       </section>
 
       {/* ── Footer ── */}
-      <footer className="bg-[#0a1535] border-t border-white/10 py-8 px-6">
+      <footer className="bg-[#0d0b10] border-t border-white/10 py-8 px-6">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4 text-sm">
           <div className="flex items-center gap-2">
             <Image src="/logo.svg" alt="Shard Learning" width={18} height={18} />

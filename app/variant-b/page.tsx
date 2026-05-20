@@ -66,7 +66,7 @@ export default function VariantB() {
       <section className="relative min-h-screen bg-white overflow-hidden flex items-center">
         {/* Subtle gradient mesh behind diamond */}
         <div className="absolute right-0 top-0 w-1/2 h-full pointer-events-none">
-          <div className="absolute inset-0 bg-gradient-to-bl from-[#6080ff]/8 via-[#162550]/5 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-bl from-[#7B4BFF]/8 via-[#141312]/5 to-transparent" />
         </div>
 
         {/* Diamond — right half */}
@@ -247,7 +247,7 @@ export default function VariantB() {
             </p>
             <a
               href="#"
-              className="text-[#6080ff] hover:text-[#7b96ff] font-medium text-sm transition-colors duration-150"
+              className="text-[#7B4BFF] hover:text-[#9b6bff] font-medium text-sm transition-colors duration-150"
             >
               Learn more →
             </a>

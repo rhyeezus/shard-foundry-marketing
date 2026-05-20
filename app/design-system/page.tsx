@@ -303,14 +303,14 @@ export default function DesignSystem() {
                   </div>
                 ))}
               </div>
-              <div className="p-6 bg-[#162550] border border-white/10 rounded-xl">
+              <div className="p-6 bg-[#141312] border border-white/10 rounded-xl">
                 <p className="text-xs font-semibold text-white/40 uppercase tracking-widest mb-4">
                   Dark Mode
                 </p>
                 {[
-                  ["#162550", "Navy"],
-                  ["#1e3a6e", "Navy Mid"],
-                  ["#0a1535", "Ambient"],
+                  ["#141312", "Near Black"],
+                  ["#1f1120", "Deep Purple"],
+                  ["#0d0b10", "Void"],
                 ].map(([bg, label]) => (
                   <div
                     key={bg}
@@ -478,7 +478,7 @@ export default function DesignSystem() {
           </Group>
 
           <Group title="All Variants — on Navy">
-            <div className="flex flex-wrap gap-3 p-6 bg-[#162550] rounded-xl">
+            <div className="flex flex-wrap gap-3 p-6 bg-[#141312] rounded-xl">
               <Button>Primary (orange)</Button>
               <Button
                 variant="outline"
@@ -486,7 +486,7 @@ export default function DesignSystem() {
               >
                 Ghost on dark
               </Button>
-              <Button className="bg-white text-[#162550] hover:bg-gray-100 hover:text-[#162550]">
+              <Button className="bg-white text-[#141312] hover:bg-gray-100 hover:text-[#141312]">
                 White CTA
               </Button>
             </div>
@@ -533,7 +533,7 @@ export default function DesignSystem() {
                 Teacher
               </span>
               {/* Student badge */}
-              <span className="inline-flex items-center text-xs font-semibold bg-[rgba(96,128,255,0.1)] text-[#6080ff] px-2.5 py-1 rounded-full">
+              <span className="inline-flex items-center text-xs font-semibold bg-[rgba(123,75,255,0.12)] text-[#7B4BFF] px-2.5 py-1 rounded-full">
                 Student
               </span>
               {/* Curriculum code chips */}
@@ -582,7 +582,7 @@ export default function DesignSystem() {
             </div>
 
             {/* Navy surface card */}
-            <div className="bg-[#162550] border border-white/20 rounded-xl p-6">
+            <div className="bg-[#141312] border border-white/20 rounded-xl p-6">
               <div className="text-orange-400 mb-3">
                 <LayoutDashboard className="size-6" />
               </div>
@@ -727,7 +727,7 @@ export default function DesignSystem() {
 
           <Group title="Dark Nav Bar">
             <div className="border border-gray-200 rounded-xl overflow-hidden">
-              <nav className="bg-[#162550]/95 border-b border-white/10">
+              <nav className="bg-[#141312]/95 border-b border-white/10">
                 <div className="px-6 h-16 flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <Image
@@ -949,7 +949,7 @@ export default function DesignSystem() {
               <span className="inline-flex items-center text-xs font-semibold bg-brand-orange-tint text-brand-orange-dark px-2.5 py-1 rounded-full">
                 Teacher
               </span>
-              <span className="inline-flex items-center text-xs font-semibold bg-[rgba(96,128,255,0.1)] text-[#6080ff] px-2.5 py-1 rounded-full">
+              <span className="inline-flex items-center text-xs font-semibold bg-[rgba(123,75,255,0.12)] text-[#7B4BFF] px-2.5 py-1 rounded-full">
                 Student
               </span>
             </div>
@@ -970,7 +970,7 @@ export default function DesignSystem() {
           </Group>
 
           <Group title="Hero Section Template">
-            <div className="bg-[#162550] rounded-xl p-10 text-white">
+            <div className="bg-[#141312] rounded-xl p-10 text-white">
               <p className="text-xs font-semibold text-orange-400 tracking-widest uppercase mb-4">
                 Australian Curriculum · Digital Technologies
               </p>
