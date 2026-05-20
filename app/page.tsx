@@ -108,7 +108,7 @@ export default function Home() {
             <p className="text-gray-600 mb-4">
               Our strategic partner in educational innovation
             </p>
-            <a href="#" className="text-teal-500 font-medium text-sm">Learn more →</a>
+            <a href="#" className="text-[#6080ff] hover:text-[#7b96ff] transition-colors font-medium text-sm">Learn more →</a>
           </div>
         </div>
       </section>
