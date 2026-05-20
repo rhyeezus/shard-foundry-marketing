@@ -24,29 +24,28 @@
 
 ### Brand Palette
 
-| Name | Tailwind | Hex | Role |
+| Name | Token | Hex | Role |
 |---|---|---|---|
-| **Orange** | `orange-500` | `#f97316` | Primary CTAs, role text, active states, key accents |
-| **Orange Dark** | `orange-600` | `#ea580c` | CTA hover / pressed |
-| **Orange Tint** | `orange-100` | `#ffedd5` | Selected state fills, soft orange backgrounds |
-| **Deep Navy** | — | `#162550` | Hero sections, footer, dark surfaces, teacher-mode accents |
-| **Navy Mid** | — | `#1e3a6e` | Dark surface hover states, card backgrounds on navy |
-| **Blue** | — | `#6080ff` | Interactive elements, links, data features, progress indicators |
-| **Blue Hover** | — | `#7b96ff` | Blue hover state |
-| **Blue Tint** | — | `rgba(96,128,255,0.1)` | Blue soft backgrounds (student badges, info fills) |
+| **Orange** | `brand-orange` | `#FF7A1F` | Primary CTAs, role text, active states, key accents |
+| **Orange Dark** | `brand-orange-dark` | `#e56b17` | CTA hover / pressed |
+| **Orange Tint** | `brand-orange-tint` | `#fff0e6` | Selected state fills, soft orange backgrounds |
+| **Teal** | `brand-teal` | `#2BC6B2` | Accents, links, interactive elements |
+| **Teal Dark** | `brand-teal-dark` | `#22a899` | Teal hover state |
+| **Teal Tint** | `brand-teal-tint` | `rgba(43,198,178,0.12)` | Soft teal backgrounds |
+| **Purple** | `brand-purple` | `#7B4BFF` | Accents, glass surfaces, nav backgrounds |
+| **Purple Dark** | `brand-purple-dark` | `#6a3de8` | Purple hover state |
 
 ### Neutral Palette
 
-| Name | Tailwind | Hex | Role |
+| Name | Token | Hex | Role |
 |---|---|---|---|
-| **Gray 900** | `gray-900` | `#111827` | Primary headings, footer background |
-| **Gray 700** | `gray-700` | `#374151` | Body text |
-| **Gray 600** | `gray-600` | `#4b5563` | Supporting / secondary body text |
-| **Gray 400** | `gray-400` | `#9ca3af` | Placeholders, disabled states |
-| **Gray 300** | `gray-300` | `#d1d5db` | Borders, dividers |
-| **Gray 100** | `gray-100` | `#f3f4f6` | Subtle section backgrounds |
-| **Gray 50** | `gray-50` | `#f9fafb` | Alternating section backgrounds |
-| **White** | `white` | `#ffffff` | Primary background, card surfaces |
+| **Near Black** | `near-black` | `#141312` | Headings, dark surfaces, footer background |
+| **Body Text** | `body-text` | `#45423D` | Body copy |
+| **Off White** | `off-white` | `#F8F7F5` | Alternating section backgrounds |
+| **White** | — | `#ffffff` | Primary background, card surfaces |
+| **Border Light** | `border-light` | `#E8E6E1` | Borders, dividers |
+| **Input Border** | `input-border` | `#D1CFC9` | Form input borders |
+| **Footer Text** | `footer-text` | `#A9A69F` | Footer copy, placeholders |
 
 ### Semantic Palette
 
@@ -61,25 +60,19 @@
 
 ### CSS Variables
 
+All tokens are defined in `globals.css` under `@theme inline` (Tailwind v4) and available as utility classes (`bg-brand-orange`, `text-brand-teal`, etc.) and as raw CSS vars (`--brand-orange`, `--brand-teal`, `--brand-purple`).
+
 ```css
-/* globals.css */
+/* Key tokens — see globals.css for full set */
 :root {
   --background: #ffffff;
-  --foreground: #111827;
-  --brand-orange: #f97316;
-  --brand-navy: #162550;
-  --brand-blue: #6080ff;
-  --border: #d1d5db;
-  --muted: #9ca3af;
-  --muted-bg: #f9fafb;
-}
-
-.dark {
-  --background: #0a0a0a;
-  --foreground: #ededed;
-  --border: #374151;
-  --muted: #6b7280;
-  --muted-bg: #111827;
+  --foreground: #141312;
+  --brand-orange:  #FF7A1F;
+  --brand-teal:    #2BC6B2;
+  --brand-purple:  #7B4BFF;
+  --near-black:    #141312;
+  --border: #E8E6E1;
+  --muted-foreground: #A9A69F;
 }
 ```
 
@@ -89,12 +82,12 @@ These values are used only for the hero diamond. Do not reuse in general UI.
 
 | Role | Hex |
 |---|---|
-| Diamond body | `#162550` (same as brand navy) |
-| Specular sheen | `#6080ff` (same as brand blue) |
+| Diamond body | `#7B4BFF` (brand purple) |
+| Specular sheen | `#2BC6B2` (brand teal) |
 | Key light | `#ffffff` |
-| Fill light | `#2244aa` |
-| Rim light | `#4466dd` |
-| Ambient | `#0a1535` |
+| Fill light | `#4a2db0` |
+| Rim light | `#FF7A1F` (brand orange) |
+| Ambient | `#1a0b3d` |
 
 ---
 
@@ -156,13 +149,14 @@ Both are loaded via `next/font/google`. Never set `font-family` directly in comp
 Sections alternate backgrounds with consistent padding:
 
 ```
-Hero       bg-[#162550]   py-24
-Features   bg-white       py-16 md:py-24
-Platform   bg-gray-50     py-16 md:py-24
-Mission    bg-[#162550]   py-16 md:py-24
-Team       bg-white       py-16 md:py-24
-Contact    bg-gray-50     py-16 md:py-24
-Footer     bg-gray-900
+Hero        mesh-gradient-light   h-screen (full viewport)
+Credentials bg-white              py-12
+Platform    bg-white              py-24
+Authority   bg-[#F8F7F5]          py-24
+Mission     bg-white              py-24
+Team        bg-[#F8F7F5]          py-24
+Contact     bg-white              py-24
+Footer      bg-[#141312]
 ```
 
 ---
@@ -182,13 +176,13 @@ Footer     bg-gray-900
   Learn More
 </button>
 
-{/* Ghost — on navy/dark backgrounds */}
+{/* Ghost — on dark/purple backgrounds */}
 <button className="border border-white/30 hover:border-white/60 text-white font-medium text-sm px-5 py-2.5 rounded-lg transition-colors duration-150">
   Sign In
 </button>
 
 {/* Link */}
-<a className="text-[#6080ff] hover:text-[#7b96ff] underline-offset-2 hover:underline transition-colors duration-150 font-medium text-sm">
+<a className="text-[#2BC6B2] hover:text-[#22a899] underline-offset-2 hover:underline transition-colors duration-150 font-medium text-sm">
   Learn more →
 </a>
 ```
@@ -238,7 +232,7 @@ Rules: one primary CTA per section · `rounded-lg` always · min 44×44px touch 
 </span>
 
 {/* Student */}
-<span className="inline-flex items-center text-xs font-semibold bg-[rgba(96,128,255,0.1)] text-[#6080ff] px-2.5 py-1 rounded-full">
+<span className="inline-flex items-center text-xs font-semibold bg-[rgba(43,198,178,0.12)] text-[#2BC6B2] px-2.5 py-1 rounded-full">
   Student
 </span>
 ```
@@ -255,27 +249,23 @@ First-class element — signals to teachers that the platform genuinely understa
 
 ### Hero Section
 
+The hero uses the glass-grid layout over a mesh gradient. See `app/variant-d/page.tsx` for the full implementation.
+
 ```jsx
-<section className="bg-[#162550] py-24 px-4 md:px-8 text-white relative overflow-hidden">
-  <div className="max-w-4xl mx-auto text-center relative z-10">
-    <p className="text-xs font-semibold text-orange-400 tracking-widest uppercase mb-4">
-      Australian Curriculum · Digital Technologies
-    </p>
-    <h1 className="text-5xl font-bold leading-tight mb-6">
-      Quality education,<br />interactive and curriculum-aligned.
-    </h1>
-    <p className="text-xl text-white/70 max-w-2xl mx-auto mb-10">
-      Made for teachers by teachers.
-    </p>
-    <div className="flex flex-col sm:flex-row gap-4 justify-center">
-      <button className="bg-orange-500 hover:bg-orange-600 text-white font-semibold px-8 py-3.5 rounded-lg transition-colors">
-        Join the Pilot
-      </button>
-      <button className="border border-white/30 hover:border-white/60 text-white font-medium px-8 py-3.5 rounded-lg transition-colors">
-        See the Platform
-      </button>
+<section className="mesh-gradient-light relative w-full h-screen overflow-hidden">
+  <div className="absolute inset-0 grid grid-cols-2 grid-rows-2" style={{zIndex: 10}}>
+    {/* Top-left: heading */}
+    <div className="border border-black/5 flex items-center px-12 pt-16 backdrop-blur-md"
+      style={{background:'rgba(255,255,255,0.55)'}}>
+      <h1 className="text-5xl font-bold text-[#141312] leading-tight">
+        Every student, genuinely engaged.
+      </h1>
     </div>
+    {/* Top-right: 3D diamond */}
+    {/* Bottom-left: subheading */}
+    {/* Bottom-right: founder credentials */}
   </div>
+  <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-white" />
 </section>
 ```
 
@@ -334,35 +324,7 @@ Always include reduced-motion support:
 
 ## Tailwind Config
 
-```ts
-// tailwind.config.ts
-import type { Config } from 'tailwindcss'
-
-const config: Config = {
-  content: ['./src/**/*.{js,ts,jsx,tsx,mdx}'],
-  theme: {
-    extend: {
-      fontFamily: {
-        sans: ['var(--font-geist-sans)', 'system-ui', 'sans-serif'],
-        mono: ['var(--font-geist-mono)', 'Courier New', 'monospace'],
-      },
-      colors: {
-        navy: {
-          DEFAULT: '#162550',
-          mid: '#1e3a6e',
-          ambient: '#0a1535',
-        },
-        brand: {
-          blue: '#6080ff',
-          'blue-hover': '#7b96ff',
-        },
-      },
-    },
-  },
-}
-
-export default config
-```
+This project uses Tailwind v4 with `@theme inline` in `globals.css`. There is no `tailwind.config.ts`. All brand tokens are defined as CSS custom properties and exposed as Tailwind utilities automatically. See `app/globals.css` for the full token set.
 
 ---
 
@@ -386,16 +348,16 @@ body {
 }
 ```
 
-### 2 — teal-500 single-use accent
+### 2 — Off-brand blue/teal usage
 
-`page.tsx` partner link uses `text-teal-500` — an undocumented colour outside the palette.
+Links and interactive accents must use brand teal `#2BC6B2`, not generic blue.
 
 ```jsx
 /* ❌ Remove */
-<a className="text-teal-500 ...">Learn more</a>
+<a className="text-[#6080ff] ...">Learn more</a>
 
-/* ✅ Replace with brand blue */
-<a className="text-[#6080ff] hover:text-[#7b96ff] transition-colors font-medium">
+/* ✅ Use brand teal */
+<a className="text-[#2BC6B2] hover:text-[#22a899] transition-colors font-medium">
   Learn more →
 </a>
 ```
@@ -406,11 +368,13 @@ body {
 
 | ✅ Do | ❌ Don't |
 |---|---|
-| One `orange-500` CTA per section | Two orange CTAs side by side |
-| `gray-700` for body text | `gray-900` for body (save it for headings) |
+| One orange CTA per section | Two orange CTAs side by side |
+| `text-[#45423D]` for body text | `gray-700` / `gray-600` (use brand neutrals) |
 | `rounded-lg` on all interactive elements | Mix border-radius values |
 | Show product screenshots early | Describe features in text only |
 | Lead with team credentials | Bury authority in a late-page team section |
 | `font-mono` for curriculum codes and code | Render AC codes in a proportional font |
 | Lucide icons at consistent sizes | Mix icon libraries |
-| Orange = action · Navy = depth · Blue = data/links | Add new colours without a semantic role |
+| Orange = action · Purple = depth · Teal = links/data | Use navy `#162550` — it's not in the palette |
+| `bg-[#F8F7F5]` for alternating sections | `bg-gray-50` (wrong warm tone) |
+| `bg-[#141312]` for dark surfaces / footer | `bg-gray-900` (wrong tone) |

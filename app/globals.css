@@ -7,8 +7,8 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  /* Geist via next/font takes priority; "Geist" is the shadcn Nova fallback */
-  --font-sans: var(--font-geist-sans), "Geist", ui-sans-serif, system-ui, sans-serif;
+  /* Inter via next/font — humanist-geometric, Notion-inspired */
+  --font-sans: var(--font-inter), "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), "Geist Mono", ui-monospace, monospace;
   --font-heading: var(--font-sans);
   --color-sidebar-ring: var(--sidebar-ring);
@@ -48,69 +48,86 @@
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
 
+  /* ── Notion-inspired warm neutral tones ── */
+  --color-ink:          #1a1a1a;   /* primary headings */
+  --color-charcoal:     #37352f;   /* body headings, warm black */
+  --color-slate-warm:   #5d5b54;   /* secondary text */
+  --color-steel-warm:   #787671;   /* tertiary text, labels */
+  --color-stone-warm:   #a4a097;   /* muted / placeholders */
+  --color-surface-notion: #f6f5f4; /* subtle section bg */
+  --color-hairline:     #e5e3df;   /* 1px borders, dividers */
+  --color-hairline-soft: #ede9e4;  /* quieter dividers */
+
   /* ── Shard brand tokens — available as Tailwind utility classes ── */
-  --color-navy: #162550;
-  --color-navy-mid: #1e3a6e;
-  --color-navy-ambient: #0a1535;
-  --color-brand-blue: #6080ff;
-  --color-brand-blue-hover: #7b96ff;
-  --color-brand-orange: #f97316;
-  --color-brand-orange-dark: #ea580c;
-  --color-brand-orange-tint: #ffedd5;
+  --color-brand-orange:       #FF7A1F;   /* CTA, accents */
+  --color-brand-orange-dark:  #e56b17;   /* CTA hover/pressed */
+  --color-brand-orange-tint:  #fff0e6;   /* soft orange fills */
+  --color-brand-teal:         #2BC6B2;   /* accents, links, interactive */
+  --color-brand-teal-dark:    #22a899;   /* teal hover */
+  --color-brand-teal-tint:    rgba(43,198,178,0.12); /* soft teal fills */
+  --color-brand-purple:       #7B4BFF;   /* accents, glass surfaces */
+  --color-brand-purple-dark:  #6a3de8;   /* purple hover */
+  --color-near-black:         #141312;   /* headings, dark surfaces */
+  --color-body-text:          #45423D;   /* body copy */
+  --color-off-white:          #F8F7F5;   /* section backgrounds */
+  --color-border-light:       #E8E6E1;   /* borders, dividers */
+  --color-input-border:       #D1CFC9;   /* form inputs */
+  --color-footer-text:        #A9A69F;   /* footer copy */
 }
 
 /* ── Shard design tokens ── */
 :root {
   /* Raw CSS vars for arbitrary use */
-  --brand-orange: #f97316;
-  --brand-navy: #162550;
-  --brand-blue: #6080ff;
+  --brand-orange:  #FF7A1F;
+  --brand-teal:    #2BC6B2;
+  --brand-purple:  #7B4BFF;
+  --near-black:    #141312;
 
   /* shadcn semantic vars — remapped to Shard tokens */
   --background: #ffffff;
-  --foreground: #111827;       /* gray-900 */
+  --foreground: #37352f;
   --card: #ffffff;
-  --card-foreground: #111827;
+  --card-foreground: #141312;
   --popover: #ffffff;
-  --popover-foreground: #111827;
-  --primary: #f97316;          /* orange-500 — Shard CTA colour */
+  --popover-foreground: #141312;
+  --primary: #FF7A1F;
   --primary-foreground: #ffffff;
-  --secondary: #f3f4f6;        /* gray-100 */
-  --secondary-foreground: #111827;
-  --muted: #f9fafb;            /* gray-50 */
-  --muted-foreground: #9ca3af; /* gray-400 */
-  --accent: #ffedd5;           /* orange-100 */
-  --accent-foreground: #ea580c;/* orange-600 */
-  --destructive: #ef4444;      /* red-500 */
-  --border: #d1d5db;           /* gray-300 */
-  --input: #d1d5db;
-  --ring: #f97316;             /* orange-500 focus ring */
-  --radius: 0.5rem;            /* 8px base — rounded-lg throughout */
+  --secondary: #F8F7F5;
+  --secondary-foreground: #141312;
+  --muted: #F8F7F5;
+  --muted-foreground: #A9A69F;
+  --accent: #fff0e6;
+  --accent-foreground: #e56b17;
+  --destructive: #ef4444;
+  --border: #E8E6E1;
+  --input: #D1CFC9;
+  --ring: #FF7A1F;
+  --radius: 0.5rem;
 
   /* Charts */
-  --chart-1: #f97316;
-  --chart-2: #6080ff;
-  --chart-3: #22c55e;
-  --chart-4: #fbbf24;
+  --chart-1: #FF7A1F;
+  --chart-2: #2BC6B2;
+  --chart-3: #7B4BFF;
+  --chart-4: #22c55e;
   --chart-5: #ef4444;
 
   /* Sidebar */
-  --sidebar: #f9fafb;
-  --sidebar-foreground: #111827;
-  --sidebar-primary: #f97316;
+  --sidebar: #F8F7F5;
+  --sidebar-foreground: #141312;
+  --sidebar-primary: #FF7A1F;
   --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #ffedd5;
-  --sidebar-accent-foreground: #ea580c;
-  --sidebar-border: #d1d5db;
-  --sidebar-ring: #f97316;
+  --sidebar-accent: #fff0e6;
+  --sidebar-accent-foreground: #e56b17;
+  --sidebar-border: #E8E6E1;
+  --sidebar-ring: #FF7A1F;
 }
 
 .dark {
-  --background: #0a0a0a;
-  --foreground: #ededed;
-  --border: #374151;
-  --muted: #111827;
-  --muted-foreground: #6b7280;
+  --background: #141312;
+  --foreground: #F8F7F5;
+  --border: #45423D;
+  --muted: #45423D;
+  --muted-foreground: #A9A69F;
 }
 
 @layer base {
@@ -119,12 +136,16 @@
   }
   body {
     @apply bg-background text-foreground;
-    /* Always prefer the loaded next/font; Arial override removed per DESIGN.md */
     font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
   }
   html {
     @apply font-sans;
   }
+  /* Notion-style tight heading tracking */
+  h1 { letter-spacing: -0.03em; line-height: 1.08; }
+  h2 { letter-spacing: -0.025em; line-height: 1.15; }
+  h3 { letter-spacing: -0.02em; line-height: 1.25; }
+  h4, h5 { letter-spacing: -0.01em; }
 }
 
 /* ── Classroom-safe: respect reduced motion ── */
@@ -139,18 +160,13 @@
    DESIGN SYSTEM — Mesh Gradient Surfaces
    ============================================================
    Two palette variants sharing the same blob motion.
-   Use .mesh-gradient-purple  → deep violet hero (dark UI)
-   Use .mesh-gradient-light   → white/grey surface (light UI)
+   Use .mesh-gradient-purple  → brand purple hero (dark UI)
+   Use .mesh-gradient-light   → warm off-white surface (light UI)
    ============================================================ */
 
-/*
-  Z-INDEX PRINCIPLE — Gradient blobs are always layer 0.
-  Any foreground content must use position:relative + z-index ≥ 1.
-  Use the .surface-content wrapper to enforce this automatically.
-*/
 .mesh-gradient-purple,
 .mesh-gradient-light {
-  isolation: isolate; /* creates a new stacking context */
+  isolation: isolate;
 }
 
 .mesh-gradient-purple::before,
@@ -167,51 +183,50 @@
   pointer-events: none;
 }
 
-/* Foreground wrapper — ensures content is always above blobs */
 .surface-content {
   position: relative;
   z-index: 1;
 }
 
-/* ── Purple variant ───────────────────────────────────────── */
+/* ── Purple variant — brand purple #7B4BFF ────────────────── */
 .mesh-gradient-purple {
-  background: #2e1065;
+  background: #3a1e99;
 }
 
 .mesh-gradient-purple::before {
-  opacity: 0.85;
+  opacity: 0.90;
   background:
-    radial-gradient(ellipse 55% 45% at 30% 30%, #8b5cf6 0%, transparent 65%),
-    radial-gradient(ellipse 50% 55% at 75% 65%, #4c1d95 0%, transparent 65%);
-  animation: blob-a 16s ease-in-out infinite alternate;
+    radial-gradient(ellipse 55% 45% at 25% 25%, #9b6bff 0%, transparent 65%),
+    radial-gradient(ellipse 50% 55% at 75% 65%, #4a2db0 0%, transparent 65%);
+  animation: blob-a 18s ease-in-out infinite alternate;
 }
 
 .mesh-gradient-purple::after {
-  opacity: 0.85;
+  opacity: 0.80;
   background:
-    radial-gradient(ellipse 60% 45% at 65% 20%, #7c3aed 0%, transparent 60%),
-    radial-gradient(ellipse 45% 60% at 20% 75%, #5b21b6 0%, transparent 65%);
-  animation: blob-b 22s ease-in-out infinite alternate;
+    radial-gradient(ellipse 60% 45% at 70% 20%, #7B4BFF 0%, transparent 60%),
+    radial-gradient(ellipse 50% 65% at 15% 80%, #2d1566 0%, transparent 65%);
+  animation: blob-b 24s ease-in-out infinite alternate;
 }
 
-/* ── Light variant ────────────────────────────────────────── */
+/* ── Light variant — warm off-white #F8F7F5 ──────────────── */
 .mesh-gradient-light {
-  background: #f8fafc;
+  background: #F8F7F5;
 }
 
 .mesh-gradient-light::before {
-  opacity: 0.70;
+  opacity: 0.60;
   background:
-    radial-gradient(ellipse 55% 45% at 30% 30%, #e2e8f0 0%, transparent 65%),
-    radial-gradient(ellipse 50% 55% at 75% 65%, #f1f5f9 0%, transparent 65%);
+    radial-gradient(ellipse 55% 45% at 30% 30%, rgba(123,75,255,0.15) 0%, transparent 65%),
+    radial-gradient(ellipse 50% 55% at 75% 65%, rgba(43,198,178,0.12) 0%, transparent 65%);
   animation: blob-a 16s ease-in-out infinite alternate;
 }
 
 .mesh-gradient-light::after {
-  opacity: 0.70;
+  opacity: 0.60;
   background:
-    radial-gradient(ellipse 60% 45% at 65% 20%, #dde3ed 0%, transparent 60%),
-    radial-gradient(ellipse 45% 60% at 20% 75%, #e8edf5 0%, transparent 65%);
+    radial-gradient(ellipse 60% 45% at 65% 20%, rgba(255,122,31,0.10) 0%, transparent 60%),
+    radial-gradient(ellipse 45% 60% at 20% 75%, rgba(123,75,255,0.10) 0%, transparent 65%);
   animation: blob-b 22s ease-in-out infinite alternate;
 }
 
@@ -230,8 +245,8 @@
   100% { transform: translate(-5%, -12%) rotate(-15deg) scale(1.05); }
 }
 
-/* Legacy alias — keep hero section working */
-.hero-gradient { background: #2e1065; }
+/* Legacy alias */
+.hero-gradient { background: #3a1e99; }
 .hero-gradient::before,
 .hero-gradient::after {
   content: '';
@@ -245,13 +260,13 @@
 }
 .hero-gradient::before {
   background:
-    radial-gradient(ellipse 55% 45% at 30% 30%, #8b5cf6 0%, transparent 65%),
-    radial-gradient(ellipse 50% 55% at 75% 65%, #4c1d95 0%, transparent 65%);
+    radial-gradient(ellipse 55% 45% at 30% 30%, #7B4BFF 0%, transparent 65%),
+    radial-gradient(ellipse 50% 55% at 75% 65%, #4a2db0 0%, transparent 65%);
   animation: blob-a 16s ease-in-out infinite alternate;
 }
 .hero-gradient::after {
   background:
-    radial-gradient(ellipse 60% 45% at 65% 20%, #7c3aed 0%, transparent 60%),
-    radial-gradient(ellipse 45% 60% at 20% 75%, #5b21b6 0%, transparent 65%);
+    radial-gradient(ellipse 60% 45% at 65% 20%, #7B4BFF 0%, transparent 60%),
+    radial-gradient(ellipse 45% 60% at 20% 75%, #2BC6B2 0%, transparent 65%);
   animation: blob-b 22s ease-in-out infinite alternate;
 }

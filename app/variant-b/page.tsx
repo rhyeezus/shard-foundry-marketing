@@ -10,7 +10,6 @@ import {
   LayoutDashboard,
   Users,
   Sparkles,
-  CheckCircle,
   ArrowRight,
 } from "lucide-react";
 

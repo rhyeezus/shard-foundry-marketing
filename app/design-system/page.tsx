@@ -36,7 +36,6 @@ import {
   BookOpen,
   GraduationCap,
   LayoutDashboard,
-  Users,
   Loader2,
 } from "lucide-react";
 
