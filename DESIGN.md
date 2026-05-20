@@ -2,6 +2,33 @@
 
 ---
 
+## Surface Pairing Pattern
+
+Pages alternate between the two gradient surface variants to create natural rhythm and visual contrast. The canonical pairing:
+
+| Section | Surface | Text |
+|---|---|---|
+| Hero | `.mesh-gradient-purple` | White |
+| Content sections | `.mesh-gradient-light` | Dark (`gray-900`) |
+| Feature sections | `.mesh-gradient-purple` | White |
+
+> **Light mode / dark mode are not separate themes** — they're alternating surface layers within the same page, both sharing the same blob motion system.
+
+### Glass Card Principle — contrast on any surface
+
+Light glass (`bg-white/10`) dissolves on light surfaces. Use **dark glass** for components that float above both surface types (FABs, tooltips, popovers, modals):
+
+```css
+/* Universal glass card — holds contrast on light AND dark surfaces */
+background: rgba(17, 17, 17, 0.75);
+backdrop-filter: blur(12px);
+border: 1px solid rgba(255, 255, 255, 0.10);
+```
+
+Light glass is only appropriate when the surface beneath it is guaranteed dark (e.g. an overlay inside a `.mesh-gradient-purple` section).
+
+---
+
 ## Brand Palette
 
 | Token | Hex | Usage |

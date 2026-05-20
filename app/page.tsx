@@ -2,14 +2,25 @@
 
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
+import { useState, useEffect } from 'react';
 
 const Diamond = dynamic(() => import('@/components/Diamond').then(m => m.Diamond), { ssr: false });
 
 export default function Home() {
+  const [isOverDark, setIsOverDark] = useState(true);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsOverDark(window.scrollY < window.innerHeight * 0.8);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
     <div className="min-h-screen bg-white">
       {/* Navigation */}
-      <nav className="fixed top-0 w-full bg-white/5 backdrop-blur-xl z-50 border-b border-white/10" style={{boxShadow: 'inset 0 -1px 0 rgba(255,255,255,0.06)'}}>
+      <nav className="fixed top-0 w-full z-50 border-b border-white/10 backdrop-blur-xl" style={{background:'rgba(46,16,101,0.82)', boxShadow:'0 1px 0 rgba(255,255,255,0.06)'}}>
         <div className="max-w-[1100px] mx-auto px-6 py-2 grid grid-cols-3 items-center">
           <div className="flex items-center">
             <Image src="/logo.svg" alt="Shard Learning" width={40} height={40} />
@@ -32,34 +43,38 @@ export default function Home() {
             <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
           </svg>
         </button>
-        {/* Callout card */}
-        <div className="bg-white/10 backdrop-blur-md border border-white/15 rounded-xl px-4 py-3 shadow-lg text-center">
+        {/* Callout card — clear glass on dark, subtle dark on light */}
+        <div className={`backdrop-blur-md rounded-xl px-4 py-3 shadow-xl text-center border transition-all duration-500 ${
+          isOverDark
+            ? 'bg-white/10 border-white/15'
+            : 'bg-gray-900/60 border-white/10'
+        }`}>
           <p className="text-white text-sm font-medium leading-none">Get in contact</p>
           <p className="text-white/50 text-xs mt-1">We'd love to hear from you</p>
         </div>
       </div>
 
       {/* Hero */}
-      <section className="hero-gradient relative w-full h-screen overflow-hidden">
+      <section className="mesh-gradient-light relative w-full h-screen overflow-hidden">
         <div className="absolute inset-0 grid grid-cols-2 grid-rows-2" style={{zIndex: 10}}>
           {/* Top-left — heading */}
-          <div className="border border-white/5 flex items-center px-12 pt-16" style={{background:'rgba(59,7,100,0.30)', boxShadow:'inset 0 2px 12px rgba(0,0,0,0.30)'}}>
-            <h1 className="text-5xl font-bold text-white leading-tight">
+          <div className="border border-black/5 flex items-center px-12 pt-16 backdrop-blur-md" style={{background:'rgba(255,255,255,0.55)', boxShadow:'inset 0 2px 12px rgba(0,0,0,0.06), 0 4px 24px rgba(0,0,0,0.08)'}}>
+            <h1 className="text-5xl font-bold text-gray-900 leading-tight">
               Every student, genuinely engaged.
             </h1>
           </div>
           {/* Top-right — diamond */}
-          <div className="border border-white/5 relative overflow-hidden" style={{background:'rgba(76,29,149,0.20)', boxShadow:'inset 0 2px 12px rgba(0,0,0,0.20)'}}>
+          <div className="border border-black/5 relative overflow-hidden backdrop-blur-md" style={{background:'rgba(255,255,255,0.40)', boxShadow:'inset 0 2px 12px rgba(0,0,0,0.05), 0 4px 24px rgba(0,0,0,0.07)'}}>
             <Diamond />
           </div>
           {/* Bottom-left — subheading */}
-          <div className="border border-white/5 flex items-start px-12 pt-10" style={{background:'rgba(46,16,101,0.40)', boxShadow:'inset 0 -2px 12px rgba(0,0,0,0.35)'}}>
-            <p className="text-3xl text-white/70 leading-relaxed">
+          <div className="border border-black/5 flex items-start px-12 pt-10 backdrop-blur-md" style={{background:'rgba(255,255,255,0.50)', boxShadow:'inset 0 -2px 12px rgba(0,0,0,0.05), 0 4px 24px rgba(0,0,0,0.07)'}}>
+            <p className="text-3xl text-gray-600 leading-relaxed">
               Curriculum-aligned experiences designed by teachers, for teachers.
             </p>
           </div>
           {/* Bottom-right — empty */}
-          <div className="border border-white/5" style={{background:'rgba(91,33,182,0.15)', boxShadow:'inset 0 -2px 12px rgba(0,0,0,0.20)'}} />
+          <div className="border border-black/5 backdrop-blur-md" style={{background:'rgba(255,255,255,0.35)', boxShadow:'inset 0 -2px 12px rgba(0,0,0,0.04), 0 4px 24px rgba(0,0,0,0.06)'}} />
         </div>
       </section>
 
@@ -74,7 +89,7 @@ export default function Home() {
               { title: 'Interactive Learning Tools', description: 'Engaging, interactive lessons for students' },
               { title: 'Partner Content', description: 'Integrated content from educational partners' },
             ].map((feature, i) => (
-              <div key={i} className="p-6 border border-gray-200 rounded-lg bg-white">
+              <div key={i} className="p-6 border border-gray-200 rounded-lg bg-white/70 backdrop-blur-sm">
                 <div className="w-12 h-12 bg-gradient-to-br from-orange-100 to-orange-50 rounded mb-4"></div>
                 <h3 className="font-semibold text-gray-900 mb-2">{feature.title}</h3>
                 <p className="text-gray-600 text-sm">{feature.description}</p>
