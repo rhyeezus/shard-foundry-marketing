@@ -86,52 +86,50 @@ export default function VariantC() {
     <div className="min-h-screen bg-white">
       <Nav theme="light" />
 
-      {/* ── Hero — atmospheric gradient mesh, diamond floating ── */}
-      <section className="relative min-h-screen overflow-hidden flex flex-col">
-        {/* Gradient mesh — upper two-thirds */}
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-0 left-0 right-0 h-[65%] bg-gradient-to-br from-[#141312] via-[#2d1066] to-[#7B4BFF]/25" />
-          <div className="absolute top-0 right-0 w-2/5 h-[65%] bg-gradient-to-bl from-[#7B4BFF]/35 to-transparent" />
-          <div className="absolute top-0 left-0 w-2/5 h-[65%] bg-gradient-to-br from-[#141312]/80 to-transparent" />
+      {/* ── Hero — atmospheric gradient mesh right, copy left ── */}
+      <section className="relative min-h-screen bg-white overflow-hidden flex items-center">
+        {/* Gradient mesh — right half */}
+        <div className="absolute right-0 top-0 w-1/2 h-full pointer-events-none">
+          <div className="absolute inset-0 bg-gradient-to-bl from-[#141312] via-[#2d1066] to-[#7B4BFF]/25" />
+          <div className="absolute inset-0 bg-gradient-to-tl from-[#7B4BFF]/30 to-transparent" />
         </div>
 
-        {/* Diamond in the gradient */}
-        <div className="absolute inset-0 w-full h-full">
+        {/* Diamond — right half */}
+        <div className="absolute right-0 top-0 w-1/2 h-full">
           <Diamond />
         </div>
 
-        {/* Hero copy — centred */}
-        <div className="relative z-10 flex flex-col items-center justify-center text-center px-6 py-36 max-w-5xl mx-auto w-full flex-1">
-          <p className="text-xs font-semibold text-orange-400 tracking-widest uppercase mb-6">
-            Australian Curriculum · Digital Technologies
-          </p>
-          <h1 className="text-4xl md:text-5xl font-semibold text-white leading-snug mb-6 max-w-3xl">
-            Quality Digital Technologies education, finally made for Australian
-            classrooms.
-          </h1>
-          <p className="text-lg text-white/70 max-w-2xl mb-10 leading-relaxed">
-            Built by the author of the national curriculum. Designed by teachers
-            who&apos;ve been in the room. Ready for your school in 2027.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4">
-            <Button
-              size="lg"
-              className="bg-brand-orange hover:bg-brand-orange-dark active:bg-brand-orange-dark text-white px-8 rounded-lg transition-colors duration-150"
-            >
-              Apply for the Pilot
-            </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              className="border-white/30 text-white hover:bg-white/10 hover:text-white px-8 rounded-lg transition-colors duration-150"
-            >
-              See the Platform
-            </Button>
+        {/* Copy — left-aligned */}
+        <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-8 w-full py-24">
+          <div className="max-w-xl">
+            <p className="text-xs font-semibold text-brand-orange tracking-widest uppercase mb-6">
+              Australian Curriculum · Digital Technologies
+            </p>
+            <h1 className="text-4xl md:text-5xl font-semibold text-[#141312] leading-snug mb-6">
+              Quality Digital Technologies education, finally made for Australian
+              classrooms.
+            </h1>
+            <p className="text-lg text-[#5d5b54] max-w-md mb-10 leading-relaxed">
+              Built by the author of the national curriculum. Designed by teachers
+              who&apos;ve been in the room. Ready for your school in 2027.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Button
+                size="lg"
+                className="bg-brand-orange hover:bg-brand-orange-dark active:bg-brand-orange-dark text-white px-8 rounded-lg transition-colors duration-150"
+              >
+                Apply for the Pilot
+              </Button>
+              <Button
+                size="lg"
+                variant="outline"
+                className="border-gray-300 text-[#141312] hover:border-gray-400 px-8 rounded-lg transition-colors duration-150"
+              >
+                See the Platform
+              </Button>
+            </div>
           </div>
         </div>
-
-        {/* Gradient fade to white */}
-        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white to-transparent pointer-events-none" />
       </section>
 
       {/* ── Credentials band ── */}

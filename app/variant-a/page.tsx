@@ -70,38 +70,47 @@ export default function VariantA() {
       <Nav theme="dark" />
 
       {/* ── Hero ── */}
-      <section className="relative w-full min-h-screen flex flex-col items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 w-full h-full">
+      <section className="relative min-h-screen bg-[#141312] overflow-hidden flex items-center">
+        {/* Subtle purple glow behind diamond */}
+        <div className="absolute right-0 top-0 w-1/2 h-full pointer-events-none">
+          <div className="absolute inset-0 bg-gradient-to-bl from-brand-purple/20 via-transparent to-transparent" />
+        </div>
+
+        {/* Diamond — right half only */}
+        <div className="absolute right-0 top-0 w-1/2 h-full">
           <Diamond />
         </div>
-        <div className="relative z-10 text-center max-w-4xl mx-auto px-6 py-32">
-          <p className="text-xs font-semibold text-orange-400 tracking-widest uppercase mb-6">
-            Built by the author of the Australian Curriculum: Digital
-            Technologies
-          </p>
-          <h1 className="text-5xl md:text-6xl font-bold leading-tight tracking-tight mb-6">
-            The curriculum platform
-            <br />
-            built from the source.
-          </h1>
-          <p className="text-xl text-white/60 max-w-2xl mx-auto mb-10 leading-relaxed">
-            Every lesson. Every standard. Every assessment marker. Written by
-            the people who wrote the curriculum.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button
-              size="lg"
-              className="bg-brand-orange hover:bg-brand-orange-dark active:bg-brand-orange-dark text-white px-8 rounded-lg transition-colors duration-150"
-            >
-              Join the Pilot
-            </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              className="border-white/30 hover:border-white/60 text-white hover:bg-white/10 hover:text-white px-8 rounded-lg transition-colors duration-150"
-            >
-              See the Platform
-            </Button>
+
+        {/* Copy — left-aligned */}
+        <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-8 w-full py-24">
+          <div className="max-w-xl">
+            <p className="text-xs font-semibold text-brand-orange tracking-widest uppercase mb-6">
+              Built by the author of the Australian Curriculum: Digital Technologies
+            </p>
+            <h1 className="text-5xl md:text-6xl font-bold leading-tight tracking-tight mb-6">
+              The curriculum platform
+              <br />
+              built from the source.
+            </h1>
+            <p className="text-xl text-white/60 max-w-md mb-10 leading-relaxed">
+              Every lesson. Every standard. Every assessment marker. Written by
+              the people who wrote the curriculum.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Button
+                size="lg"
+                className="bg-brand-orange hover:bg-brand-orange-dark active:bg-brand-orange-dark text-white px-8 rounded-lg transition-colors duration-150"
+              >
+                Join the Pilot
+              </Button>
+              <Button
+                size="lg"
+                variant="outline"
+                className="border-white/30 hover:border-white/60 text-white hover:bg-white/10 hover:text-white px-8 rounded-lg transition-colors duration-150"
+              >
+                See the Platform
+              </Button>
+            </div>
           </div>
         </div>
       </section>
