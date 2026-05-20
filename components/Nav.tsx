@@ -21,14 +21,16 @@ export function Nav({ theme = "light" }: NavProps) {
     <nav
       className={`sticky top-0 z-50 backdrop-blur-md border-b ${
         isDark
-          ? "bg-[#162550]/90 border-white/10"
+          ? "bg-[#141312]/90 border-white/10"
           : "bg-white/80 border-gray-100"
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 md:px-8 h-16 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2 shrink-0">
-          <Image src="/logo.svg" alt="Shard Learning" width={22} height={22} />
+          <div className={isDark ? "bg-white/15 rounded-lg p-1" : ""}>
+            <Image src="/logo.svg" alt="Shard Learning" width={22} height={22} />
+          </div>
           <span
             className={`font-semibold text-base ${
               isDark ? "text-white" : "text-gray-900"
@@ -70,7 +72,7 @@ export function Nav({ theme = "light" }: NavProps) {
           </Button>
           <Button
             size="sm"
-            className="bg-orange-500 hover:bg-orange-600 text-white rounded-lg"
+            className="bg-brand-orange hover:bg-brand-orange-dark text-white rounded-lg"
           >
             Get in Touch
           </Button>
