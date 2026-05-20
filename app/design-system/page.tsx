@@ -163,7 +163,7 @@ export default function DesignSystem() {
                 href={`#${id}`}
                 className={`shrink-0 px-3 py-1.5 text-xs font-medium rounded-full transition-colors duration-150 ${
                   active === id
-                    ? "bg-orange-500 text-white"
+                    ? "bg-brand-orange text-white"
                     : "text-gray-500 hover:text-gray-900 hover:bg-gray-100"
                 }`}
               >
@@ -182,14 +182,15 @@ export default function DesignSystem() {
           <Group title="Brand Palette">
             <div className="flex flex-wrap gap-5">
               {[
-                { hex: "#f97316", name: "Orange 500" },
-                { hex: "#ea580c", name: "Orange 600" },
-                { hex: "#ffedd5", name: "Orange 100" },
-                { hex: "#162550", name: "Navy" },
-                { hex: "#1e3a6e", name: "Navy Mid" },
-                { hex: "#0a1535", name: "Navy Ambient" },
-                { hex: "#6080ff", name: "Blue" },
-                { hex: "#7b96ff", name: "Blue Hover" },
+                { hex: "#FF7A1F", name: "Brand Orange" },
+                { hex: "#e56b17", name: "Orange Dark" },
+                { hex: "#fff0e6", name: "Orange Tint" },
+                { hex: "#7B4BFF", name: "Brand Purple" },
+                { hex: "#6a3de8", name: "Purple Dark" },
+                { hex: "#2BC6B2", name: "Brand Teal" },
+                { hex: "#22a899", name: "Teal Dark" },
+                { hex: "#141312", name: "Near Black" },
+                { hex: "#F8F7F5", name: "Off White" },
               ].map((s) => (
                 <Swatch key={s.hex} {...s} />
               ))}
@@ -199,13 +200,13 @@ export default function DesignSystem() {
           <Group title="Neutral Palette">
             <div className="flex flex-wrap gap-5">
               {[
-                { hex: "#111827", name: "Gray 900" },
-                { hex: "#374151", name: "Gray 700" },
-                { hex: "#4b5563", name: "Gray 600" },
-                { hex: "#9ca3af", name: "Gray 400" },
-                { hex: "#d1d5db", name: "Gray 300" },
-                { hex: "#f3f4f6", name: "Gray 100" },
-                { hex: "#f9fafb", name: "Gray 50" },
+                { hex: "#1a1a1a", name: "Ink" },
+                { hex: "#37352f", name: "Charcoal" },
+                { hex: "#5d5b54", name: "Slate Warm" },
+                { hex: "#787671", name: "Steel Warm" },
+                { hex: "#a4a097", name: "Stone Warm" },
+                { hex: "#e5e3df", name: "Hairline" },
+                { hex: "#f6f5f4", name: "Surface" },
                 { hex: "#ffffff", name: "White" },
               ].map((s) => (
                 <Swatch key={s.hex} {...s} />
@@ -231,17 +232,17 @@ export default function DesignSystem() {
           <Group title="Orange Scale — 50 → 950">
             <div className="flex gap-1.5 flex-wrap">
               {[
-                ["50", "#fff7ed"],
-                ["100", "#ffedd5"],
-                ["200", "#fed7aa"],
-                ["300", "#fdba74"],
-                ["400", "#fb923c"],
-                ["500", "#f97316"],
-                ["600", "#ea580c"],
-                ["700", "#c2410c"],
-                ["800", "#9a3412"],
-                ["900", "#7c2d12"],
-                ["950", "#431407"],
+                ["50",  "#fff7f0"],
+                ["100", "#fff0e6"],
+                ["200", "#ffd4b3"],
+                ["300", "#ffb880"],
+                ["400", "#ff9c4d"],
+                ["500", "#FF7A1F"],
+                ["600", "#e56b17"],
+                ["700", "#bf590f"],
+                ["800", "#994808"],
+                ["900", "#733604"],
+                ["950", "#4d2402"],
               ].map(([stop, hex]) => (
                 <div key={stop} className="flex flex-col items-center gap-1">
                   <div
@@ -254,20 +255,20 @@ export default function DesignSystem() {
             </div>
           </Group>
 
-          <Group title="Navy Scale — 50 → 950">
+          <Group title="Purple Scale — 50 → 950">
             <div className="flex gap-1.5 flex-wrap">
               {[
-                ["50", "#e8ecf4"],
-                ["100", "#c8d2e5"],
-                ["200", "#a3b3d3"],
-                ["300", "#7590be"],
-                ["400", "#4c6fa8"],
-                ["500", "#1e3a6e"],
-                ["600", "#162550"],
-                ["700", "#112040"],
-                ["800", "#0d1933"],
-                ["900", "#0a1526"],
-                ["950", "#0a1535"],
+                ["50",  "#f3eeff"],
+                ["100", "#e4d8ff"],
+                ["200", "#c9b1ff"],
+                ["300", "#ae8aff"],
+                ["400", "#9363ff"],
+                ["500", "#7B4BFF"],
+                ["600", "#6a3de8"],
+                ["700", "#572fc0"],
+                ["800", "#432399"],
+                ["900", "#301873"],
+                ["950", "#1e0e4d"],
               ].map(([stop, hex]) => (
                 <div key={stop} className="flex flex-col items-center gap-1">
                   <div
@@ -502,7 +503,7 @@ export default function DesignSystem() {
           <Group title="States">
             <div className="flex flex-wrap gap-3">
               <Button>Default</Button>
-              <Button className="bg-orange-600">Hover / Active</Button>
+              <Button className="bg-brand-orange-dark">Hover / Active</Button>
               <Button disabled>Disabled</Button>
               <Button>
                 <Loader2 className="size-4 animate-spin" />
@@ -528,7 +529,7 @@ export default function DesignSystem() {
           <Group title="Shard-Specific">
             <div className="flex flex-wrap gap-3 items-center">
               {/* Teacher badge */}
-              <span className="inline-flex items-center text-xs font-semibold bg-orange-100 text-orange-700 px-2.5 py-1 rounded-full">
+              <span className="inline-flex items-center text-xs font-semibold bg-brand-orange-tint text-brand-orange-dark px-2.5 py-1 rounded-full">
                 Teacher
               </span>
               {/* Student badge */}
@@ -555,7 +556,7 @@ export default function DesignSystem() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Standard */}
             <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow duration-200">
-              <div className="text-orange-500 mb-3">
+              <div className="text-brand-orange mb-3">
                 <BookOpen className="size-6" />
               </div>
               <h3 className="text-lg font-semibold text-gray-900 mb-2">
@@ -568,7 +569,7 @@ export default function DesignSystem() {
 
             {/* Feature card */}
             <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
-              <div className="text-orange-500 mb-3">
+              <div className="text-brand-orange mb-3">
                 <GraduationCap className="size-6" />
               </div>
               <h3 className="text-lg font-semibold text-gray-900 mb-2">
@@ -604,7 +605,7 @@ export default function DesignSystem() {
               <h3 className="font-semibold text-gray-900 mb-1">
                 James Mitchell
               </h3>
-              <span className="inline-flex text-xs font-semibold bg-orange-100 text-orange-700 px-2.5 py-1 rounded-full mb-3">
+              <span className="inline-flex text-xs font-semibold bg-brand-orange-tint text-brand-orange-dark px-2.5 py-1 rounded-full mb-3">
                 Co-Founder
               </span>
               <p className="text-sm text-gray-600 leading-relaxed">
@@ -945,7 +946,7 @@ export default function DesignSystem() {
 
           <Group title="Role Badges">
             <div className="flex gap-3 items-center">
-              <span className="inline-flex items-center text-xs font-semibold bg-orange-100 text-orange-700 px-2.5 py-1 rounded-full">
+              <span className="inline-flex items-center text-xs font-semibold bg-brand-orange-tint text-brand-orange-dark px-2.5 py-1 rounded-full">
                 Teacher
               </span>
               <span className="inline-flex items-center text-xs font-semibold bg-[rgba(96,128,255,0.1)] text-[#6080ff] px-2.5 py-1 rounded-full">
@@ -1008,7 +1009,7 @@ export default function DesignSystem() {
                 <h3 className="font-semibold text-gray-900 mb-1">
                   James Mitchell
                 </h3>
-                <span className="inline-flex text-xs font-semibold bg-orange-100 text-orange-700 px-2.5 py-1 rounded-full mb-3">
+                <span className="inline-flex text-xs font-semibold bg-brand-orange-tint text-brand-orange-dark px-2.5 py-1 rounded-full mb-3">
                   Co-Founder &amp; Curriculum Lead
                 </span>
                 <p className="text-sm text-gray-600 leading-relaxed">

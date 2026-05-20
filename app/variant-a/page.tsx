@@ -91,7 +91,7 @@ export default function VariantA() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button
               size="lg"
-              className="bg-orange-500 hover:bg-orange-600 active:bg-orange-700 text-white px-8 rounded-lg transition-colors duration-150"
+              className="bg-brand-orange hover:bg-brand-orange-dark active:bg-brand-orange-dark text-white px-8 rounded-lg transition-colors duration-150"
             >
               Join the Pilot
             </Button>
@@ -129,7 +129,7 @@ export default function VariantA() {
                 key={title}
                 className="bg-white/5 border border-white/10 rounded-xl p-6 hover:border-white/20 transition-colors duration-200"
               >
-                <div className="text-orange-500 mb-4">
+                <div className="text-brand-orange mb-4">
                   <Icon className="size-6" />
                 </div>
                 <h3 className="text-lg font-semibold text-white mb-2 tracking-tight">
@@ -162,7 +162,7 @@ export default function VariantA() {
               </p>
               <Button
                 size="lg"
-                className="bg-orange-500 hover:bg-orange-600 text-white rounded-lg transition-colors duration-150"
+                className="bg-brand-orange hover:bg-brand-orange-dark text-white rounded-lg transition-colors duration-150"
               >
                 Join the Pilot
                 <ArrowRight className="size-4 ml-2" />
@@ -174,7 +174,7 @@ export default function VariantA() {
                   key={check}
                   className="flex items-center gap-3 bg-white/5 border border-white/10 rounded-lg px-4 py-3"
                 >
-                  <CheckCircle className="size-4 text-orange-500 shrink-0" />
+                  <CheckCircle className="size-4 text-brand-orange shrink-0" />
                   <span className="text-sm text-white/80">{check}</span>
                 </div>
               ))}
@@ -225,7 +225,7 @@ export default function VariantA() {
                   </span>
                 </div>
                 <h3 className="font-semibold text-white mb-1">{name}</h3>
-                <span className="inline-flex text-xs font-semibold bg-orange-100 text-orange-700 px-2.5 py-1 rounded-full mb-4">
+                <span className="inline-flex text-xs font-semibold bg-orange-100 text-brand-orange-dark px-2.5 py-1 rounded-full mb-4">
                   {role}
                 </span>
                 <p className="text-sm text-white/60 leading-relaxed">{bio}</p>
@@ -262,7 +262,7 @@ export default function VariantA() {
                   id="a-name"
                   type="text"
                   placeholder="Your name"
-                  className="w-full px-4 py-3 bg-white/5 border border-white/20 rounded-lg text-white placeholder-white/30 text-sm focus:outline-none focus:border-orange-500 transition-colors duration-150"
+                  className="w-full px-4 py-3 bg-white/5 border border-white/20 rounded-lg text-white placeholder-white/30 text-sm focus:outline-none focus:border-brand-orange transition-colors duration-150"
                 />
               </div>
               <div className="space-y-2">
@@ -276,7 +276,7 @@ export default function VariantA() {
                   id="a-email"
                   type="email"
                   placeholder="you@school.edu.au"
-                  className="w-full px-4 py-3 bg-white/5 border border-white/20 rounded-lg text-white placeholder-white/30 text-sm focus:outline-none focus:border-orange-500 transition-colors duration-150"
+                  className="w-full px-4 py-3 bg-white/5 border border-white/20 rounded-lg text-white placeholder-white/30 text-sm focus:outline-none focus:border-brand-orange transition-colors duration-150"
                 />
               </div>
             </div>
@@ -291,7 +291,7 @@ export default function VariantA() {
                 id="a-school"
                 type="text"
                 placeholder="Your school"
-                className="w-full px-4 py-3 bg-white/5 border border-white/20 rounded-lg text-white placeholder-white/30 text-sm focus:outline-none focus:border-orange-500 transition-colors duration-150"
+                className="w-full px-4 py-3 bg-white/5 border border-white/20 rounded-lg text-white placeholder-white/30 text-sm focus:outline-none focus:border-brand-orange transition-colors duration-150"
               />
             </div>
             <div className="space-y-2">
@@ -305,13 +305,13 @@ export default function VariantA() {
                 id="a-message"
                 rows={5}
                 placeholder="Tell us about your school and what you're looking for..."
-                className="w-full px-4 py-3 bg-white/5 border border-white/20 rounded-lg text-white placeholder-white/30 text-sm focus:outline-none focus:border-orange-500 resize-none transition-colors duration-150"
+                className="w-full px-4 py-3 bg-white/5 border border-white/20 rounded-lg text-white placeholder-white/30 text-sm focus:outline-none focus:border-brand-orange resize-none transition-colors duration-150"
               />
             </div>
             <Button
               type="submit"
               size="lg"
-              className="w-full bg-orange-500 hover:bg-orange-600 active:bg-orange-700 text-white rounded-lg transition-colors duration-150"
+              className="w-full bg-brand-orange hover:bg-brand-orange-dark active:bg-brand-orange-dark text-white rounded-lg transition-colors duration-150"
             >
               Apply for the Pilot
             </Button>

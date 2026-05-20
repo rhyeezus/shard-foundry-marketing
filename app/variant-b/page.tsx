@@ -77,7 +77,7 @@ export default function VariantB() {
         {/* Copy — left-aligned */}
         <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-8 w-full py-24">
           <div className="max-w-xl">
-            <p className="text-xs font-semibold text-orange-500 tracking-widest uppercase mb-6">
+            <p className="text-xs font-semibold text-brand-orange tracking-widest uppercase mb-6">
               Australian Curriculum · Digital Technologies
             </p>
             <h1 className="text-5xl md:text-6xl font-bold text-gray-900 leading-tight tracking-tight mb-6">
@@ -85,7 +85,7 @@ export default function VariantB() {
               <br />
               Technologies,
               <br />
-              <span className="text-orange-500">done right.</span>
+              <span className="text-brand-orange">done right.</span>
             </h1>
             <p className="text-lg text-gray-600 mb-10 leading-relaxed max-w-md">
               Curriculum-aligned lessons, teacher dashboards, and assessment
@@ -95,7 +95,7 @@ export default function VariantB() {
             <div className="flex flex-col sm:flex-row gap-4">
               <Button
                 size="lg"
-                className="bg-orange-500 hover:bg-orange-600 active:bg-orange-700 text-white px-8 rounded-lg transition-colors duration-150"
+                className="bg-brand-orange hover:bg-brand-orange-dark active:bg-brand-orange-dark text-white px-8 rounded-lg transition-colors duration-150"
               >
                 Join the Pilot
               </Button>
@@ -137,7 +137,7 @@ export default function VariantB() {
       <section id="platform" className="py-24 px-6 bg-white">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <p className="text-xs font-semibold text-orange-500 tracking-widest uppercase mb-3">
+            <p className="text-xs font-semibold text-brand-orange tracking-widest uppercase mb-3">
               The Platform
             </p>
             <h2 className="text-4xl font-bold text-gray-900 tracking-tight mb-4">
@@ -154,7 +154,7 @@ export default function VariantB() {
                 key={title}
                 className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow duration-200"
               >
-                <div className="text-orange-500 mb-4">
+                <div className="text-brand-orange mb-4">
                   <Icon className="size-6" />
                 </div>
                 <h3 className="text-base font-semibold text-gray-900 mb-2">
@@ -170,7 +170,7 @@ export default function VariantB() {
       {/* ── Digital Technologies ── */}
       <section id="technologies" className="py-24 px-6 bg-gray-50">
         <div className="max-w-7xl mx-auto text-center">
-          <p className="text-xs font-semibold text-orange-500 tracking-widest uppercase mb-4">
+          <p className="text-xs font-semibold text-brand-orange tracking-widest uppercase mb-4">
             Digital Technologies
           </p>
           <h2 className="text-4xl font-bold text-gray-900 tracking-tight mb-6">
@@ -183,7 +183,7 @@ export default function VariantB() {
           </p>
           <Button
             size="lg"
-            className="bg-orange-500 hover:bg-orange-600 text-white rounded-lg px-8 transition-colors duration-150"
+            className="bg-brand-orange hover:bg-brand-orange-dark text-white rounded-lg px-8 transition-colors duration-150"
           >
             Join the Pilot
           </Button>
@@ -193,7 +193,7 @@ export default function VariantB() {
       {/* ── Mission ── */}
       <section id="mission" className="py-24 px-6 bg-white">
         <div className="max-w-4xl mx-auto text-center">
-          <p className="text-xs font-semibold text-orange-500 tracking-widest uppercase mb-4">
+          <p className="text-xs font-semibold text-brand-orange tracking-widest uppercase mb-4">
             Mission
           </p>
           <h2 className="text-4xl font-bold text-gray-900 tracking-tight mb-6">
@@ -212,7 +212,7 @@ export default function VariantB() {
       <section id="team" className="py-24 px-6 bg-gray-50">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <p className="text-xs font-semibold text-orange-500 tracking-widest uppercase mb-3">
+            <p className="text-xs font-semibold text-brand-orange tracking-widest uppercase mb-3">
               Founding Team &amp; Partners
             </p>
             <h2 className="text-4xl font-bold text-gray-900 tracking-tight">
@@ -231,7 +231,7 @@ export default function VariantB() {
                   </span>
                 </div>
                 <h3 className="font-semibold text-gray-900 mb-1">{name}</h3>
-                <span className="inline-flex text-xs font-semibold bg-orange-100 text-orange-700 px-2.5 py-1 rounded-full mb-4">
+                <span className="inline-flex text-xs font-semibold bg-orange-100 text-brand-orange-dark px-2.5 py-1 rounded-full mb-4">
                   {role}
                 </span>
                 <p className="text-sm text-gray-600 leading-relaxed">{bio}</p>
@@ -259,7 +259,7 @@ export default function VariantB() {
       <section id="schools" className="py-24 px-6 bg-white">
         <div className="max-w-2xl mx-auto">
           <div className="text-center mb-12">
-            <p className="text-xs font-semibold text-orange-500 tracking-widest uppercase mb-3">
+            <p className="text-xs font-semibold text-brand-orange tracking-widest uppercase mb-3">
               For Schools
             </p>
             <h2 className="text-4xl font-bold text-gray-900 tracking-tight mb-4">
@@ -296,7 +296,7 @@ export default function VariantB() {
             <Button
               type="submit"
               size="lg"
-              className="w-full bg-orange-500 hover:bg-orange-600 text-white rounded-lg transition-colors duration-150"
+              className="w-full bg-brand-orange hover:bg-brand-orange-dark text-white rounded-lg transition-colors duration-150"
             >
               Send Message
             </Button>

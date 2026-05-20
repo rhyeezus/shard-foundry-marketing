@@ -116,7 +116,7 @@ export default function VariantC() {
           <div className="flex flex-col sm:flex-row gap-4">
             <Button
               size="lg"
-              className="bg-orange-500 hover:bg-orange-600 active:bg-orange-700 text-white px-8 rounded-lg transition-colors duration-150"
+              className="bg-brand-orange hover:bg-brand-orange-dark active:bg-brand-orange-dark text-white px-8 rounded-lg transition-colors duration-150"
             >
               Apply for the Pilot
             </Button>
@@ -149,7 +149,7 @@ export default function VariantC() {
                 key={item}
                 className="flex items-center gap-2 text-sm text-gray-600"
               >
-                <CheckCircle className="size-4 text-orange-500 shrink-0" />
+                <CheckCircle className="size-4 text-brand-orange shrink-0" />
                 <span>{item}</span>
               </div>
             ))}
@@ -161,7 +161,7 @@ export default function VariantC() {
       <section id="platform" className="py-24 px-6 bg-gray-50">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <p className="text-xs font-semibold text-orange-500 tracking-widest uppercase mb-3">
+            <p className="text-xs font-semibold text-brand-orange tracking-widest uppercase mb-3">
               The Platform
             </p>
             <h2 className="text-4xl font-semibold text-gray-900 mb-4">
@@ -177,7 +177,7 @@ export default function VariantC() {
             {features.map(({ icon: Icon, title, desc }) => (
               <div key={title} className="flex gap-5">
                 <div className="shrink-0 w-10 h-10 bg-orange-100 rounded-xl flex items-center justify-center">
-                  <Icon className="size-5 text-orange-600" />
+                  <Icon className="size-5 text-brand-orange-dark" />
                 </div>
                 <div>
                   <h3 className="font-semibold text-gray-900 mb-2">{title}</h3>
@@ -194,7 +194,7 @@ export default function VariantC() {
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
             <div>
-              <p className="text-xs font-semibold text-orange-500 tracking-widest uppercase mb-4">
+              <p className="text-xs font-semibold text-brand-orange tracking-widest uppercase mb-4">
                 Digital Technologies
               </p>
               <h2 className="text-4xl font-semibold text-gray-900 mb-6 leading-tight">
@@ -212,7 +212,7 @@ export default function VariantC() {
               </p>
               <Button
                 size="lg"
-                className="bg-orange-500 hover:bg-orange-600 text-white rounded-lg px-8 transition-colors duration-150"
+                className="bg-brand-orange hover:bg-brand-orange-dark text-white rounded-lg px-8 transition-colors duration-150"
               >
                 Join the Pilot
               </Button>
@@ -224,7 +224,7 @@ export default function VariantC() {
               <div className="space-y-3">
                 {curriculumStrands.map((strand, i) => (
                   <div key={strand} className="flex items-center gap-3">
-                    <div className="w-8 h-8 bg-orange-500/15 border border-orange-500/25 rounded-lg flex items-center justify-center shrink-0">
+                    <div className="w-8 h-8 bg-brand-orange/15 border border-brand-orange/25 rounded-lg flex items-center justify-center shrink-0">
                       <span className="text-xs font-mono text-orange-400">
                         {String(i + 1).padStart(2, "0")}
                       </span>
@@ -256,7 +256,7 @@ export default function VariantC() {
           </p>
           <Button
             size="lg"
-            className="bg-orange-500 hover:bg-orange-600 text-white rounded-lg px-8 transition-colors duration-150"
+            className="bg-brand-orange hover:bg-brand-orange-dark text-white rounded-lg px-8 transition-colors duration-150"
           >
             Apply for the Pilot
           </Button>
@@ -267,7 +267,7 @@ export default function VariantC() {
       <section id="team" className="py-24 px-6 bg-white">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <p className="text-xs font-semibold text-orange-500 tracking-widest uppercase mb-3">
+            <p className="text-xs font-semibold text-brand-orange tracking-widest uppercase mb-3">
               Founding Team
             </p>
             <h2 className="text-4xl font-semibold text-gray-900 mb-4">
@@ -293,13 +293,13 @@ export default function VariantC() {
                   </div>
                   <div>
                     <h3 className="font-semibold text-gray-900">{name}</h3>
-                    <span className="inline-flex text-xs font-semibold bg-orange-100 text-orange-700 px-2 py-0.5 rounded-full">
+                    <span className="inline-flex text-xs font-semibold bg-orange-100 text-brand-orange-dark px-2 py-0.5 rounded-full">
                       {role}
                     </span>
                   </div>
                 </div>
                 <div className="flex items-center gap-2 bg-gray-50 border border-gray-100 rounded-lg px-3 py-2 mb-4">
-                  <CheckCircle className="size-3.5 text-orange-500 shrink-0" />
+                  <CheckCircle className="size-3.5 text-brand-orange shrink-0" />
                   <span className="text-xs font-semibold text-gray-700">
                     {credential}
                   </span>
@@ -329,7 +329,7 @@ export default function VariantC() {
       <section id="schools" className="py-24 px-6 bg-gray-50">
         <div className="max-w-2xl mx-auto">
           <div className="text-center mb-12">
-            <p className="text-xs font-semibold text-orange-500 tracking-widest uppercase mb-3">
+            <p className="text-xs font-semibold text-brand-orange tracking-widest uppercase mb-3">
               For Schools
             </p>
             <h2 className="text-4xl font-semibold text-gray-900 mb-4">
@@ -370,7 +370,7 @@ export default function VariantC() {
             <Button
               type="submit"
               size="lg"
-              className="w-full bg-orange-500 hover:bg-orange-600 text-white rounded-lg transition-colors duration-150"
+              className="w-full bg-brand-orange hover:bg-brand-orange-dark text-white rounded-lg transition-colors duration-150"
             >
               Apply for the Pilot
             </Button>

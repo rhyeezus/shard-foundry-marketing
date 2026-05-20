@@ -224,7 +224,7 @@ export default function VariantD() {
             >
               For Schools
             </a>
-            <button className="px-4 py-1.5 text-sm text-white/80 border border-white/30 rounded-lg hover:border-white/60 transition-colors duration-150">
+            <button className="hidden sm:block px-4 py-1.5 text-sm text-white/80 border border-white/30 rounded-lg hover:border-white/60 transition-colors duration-150">
               Sign in
             </button>
           </div>
@@ -242,7 +242,7 @@ export default function VariantD() {
           </svg>
         </button>
         <div className={`backdrop-blur-md rounded-xl px-4 py-3 shadow-xl text-center border transition-all duration-500 ${
-          isOverDark ? 'bg-white/10 border-white/15' : 'bg-gray-900/60 border-white/10'
+          isOverDark ? 'opacity-100 bg-white/10 border-white/15' : 'opacity-0 pointer-events-none bg-gray-900/60 border-white/10'
         }`}>
           <p className="text-white text-sm font-medium leading-none">Get in contact</p>
           <p className="text-white/50 text-xs mt-1">We&apos;d love to hear from you</p>
@@ -272,21 +272,46 @@ export default function VariantD() {
 
           {/* Right — three students with diamond SVG backgrounds */}
           <div className="relative hidden lg:block" style={{ height: '400px' }}>
-            <div style={{ position: 'absolute', inset: 0, display: 'flex' }}>
+            <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'stretch' }}>
               {[
                 { person: '/students/student-1.png', diamond: '/purple.svg', alt: 'Student' },
                 { person: '/students/teacher.png',   diamond: '/orange.svg', alt: 'Teacher' },
                 { person: '/students/student-4.png', diamond: '/teal.svg',   alt: 'Student' },
               ].map(({ person, diamond, alt }, i) => (
-                <div key={i} style={{ flex: 1, position: 'relative', overflow: 'hidden' }}>
+                <div
+                  key={i}
+                  style={{
+                    flex: 1,
+                    position: 'relative',
+                    // pull each subsequent column left so diamonds overlap
+                    marginLeft: i > 0 ? '-32px' : 0,
+                    // right-most on top, left-most behind
+                    zIndex: i + 1,
+                  }}
+                >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={diamond}
                     alt=""
                     aria-hidden="true"
-                    style={{ position: 'absolute', top: '5%', left: '50%', width: '90%', transform: 'translateX(-50%)', zIndex: 0 }}
+                    style={{
+                      position: 'absolute',
+                      top: '12%',
+                      left: '50%',
+                      width: '100%',
+                      transform: 'translateX(-50%)',
+                      opacity: 0.8,
+                      zIndex: 0,
+                    }}
                   />
-                  <Image src={person} alt={alt} fill className="object-contain object-bottom" style={{ zIndex: 1 }} />
+                  <Image
+                    src={person}
+                    alt={alt}
+                    fill
+                    sizes="(max-width: 1280px) 15vw, 200px"
+                    className="object-contain object-bottom"
+                    style={{ zIndex: 1 }}
+                  />
                 </div>
               ))}
             </div>
