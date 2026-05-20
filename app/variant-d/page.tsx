@@ -209,7 +209,8 @@ export default function VariantD() {
           {/* Logo */}
           <div className="flex items-center">
             <div className="bg-white/15 rounded-lg p-1.5">
-              <Image src="/logo.svg" alt="Shard Learning" width={28} height={28} />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/logo.svg" alt="Shard Learning" width={28} height={28} />
             </div>
           </div>
           {/* Brand name — centred */}

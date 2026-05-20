@@ -29,7 +29,8 @@ export function Nav({ theme = "light" }: NavProps) {
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2 shrink-0">
           <div className={isDark ? "bg-white/15 rounded-lg p-1" : ""}>
-            <Image src="/logo.svg" alt="Shard Learning" width={22} height={22} />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/logo.svg" alt="Shard Learning" width={22} height={22} />
           </div>
           <span
             className={`font-semibold text-base ${
