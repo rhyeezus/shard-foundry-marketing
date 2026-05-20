@@ -1,6 +1,5 @@
-'use client';
-
 import Image from 'next/image';
+import { Diamond } from '@/components/Diamond';
 
 export default function Home() {
   return (
@@ -27,14 +26,13 @@ export default function Home() {
       </nav>
 
       {/* Hero */}
-      <section className="pt-32 pb-16 px-6 bg-gradient-to-b from-white to-gray-50">
-        <div className="max-w-[1100px] mx-auto text-center">
-          <h1 className="text-6xl font-bold text-orange-500 mb-6">Shard Foundry</h1>
-          <p className="text-xl text-gray-700 max-w-2xl mx-auto mb-8">
-            Quality education, interactive and curriculum-aligned.<br />
-            Made for teachers by teachers.
-          </p>
+      <section className="relative w-full h-screen bg-white overflow-hidden">
+        {/* 3D Diamond Canvas */}
+        <div className="absolute inset-0 w-full h-full">
+          <Diamond />
         </div>
+
+
       </section>
 
       {/* The Platform */}
