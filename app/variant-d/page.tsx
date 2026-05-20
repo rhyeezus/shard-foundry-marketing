@@ -7,35 +7,34 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import {
-  BookOpen,
-  LayoutDashboard,
-  Users,
-  Sparkles,
   CheckCircle,
   ArrowRight,
   Award,
+  ChevronRight,
+  Zap,
+  BarChart2,
+  ClipboardList,
+  Users,
 } from "lucide-react";
+
+/* ── Data ── */
 
 const features = [
   {
-    icon: BookOpen,
     title: "Curriculum-Aligned Content",
-    desc: "Every unit mapped to Australian Curriculum: Digital Technologies content descriptions. Written by the curriculum's own author.",
+    desc: "Interactive lessons mapped to the Australian Curriculum: Digital Technologies, covering data representation, algorithms, programming, and more.",
   },
   {
-    icon: LayoutDashboard,
     title: "Teacher Dashboards",
-    desc: "Track class and individual progress at a glance. Intervene early. Spend less time on admin, more time teaching.",
+    desc: "Real-time classroom management with live progress tracking, student activity monitoring, and assessment tools — everything a teacher needs in one place.",
   },
   {
-    icon: Users,
-    title: "Interactive Lessons",
-    desc: "Structured activities that Year 7–8 students actually engage with. Designed for real Australian classroom conditions.",
+    title: "Interactive Learning Tools",
+    desc: "Students learn together and with their teacher through whole-classroom discussions, collaborative activities, and real-time shared exercises that keep every student engaged.",
   },
   {
-    icon: Sparkles,
-    title: "Assessment-Ready",
-    desc: "Formative check-ins and summative tasks aligned to proficiency levels. Reporting made simple.",
+    title: "Partner Content",
+    desc: "A growing library of specialist content from education partners, including professional development for teachers and enrichment programs for gifted learners.",
   },
 ];
 
@@ -60,169 +59,333 @@ const team = [
   },
 ];
 
+/* ── Dashboard Mockup ── */
+
+function DashboardMockup() {
+  const sideNavItems = [
+    { label: 'Classes', hasChevron: true },
+    { label: 'Observe', hasChevron: true },
+    { label: 'Content Browser', hasChevron: false },
+    { label: 'Students', hasChevron: false },
+  ];
+
+  const planningCards = [
+    { title: 'Create New Class', desc: 'Set up a new class' },
+    { title: 'Add Students to Class', desc: 'Invite by email, code, or URL' },
+    { title: 'Add Modules to Class', desc: 'Assign learning modules' },
+  ];
+
+  const teachingCards = [
+    { title: 'Impersonate Student', desc: 'View as student' },
+    { title: 'Observe Student Progress', desc: 'View class and student analytics' },
+  ];
+
+  return (
+    <div className="flex h-full bg-white" style={{ fontSize: '11px', fontFamily: 'inherit' }}>
+      {/* Sidebar */}
+      <div className="w-36 bg-white border-r border-[#e5e3df] flex-shrink-0 flex flex-col">
+        {/* Header */}
+        <div className="px-3 py-2.5 border-b border-[#e5e3df] flex items-center gap-1.5">
+          <div
+            className="w-3.5 h-3.5 rounded-sm flex-shrink-0"
+            style={{ background: 'linear-gradient(135deg, #7B4BFF, #5530cc)' }}
+          />
+          <span className="font-semibold text-[#37352f] leading-tight flex-1" style={{ fontSize: '8.5px' }}>
+            Teacher Dashboard
+          </span>
+          <span
+            className="flex-shrink-0 bg-orange-100 text-orange-600 font-semibold rounded px-1"
+            style={{ fontSize: '7px' }}
+          >
+            Beta access
+          </span>
+        </div>
+        {/* Quick Actions */}
+        <div className="px-2 pt-2">
+          <div className="flex items-center gap-1 px-1.5 py-1 text-orange-500 font-semibold" style={{ fontSize: '9px' }}>
+            <Zap className="w-3 h-3 flex-shrink-0" />
+            <span>Quick Actions</span>
+          </div>
+          {sideNavItems.map(({ label, hasChevron }) => (
+            <div
+              key={label}
+              className="flex items-center gap-1.5 px-1.5 py-1 text-[#5d5b54] rounded hover:bg-[#f6f5f4] cursor-pointer"
+              style={{ fontSize: '9px' }}
+            >
+              <div className="w-3 h-3 rounded-sm bg-[#e5e3df] flex-shrink-0" />
+              <span className="flex-1">{label}</span>
+              {hasChevron && <ChevronRight className="w-2.5 h-2.5 text-[#a4a097] flex-shrink-0" />}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Main content */}
+      <div className="flex-1 overflow-auto p-3.5 bg-white">
+        {/* Planning */}
+        <div className="mb-4">
+          <div className="flex items-center gap-1.5 mb-2">
+            <ClipboardList className="w-3.5 h-3.5 text-orange-500 flex-shrink-0" />
+            <span className="font-semibold text-[#37352f]" style={{ fontSize: '10px' }}>Planning</span>
+          </div>
+          <div className="grid grid-cols-3 gap-1.5">
+            {planningCards.map(card => (
+              <div key={card.title} className="border border-orange-100 bg-orange-50/40 rounded-md p-2">
+                <div className="w-4 h-4 border border-orange-200 bg-orange-50 rounded flex items-center justify-center mb-1.5">
+                  <span className="text-orange-400 font-bold leading-none" style={{ fontSize: '9px' }}>+</span>
+                </div>
+                <p className="font-semibold text-orange-600 leading-tight mb-0.5" style={{ fontSize: '8px' }}>{card.title}</p>
+                <p className="text-[#a4a097] leading-snug" style={{ fontSize: '7px' }}>{card.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Teaching & Learning */}
+        <div className="mb-4">
+          <div className="flex items-center gap-1.5 mb-2">
+            <Users className="w-3.5 h-3.5 text-orange-500 flex-shrink-0" />
+            <span className="font-semibold text-[#37352f]" style={{ fontSize: '10px' }}>Teaching &amp; Learning</span>
+          </div>
+          <div className="flex gap-1.5">
+            {teachingCards.map(card => (
+              <div key={card.title} className="border border-orange-100 bg-orange-50/40 rounded-md p-2 flex-1">
+                <div className="w-4 h-4 border border-orange-200 bg-orange-50 rounded flex items-center justify-center mb-1.5">
+                  <Users className="w-2.5 h-2.5 text-orange-400" />
+                </div>
+                <p className="font-semibold text-orange-600 leading-tight mb-0.5 underline" style={{ fontSize: '8px' }}>{card.title}</p>
+                <p className="text-[#a4a097] leading-snug" style={{ fontSize: '7px' }}>{card.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Reporting */}
+        <div>
+          <div className="flex items-center gap-1.5 mb-2">
+            <BarChart2 className="w-3.5 h-3.5 text-[#787671] flex-shrink-0" />
+            <span className="font-semibold text-[#37352f]" style={{ fontSize: '10px' }}>Reporting</span>
+          </div>
+          <div style={{ width: '72px' }}>
+            <div className="border border-[#e5e3df] rounded-md p-2">
+              <div className="flex items-end gap-0.5 mb-1.5" style={{ height: '24px' }}>
+                {[3, 5, 2, 4, 3].map((h, i) => (
+                  <div
+                    key={i}
+                    className="flex-1 bg-[#e5e3df] rounded-sm"
+                    style={{ height: `${h * 4}px` }}
+                  />
+                ))}
+              </div>
+              <p className="font-semibold text-orange-600 leading-tight underline" style={{ fontSize: '8px' }}>View Reports</p>
+              <p className="text-[#a4a097]" style={{ fontSize: '7px' }}>Coming soon</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ── Page ── */
+
 export default function VariantD() {
-  const [isOverDark, setIsOverDark] = useState(true);
+  const [isOverDark, setIsOverDark] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsOverDark(window.scrollY < window.innerHeight * 0.8);
+      setIsOverDark(window.scrollY < 80);
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#F8F7F5]">
-      {/* Navigation — floating purple pill */}
-      <nav className="fixed top-0 w-full z-50 flex justify-center px-6 pt-4">
-        <div className="w-full max-w-7xl rounded-2xl border border-white/10 backdrop-blur-xl px-6 py-2 grid grid-cols-3 items-center" style={{background:'rgba(123,75,255,0.88)', boxShadow:'0 8px 32px rgba(0,0,0,0.18), 0 1px 0 rgba(255,255,255,0.08)'}}>
+    <div className="min-h-screen bg-off-white">
+
+      {/* ── Navigation — full-width flat purple bar ── */}
+      <nav className="fixed top-0 w-full z-50 bg-brand-purple" style={{ boxShadow: '0 1px 0 rgba(0,0,0,0.12)' }}>
+        <div className="max-w-7xl mx-auto px-6 h-14 flex items-center">
+          {/* Logo */}
           <div className="flex items-center">
-            <Image src="/logo.svg" alt="Shard Learning" width={36} height={36} />
+            <div className="bg-white/15 rounded-lg p-1.5">
+              <Image src="/logo.svg" alt="Shard Learning" width={28} height={28} />
+            </div>
           </div>
-          <div className="flex items-center justify-center">
-            <span className="font-semibold text-white text-lg">Shard Learning</span>
+          {/* Brand name — centred */}
+          <div className="flex-1 flex items-center justify-center">
+            <span className="font-bold text-white text-lg tracking-tight">Shard Learning</span>
           </div>
-          <div className="flex items-center justify-end gap-3">
-            <a href="#schools" className="px-4 py-1.5 text-sm font-semibold bg-[#FF7A1F] hover:bg-[#e56b17] text-white rounded-lg transition-colors">For Schools</a>
-            <button className="px-4 py-1.5 text-sm text-white/80 border border-white/30 rounded-lg hover:border-white/60 transition-colors">Sign In</button>
+          {/* Actions */}
+          <div className="flex items-center gap-3">
+            <a
+              href="#schools"
+              className="px-4 py-1.5 text-sm font-semibold bg-brand-orange hover:bg-brand-orange-dark text-white rounded-lg transition-colors duration-150"
+            >
+              For Schools
+            </a>
+            <button className="px-4 py-1.5 text-sm text-white/80 border border-white/30 rounded-lg hover:border-white/60 transition-colors duration-150">
+              Sign in
+            </button>
           </div>
         </div>
       </nav>
 
-      {/* FAB — Get in Contact */}
-      <div className="fixed bottom-6 right-6 z-50 flex flex-col items-center gap-2">
-        <button className="w-16 h-16 bg-orange-500 hover:bg-orange-600 text-white rounded-full shadow-xl flex items-center justify-center transition-colors">
+      {/* ── FAB — Get in Contact ── */}
+      <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-2">
+        <button
+          aria-label="Get in contact"
+          className="w-16 h-16 bg-orange-500 hover:bg-orange-600 text-white rounded-full shadow-xl flex items-center justify-center transition-colors"
+        >
           <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
           </svg>
         </button>
         <div className={`backdrop-blur-md rounded-xl px-4 py-3 shadow-xl text-center border transition-all duration-500 ${
-          isOverDark
-            ? 'bg-white/10 border-white/15'
-            : 'bg-gray-900/60 border-white/10'
+          isOverDark ? 'bg-white/10 border-white/15' : 'bg-gray-900/60 border-white/10'
         }`}>
           <p className="text-white text-sm font-medium leading-none">Get in contact</p>
           <p className="text-white/50 text-xs mt-1">We&apos;d love to hear from you</p>
         </div>
       </div>
 
-      {/* Hero */}
-      <section className="relative w-full" style={{height:'100vh', background:'radial-gradient(ellipse 120% 80% at 50% 0%, #ffffff 0%, #F0EEE9 100%)'}}>
-        <div className="relative z-10 w-full h-full flex items-stretch justify-center px-6 pt-20 pb-6">
-          <div className="w-full max-w-7xl grid gap-1.5" style={{gridTemplateColumns:'60% 40%', gridTemplateRows:'3fr 2fr'}}>
+      {/* ══════════════════════════════════════════════════
+          HERO
+      ══════════════════════════════════════════════════ */}
+      <section className="w-full bg-white pt-14">
+        <div className="max-w-7xl mx-auto px-6 py-16 grid grid-cols-1 lg:grid-cols-[55%_45%] gap-8 items-center">
 
-            {/* Left — full height, heading + tagline + CTAs */}
-            <div className="row-span-2 flex flex-col justify-center p-10">
-              <h1 className="text-7xl font-bold text-[#141312] leading-none mb-8">
-                Every student,<br />genuinely engaged.
-              </h1>
-              <p className="text-xl text-[#FF7A1F] font-normal leading-relaxed mb-10 max-w-sm">
-                Curriculum-aligned experiences designed by teachers, for teachers.
-              </p>
-              <div className="flex gap-3">
-                <button className="px-6 py-3 bg-[#FF7A1F] hover:bg-[#e56b17] text-white font-semibold rounded-lg transition-colors duration-150">
-                  Join the Pilot
-                </button>
-                <button className="px-6 py-3 border border-[#D1CFC9] hover:border-[#787671] text-[#45423D] rounded-lg transition-colors duration-150">
-                  See the Platform
-                </button>
-              </div>
+          {/* Left — heading + tagline + CTA */}
+          <div className="flex flex-col justify-center">
+            <h1 className="text-5xl lg:text-[3.75rem] font-bold text-near-black leading-none mb-6">
+              Every student,<br />genuinely engaged.
+            </h1>
+            <p className="text-xl text-brand-orange font-normal leading-relaxed mb-10 max-w-sm">
+              Curriculum-aligned experiences<br />designed by teachers, for teachers.
+            </p>
+            <div>
+              <button className="px-6 py-3 bg-brand-orange hover:bg-brand-orange-dark text-white font-semibold rounded-lg transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-brand-orange focus:ring-offset-2">
+                Join the Pilot
+              </button>
             </div>
-
-            {/* Top-right — SVG diamonds behind each person */}
-            <div className="rounded-2xl border border-black/[0.06] overflow-hidden bg-white" style={{position:'relative'}}>
-              <div style={{position:'absolute', inset:0, display:'flex'}}>
-                {[
-                  { person:'/students/student-1.png', diamond:'/purple.svg' },
-                  { person:'/students/teacher.png',   diamond:'/orange.svg' },
-                  { person:'/students/student-4.png', diamond:'/teal.svg'   },
-                ].map(({ person, diamond }, i) => (
-                  <div key={i} style={{flex:1, position:'relative', overflow:'hidden'}}>
-                    {/* Diamond SVG — upper body level */}
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={diamond} alt="" style={{position:'absolute', top:'5%', left:'50%', width:'90%', transform:'translateX(-50%)', zIndex:0}} />
-                    {/* Person — full height, bottom anchored, on top */}
-                    <Image src={person} alt="" fill className="object-contain object-bottom" style={{zIndex:1}} />
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Bottom-right — credentials */}
-            <div className="overflow-hidden rounded-2xl border border-white/10 flex flex-col justify-end p-10" style={{background:'radial-gradient(ellipse 75% 65% at 80% 80%, #7B4BFF 0%, transparent 60%), radial-gradient(ellipse 65% 70% at 20% 20%, #3d1fa0 0%, transparent 65%), #5530cc'}}>
-              <p className="text-xs font-semibold text-[#FF7A1F] tracking-widest uppercase mb-3">Built by</p>
-              <p className="text-3xl font-bold text-white leading-tight mb-1">Bruce Fuda</p>
-              <p className="text-sm text-white/55 mb-6">Author of the Australian Curriculum:<br />Digital Technologies</p>
-              <div className="inline-flex items-center gap-3 bg-[#FF7A1F]/12 border border-[#FF7A1F]/25 rounded-xl px-4 py-2.5 mb-5 w-fit">
-                <Award className="size-4 text-[#FF7A1F] shrink-0" />
-                <div>
-                  <p className="text-xs font-semibold text-[#FF7A1F]">2016 ACCE/ACS Award</p>
-                  <p className="text-xs text-white/45">ICT Educator of the Year</p>
-                </div>
-              </div>
-              <div className="flex gap-2">
-                <span className="font-mono text-xs font-medium bg-white/8 text-white/40 px-2 py-0.5 rounded border border-white/12">ACTDIK023</span>
-                <span className="font-mono text-xs font-medium bg-white/8 text-white/40 px-2 py-0.5 rounded border border-white/12">ACTDIP026</span>
-              </div>
-            </div>
-
           </div>
+
+          {/* Right — three students with diamond SVG backgrounds */}
+          <div className="relative hidden lg:block" style={{ height: '400px' }}>
+            <div style={{ position: 'absolute', inset: 0, display: 'flex' }}>
+              {[
+                { person: '/students/student-1.png', diamond: '/purple.svg', alt: 'Student' },
+                { person: '/students/teacher.png',   diamond: '/orange.svg', alt: 'Teacher' },
+                { person: '/students/student-4.png', diamond: '/teal.svg',   alt: 'Student' },
+              ].map(({ person, diamond, alt }, i) => (
+                <div key={i} style={{ flex: 1, position: 'relative', overflow: 'hidden' }}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={diamond}
+                    alt=""
+                    aria-hidden="true"
+                    style={{ position: 'absolute', top: '5%', left: '50%', width: '90%', transform: 'translateX(-50%)', zIndex: 0 }}
+                  />
+                  <Image src={person} alt={alt} fill className="object-contain object-bottom" style={{ zIndex: 1 }} />
+                </div>
+              ))}
+            </div>
+          </div>
+
         </div>
       </section>
 
-      {/* ── Credentials band ── */}
-      <section className="py-12 px-6 bg-white border-b border-[#E8E6E1]">
+      {/* ══════════════════════════════════════════════════
+          PLATFORM — 2-col + "The Platform" label + feature cards
+      ══════════════════════════════════════════════════ */}
+      <section className="py-16 px-6 bg-white">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            {[
-              { value: "15+", label: "Years building the national curriculum" },
-              { value: "Y7–10", label: "Complete scope & sequence" },
-              { value: "v9.0", label: "AC: Digital Technologies aligned" },
-              { value: "2016", label: "ACCE/ACS ICT Educator of the Year" },
-            ].map(({ value, label }) => (
-              <div key={label}>
-                <p className="text-4xl font-bold text-[#37352f] mb-1 tracking-tight">{value}</p>
-                <p className="text-sm text-[#787671] leading-snug">{label}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
-      {/* ── Platform ── */}
-      <section id="platform" className="py-24 px-6 bg-[#F8F7F5]">
-        <div className="max-w-7xl mx-auto">
-          <p className="text-xs font-semibold text-orange-500 tracking-widest uppercase mb-12">
-            The Platform
-          </p>
-          <div className="grid lg:grid-cols-2 gap-8 items-start mb-16">
+          {/* 2-col grid */}
+          <div className="grid lg:grid-cols-2 gap-12 items-start mb-20">
 
-            {/* Left — dashboard in browser frame */}
-            <div className="rounded-2xl overflow-hidden shadow-xl border border-[#e5e3df]">
-              {/* Browser chrome */}
-              <div className="bg-[#f1f0ee] px-4 py-2.5 flex items-center gap-2 border-b border-[#e5e3df]">
-                <div className="flex gap-1.5">
-                  <div className="w-3 h-3 rounded-full bg-[#FF5F57]" />
-                  <div className="w-3 h-3 rounded-full bg-[#FFBD2E]" />
-                  <div className="w-3 h-3 rounded-full bg-[#28CA42]" />
-                </div>
-                <div className="flex-1 mx-3 bg-white rounded text-xs text-[#a4a097] text-center py-0.5 px-3">
-                  app.shardlearning.com.au
-                </div>
-              </div>
-              <Image
-                src="/dashboard.png"
-                alt="Teacher Dashboard"
-                width={700}
-                height={500}
-                className="w-full"
+            {/* Left — browser frame + decorative diamond shapes */}
+            <div className="relative pt-12 pb-10">
+
+              {/* Teal diamond — top-left decoration */}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/teal.svg"
+                alt=""
+                aria-hidden="true"
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: '12px',
+                  width: '80px',
+                  height: '80px',
+                  transform: 'rotate(20deg)',
+                  zIndex: 0,
+                }}
               />
+
+              {/* Browser chrome frame */}
+              <div className="rounded-2xl overflow-hidden shadow-xl border border-[#e5e3df] relative z-10">
+                <div className="bg-[#f1f0ee] px-4 py-2.5 flex items-center gap-2 border-b border-[#e5e3df]">
+                  <div className="flex gap-1.5">
+                    <div className="w-3 h-3 rounded-full bg-[#FF5F57]" />
+                    <div className="w-3 h-3 rounded-full bg-[#FFBD2E]" />
+                    <div className="w-3 h-3 rounded-full bg-[#28CA42]" />
+                  </div>
+                  <div className="flex-1 mx-3 bg-white rounded text-xs text-[#a4a097] text-center py-0.5 px-3">
+                    app.shardlearning.com.au
+                  </div>
+                </div>
+                {/* Inline dashboard mockup (replaces missing dashboard.png) */}
+                <div style={{ height: '360px', overflow: 'hidden' }}>
+                  <DashboardMockup />
+                </div>
+              </div>
+
+              {/* Orange diamond — right-pointing (between columns) */}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/orange.svg"
+                alt=""
+                aria-hidden="true"
+                className="hidden lg:block"
+                style={{
+                  position: 'absolute',
+                  right: '-28px',
+                  top: '55%',
+                  transform: 'translateY(-50%) rotate(90deg)',
+                  width: '48px',
+                  height: '48px',
+                  zIndex: 20,
+                }}
+              />
+
+              {/* Orange diamond — pointing down (below browser) */}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/orange.svg"
+                alt=""
+                aria-hidden="true"
+                style={{
+                  position: 'absolute',
+                  bottom: '-4px',
+                  left: '50%',
+                  transform: 'translateX(-50%)',
+                  width: '52px',
+                  height: '52px',
+                  zIndex: 10,
+                }}
+              />
+
             </div>
 
-            {/* Right — purple card + stats + CTA */}
+            {/* Right — purple card + stat chips + CTA */}
             <div className="flex flex-col gap-4">
               {/* Purple card */}
-              <div className="rounded-2xl p-8" style={{background:'radial-gradient(ellipse 75% 65% at 80% 80%, #7B4BFF 0%, transparent 60%), radial-gradient(ellipse 65% 70% at 20% 20%, #3d1fa0 0%, transparent 65%), #5530cc'}}>
+              <div
+                className="rounded-2xl p-8"
+                style={{ background: 'radial-gradient(ellipse 75% 65% at 80% 80%, #7B4BFF 0%, transparent 60%), radial-gradient(ellipse 65% 70% at 20% 20%, #3d1fa0 0%, transparent 65%), #5530cc' }}
+              >
                 <h2 className="text-2xl font-bold text-white mb-3 leading-snug">
                   Everything teachers need.
                 </h2>
@@ -231,14 +394,14 @@ export default function VariantD() {
                 </p>
               </div>
 
-              {/* Stat chips */}
+              {/* Stat chips — each with a distinct brand-colour border */}
               <div className="grid grid-cols-3 gap-3">
                 {[
-                  { value:'15+',  label:'Years building the national curriculum' },
-                  { value:'2016', label:'ACCE/ACS Educator of the year' },
-                  { value:'v9.0', label:'AC-Digital Technologies aligned' },
-                ].map(({ value, label }) => (
-                  <div key={label} className="bg-white border border-[#e5e3df] rounded-xl p-4">
+                  { value: '15+',  label: 'Years building the national curriculum', borderClass: 'border-brand-teal' },
+                  { value: '2016', label: 'ACCE/ACS Educator of the year',           borderClass: 'border-brand-orange' },
+                  { value: 'v9.0', label: 'AC-Digital Technologies aligned',         borderClass: 'border-brand-purple' },
+                ].map(({ value, label, borderClass }) => (
+                  <div key={label} className={`bg-white border-2 ${borderClass} rounded-xl p-4`}>
                     <p className="text-2xl font-bold text-[#37352f] mb-1 tracking-tight">{value}</p>
                     <p className="text-xs text-[#787671] leading-snug">{label}</p>
                   </div>
@@ -247,39 +410,44 @@ export default function VariantD() {
 
               {/* CTA */}
               <div className="flex justify-end">
-                <button className="px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-lg transition-colors duration-150 flex items-center gap-2">
-                  Join the Pilot <span aria-hidden>✈️</span>
+                <button className="px-6 py-3 bg-brand-orange hover:bg-brand-orange-dark text-white font-semibold rounded-lg transition-colors duration-150 flex items-center gap-2">
+                  Join the Pilot <span aria-hidden="true">✈️</span>
                 </button>
               </div>
             </div>
+
           </div>
 
-          {/* Feature cards */}
+          {/* "The Platform" section label — intentionally below the 2-col grid */}
+          <p className="text-xs font-semibold text-brand-orange tracking-widest uppercase mb-8">
+            The Platform
+          </p>
+
+          {/* Feature cards — no icons, matches design */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {features.map(({ icon: Icon, title, desc }) => (
+            {features.map(({ title, desc }) => (
               <div
                 key={title}
-                className="bg-white border border-[#e5e3df] rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow duration-200"
+                className="bg-white border border-[#e5e3df] rounded-2xl p-6 hover:shadow-md transition-shadow duration-200"
               >
-                <div className="text-orange-500 mb-4">
-                  <Icon className="size-6" />
-                </div>
-                <h3 className="text-base font-semibold text-[#37352f] mb-2">{title}</h3>
+                <h3 className="text-base font-bold text-[#37352f] mb-3 leading-tight">{title}</h3>
                 <p className="text-sm text-[#5d5b54] leading-relaxed">{desc}</p>
               </div>
             ))}
           </div>
+
         </div>
       </section>
 
-      {/* ── Authority ── */}
+      {/* ══════════════════════════════════════════════════
+          AUTHORITY  (unchanged)
+      ══════════════════════════════════════════════════ */}
       <section id="technologies" className="py-24 px-6 bg-[#F8F7F5]">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
             {/* Left — credential card + teacher photo */}
             <div className="relative">
-              {/* Teacher photo — floats top-right of card */}
               <div className="absolute -top-8 -right-6 w-32 h-40 rounded-2xl overflow-hidden border-4 border-white shadow-xl z-10 hidden lg:block">
                 <Image src="/students/teacher.png" alt="Teacher" fill className="object-cover object-top" />
               </div>
@@ -308,7 +476,6 @@ export default function VariantD() {
                   ))}
                 </div>
               </div>
-              {/* Courtney overlay */}
               <div className="absolute -bottom-5 -right-4 bg-white border border-[#e5e3df] rounded-xl px-5 py-4 shadow-lg">
                 <p className="text-sm font-semibold text-[#37352f] mb-0.5">Courtney Weaver</p>
                 <p className="text-xs text-[#787671]">Former Head of Education, Grok Academy</p>
@@ -355,7 +522,9 @@ export default function VariantD() {
         </div>
       </section>
 
-      {/* ── Mission ── */}
+      {/* ══════════════════════════════════════════════════
+          MISSION  (unchanged)
+      ══════════════════════════════════════════════════ */}
       <section id="mission" className="py-24 px-6 bg-[#F8F7F5]">
         <div className="max-w-4xl mx-auto text-center">
           <p className="text-xs font-semibold text-orange-500 tracking-widest uppercase mb-4">
@@ -373,7 +542,9 @@ export default function VariantD() {
         </div>
       </section>
 
-      {/* ── Team ── */}
+      {/* ══════════════════════════════════════════════════
+          TEAM  (unchanged)
+      ══════════════════════════════════════════════════ */}
       <section id="team" className="py-24 px-6 bg-[#F8F7F5]">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
@@ -391,9 +562,7 @@ export default function VariantD() {
                 className="bg-white border border-[#e5e3df] rounded-xl p-8 text-center shadow-sm"
               >
                 <div className="w-16 h-16 bg-[#f6f5f4] rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-lg font-semibold text-[#5d5b54]">
-                    {initials}
-                  </span>
+                  <span className="text-lg font-semibold text-[#5d5b54]">{initials}</span>
                 </div>
                 <h3 className="font-semibold text-[#37352f] mb-1">{name}</h3>
                 <span className="inline-flex text-xs font-semibold bg-orange-100 text-orange-700 px-2.5 py-1 rounded-full mb-4">
@@ -403,8 +572,6 @@ export default function VariantD() {
               </div>
             ))}
           </div>
-
-          {/* Partner */}
           <div className="max-w-md mx-auto p-8 border border-[#e5e3df] rounded-xl bg-white text-center shadow-sm">
             <div className="w-32 h-10 bg-[#f6f5f4] rounded mx-auto mb-4" />
             <p className="text-[#5d5b54] text-sm mb-4">
@@ -420,7 +587,9 @@ export default function VariantD() {
         </div>
       </section>
 
-      {/* ── Contact ── */}
+      {/* ══════════════════════════════════════════════════
+          CONTACT  (unchanged)
+      ══════════════════════════════════════════════════ */}
       <section id="schools" className="py-24 px-6 bg-white border-t border-[#E8E6E1]">
         <div className="max-w-2xl mx-auto">
           <div className="text-center mb-12">
@@ -461,7 +630,9 @@ export default function VariantD() {
         </div>
       </section>
 
-      {/* ── Footer ── */}
+      {/* ══════════════════════════════════════════════════
+          FOOTER  (unchanged)
+      ══════════════════════════════════════════════════ */}
       <footer className="bg-[#141312] text-[#A9A69F] py-8 px-6">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4 text-sm">
           <div className="flex items-center gap-2">
@@ -481,6 +652,7 @@ export default function VariantD() {
           </div>
         </div>
       </footer>
+
     </div>
   );
 }
