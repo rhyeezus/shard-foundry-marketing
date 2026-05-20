@@ -107,16 +107,16 @@ export default function VariantD() {
       </div>
 
       {/* Hero */}
-      <section className="relative w-full min-h-screen" style={{background:'radial-gradient(ellipse 120% 80% at 50% 0%, #ffffff 0%, #F0EEE9 100%)'}}>
-        <div className="relative z-10 w-full flex items-start justify-center px-6 pt-20 pb-6" style={{minHeight:'100vh'}}>
-          <div className="w-full max-w-7xl self-stretch grid gap-1.5" style={{gridTemplateColumns:'60% 40%', gridTemplateRows:'1fr 1fr'}}>
+      <section className="relative w-full" style={{height:'100vh', background:'radial-gradient(ellipse 120% 80% at 50% 0%, #ffffff 0%, #F0EEE9 100%)'}}>
+        <div className="relative z-10 w-full h-full flex items-stretch justify-center px-6 pt-20 pb-6">
+          <div className="w-full max-w-7xl grid gap-1.5" style={{gridTemplateColumns:'60% 40%', gridTemplateRows:'3fr 2fr'}}>
 
             {/* Left — full height, heading + tagline + CTAs */}
-            <div className="row-span-2 rounded-2xl flex flex-col justify-center p-10">
+            <div className="row-span-2 flex flex-col justify-center p-10">
               <h1 className="text-7xl font-bold text-[#141312] leading-none mb-8">
                 Every student,<br />genuinely engaged.
               </h1>
-              <p className="text-xl text-[#5d5b54] font-normal leading-relaxed mb-10 max-w-sm">
+              <p className="text-xl text-[#FF7A1F] font-normal leading-relaxed mb-10 max-w-sm">
                 Curriculum-aligned experiences designed by teachers, for teachers.
               </p>
               <div className="flex gap-3">
@@ -129,21 +129,22 @@ export default function VariantD() {
               </div>
             </div>
 
-            {/* Top-right — students */}
-            <div className="overflow-hidden rounded-2xl border border-black/[0.06] relative" style={{background:'radial-gradient(ellipse 80% 60% at 50% 100%, rgba(123,75,255,0.10) 0%, transparent 70%), #F8F7F5'}}>
-              <div className="absolute inset-0 flex items-end">
-                <div className="relative flex-1" style={{height:'92%', zIndex:1}}>
-                  <Image src="/students/student-1.png" alt="Student" fill className="object-contain object-bottom" style={{transform:'scale(1.5)', transformOrigin:'50% 100%'}} />
-                </div>
-                <div className="relative flex-1" style={{height:'100%', zIndex:2, marginLeft:'-12px'}}>
-                  <Image src="/students/student-2.png" alt="Student" fill className="object-contain object-bottom" style={{transform:'scale(1.5)', transformOrigin:'50% 100%'}} />
-                </div>
-                <div className="relative flex-1" style={{height:'96%', zIndex:2, marginLeft:'-12px'}}>
-                  <Image src="/students/student-3.png" alt="Student" fill className="object-contain object-bottom" style={{transform:'scale(1.5)', transformOrigin:'50% 100%'}} />
-                </div>
-                <div className="relative flex-1" style={{height:'90%', zIndex:1, marginLeft:'-12px'}}>
-                  <Image src="/students/student-4.png" alt="Student" fill className="object-contain object-bottom" style={{transform:'scale(1.5)', transformOrigin:'50% 100%'}} />
-                </div>
+            {/* Top-right — SVG diamonds behind each person */}
+            <div className="rounded-2xl border border-black/[0.06] overflow-hidden bg-white" style={{position:'relative'}}>
+              <div style={{position:'absolute', inset:0, display:'flex'}}>
+                {[
+                  { person:'/students/student-1.png', diamond:'/purple.svg' },
+                  { person:'/students/teacher.png',   diamond:'/orange.svg' },
+                  { person:'/students/student-4.png', diamond:'/teal.svg'   },
+                ].map(({ person, diamond }, i) => (
+                  <div key={i} style={{flex:1, position:'relative', overflow:'hidden'}}>
+                    {/* Diamond SVG — upper body level */}
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={diamond} alt="" style={{position:'absolute', top:'5%', left:'50%', width:'90%', transform:'translateX(-50%)', zIndex:0}} />
+                    {/* Person — full height, bottom anchored, on top */}
+                    <Image src={person} alt="" fill className="object-contain object-bottom" style={{zIndex:1}} />
+                  </div>
+                ))}
               </div>
             </div>
 
@@ -191,18 +192,69 @@ export default function VariantD() {
       {/* ── Platform ── */}
       <section id="platform" className="py-24 px-6 bg-[#F8F7F5]">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <p className="text-xs font-semibold text-orange-500 tracking-widest uppercase mb-3">
-              The Platform
-            </p>
-            <h2 className="text-4xl font-bold text-[#37352f] tracking-tight mb-4">
-              Everything teachers need.
-            </h2>
-            <p className="text-lg text-[#5d5b54] max-w-2xl mx-auto">
-              Built around the realities of Australian classrooms — not an
-              imported American EdTech product.
-            </p>
+          <p className="text-xs font-semibold text-orange-500 tracking-widest uppercase mb-12">
+            The Platform
+          </p>
+          <div className="grid lg:grid-cols-2 gap-8 items-start mb-16">
+
+            {/* Left — dashboard in browser frame */}
+            <div className="rounded-2xl overflow-hidden shadow-xl border border-[#e5e3df]">
+              {/* Browser chrome */}
+              <div className="bg-[#f1f0ee] px-4 py-2.5 flex items-center gap-2 border-b border-[#e5e3df]">
+                <div className="flex gap-1.5">
+                  <div className="w-3 h-3 rounded-full bg-[#FF5F57]" />
+                  <div className="w-3 h-3 rounded-full bg-[#FFBD2E]" />
+                  <div className="w-3 h-3 rounded-full bg-[#28CA42]" />
+                </div>
+                <div className="flex-1 mx-3 bg-white rounded text-xs text-[#a4a097] text-center py-0.5 px-3">
+                  app.shardlearning.com.au
+                </div>
+              </div>
+              <Image
+                src="/dashboard.png"
+                alt="Teacher Dashboard"
+                width={700}
+                height={500}
+                className="w-full"
+              />
+            </div>
+
+            {/* Right — purple card + stats + CTA */}
+            <div className="flex flex-col gap-4">
+              {/* Purple card */}
+              <div className="rounded-2xl p-8" style={{background:'radial-gradient(ellipse 75% 65% at 80% 80%, #7B4BFF 0%, transparent 60%), radial-gradient(ellipse 65% 70% at 20% 20%, #3d1fa0 0%, transparent 65%), #5530cc'}}>
+                <h2 className="text-2xl font-bold text-white mb-3 leading-snug">
+                  Everything teachers need.
+                </h2>
+                <p className="text-white/70 leading-relaxed">
+                  Built around the realities of Australian classrooms.
+                </p>
+              </div>
+
+              {/* Stat chips */}
+              <div className="grid grid-cols-3 gap-3">
+                {[
+                  { value:'15+',  label:'Years building the national curriculum' },
+                  { value:'2016', label:'ACCE/ACS Educator of the year' },
+                  { value:'v9.0', label:'AC-Digital Technologies aligned' },
+                ].map(({ value, label }) => (
+                  <div key={label} className="bg-white border border-[#e5e3df] rounded-xl p-4">
+                    <p className="text-2xl font-bold text-[#37352f] mb-1 tracking-tight">{value}</p>
+                    <p className="text-xs text-[#787671] leading-snug">{label}</p>
+                  </div>
+                ))}
+              </div>
+
+              {/* CTA */}
+              <div className="flex justify-end">
+                <button className="px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-lg transition-colors duration-150 flex items-center gap-2">
+                  Join the Pilot <span aria-hidden>✈️</span>
+                </button>
+              </div>
+            </div>
           </div>
+
+          {/* Feature cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {features.map(({ icon: Icon, title, desc }) => (
               <div
@@ -212,9 +264,7 @@ export default function VariantD() {
                 <div className="text-orange-500 mb-4">
                   <Icon className="size-6" />
                 </div>
-                <h3 className="text-base font-semibold text-[#37352f] mb-2">
-                  {title}
-                </h3>
+                <h3 className="text-base font-semibold text-[#37352f] mb-2">{title}</h3>
                 <p className="text-sm text-[#5d5b54] leading-relaxed">{desc}</p>
               </div>
             ))}
@@ -227,8 +277,12 @@ export default function VariantD() {
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
-            {/* Left — credential card */}
+            {/* Left — credential card + teacher photo */}
             <div className="relative">
+              {/* Teacher photo — floats top-right of card */}
+              <div className="absolute -top-8 -right-6 w-32 h-40 rounded-2xl overflow-hidden border-4 border-white shadow-xl z-10 hidden lg:block">
+                <Image src="/students/teacher.png" alt="Teacher" fill className="object-cover object-top" />
+              </div>
               <div className="bg-[#141312] rounded-2xl p-10">
                 <p className="text-xs font-semibold text-orange-400 tracking-widest uppercase mb-6">
                   Curriculum Authority
