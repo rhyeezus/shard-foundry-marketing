@@ -38,6 +38,18 @@ const variants = [
     arrowColor: "text-gray-300 group-hover:text-[#6080ff]",
     border: "border border-gray-200",
   },
+  {
+    href: "/variant-d",
+    tag: "Variant D",
+    tagColor: "text-purple-400",
+    title: "Glass & Motion",
+    desc: "Mesh gradient hero with frosted glass grid, animated diamond, purple glass nav, scroll-aware FAB. Live and experimental.",
+    bg: "bg-[#2e1065] hover:bg-[#3b0764]",
+    titleColor: "text-white",
+    descColor: "text-white/60",
+    arrowColor: "text-white/40 group-hover:text-white/80",
+    border: "",
+  },
 ];
 
 export default function Home() {
