@@ -50,6 +50,18 @@ const variants = [
     arrowColor: "text-white/40 group-hover:text-white/80",
     border: "",
   },
+  {
+    href: "/variant-e",
+    tag: "Variant E",
+    tagColor: "text-orange-400",
+    title: "Forge Rebrand",
+    desc: "Game-inspired. Amethyst sky → volcanic lava floor, CSS parallax mountains, orbiting SVG gems, forge vortex. Zero canvas, zero WebGL.",
+    bg: "bg-[#0e0720] hover:bg-[#1a0d38]",
+    titleColor: "text-white",
+    descColor: "text-white/60",
+    arrowColor: "text-white/40 group-hover:text-white/80",
+    border: "",
+  },
 ];
 
 export default function Home() {
