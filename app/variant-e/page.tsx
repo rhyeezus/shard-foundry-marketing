@@ -47,8 +47,8 @@ export default function VariantE() {
         className="relative overflow-hidden"
         style={{
           height: '100vh',
-          // Frame fill: #0E0720 (r:0.055 g:0.027 b:0.125). Gradient adds volcanic warmth below.
-          background: 'linear-gradient(180deg, #0E0720 0%, #110A28 30%, #1A1040 52%, #38180A 76%, #1A0800 100%)',
+          // Dark purple sky stays dominant; warm volcanic glow only creeps in near the horizon
+          background: 'linear-gradient(180deg, #0E0720 0%, #130B2A 45%, #1C1244 68%, #2A1008 88%, #1A0800 100%)',
         }}
       >
         {/* ── Twinkle keyframe ── */}
@@ -147,6 +147,8 @@ export default function VariantE() {
           className="absolute pointer-events-none"
           style={{
             left: '6.4%', top: '33.8%', width: '45.9%',
+            opacity: 0.55,
+            filter: 'blur(1px)',
             transform: `translateY(${scrollY * 0.12}px)`,
           }}
         >
@@ -159,6 +161,8 @@ export default function VariantE() {
           className="absolute pointer-events-none"
           style={{
             left: '78.8%', top: '43.6%', width: '42.2%',
+            opacity: 0.5,
+            filter: 'blur(1px)',
             transform: `translateY(${scrollY * 0.10}px)`,
           }}
         >
@@ -171,6 +175,8 @@ export default function VariantE() {
           className="absolute pointer-events-none"
           style={{
             left: '55.9%', top: '65.2%', width: '38.1%',
+            opacity: 0.45,
+            filter: 'blur(1px)',
             transform: `translateY(${scrollY * 0.11}px)`,
           }}
         >
@@ -287,8 +293,7 @@ export default function VariantE() {
                 color: 'rgba(255,255,255,0.72)',
               }}
             >
-              Curriculum-aligned experiences designed<br />
-              by teachers, for teachers.
+              Curriculum-aligned experiences designed by teachers, for teachers.
             </p>
 
             <div className="flex gap-4 flex-wrap">
@@ -333,7 +338,7 @@ export default function VariantE() {
       </section>
 
       {/* ━━ Below-fold placeholder ━━ */}
-      <section style={{ padding: '120px 80px', backgroundColor: '#1A0800' }}>
+      <section style={{ padding: '120px 80px', backgroundColor: '#1A0800', marginTop: 0 }}>
         <div style={{ maxWidth: 800, margin: '0 auto', textAlign: 'center' }}>
           <p style={{ color: 'rgba(255,255,255,0.4)' }}>More sections coming soon…</p>
         </div>
