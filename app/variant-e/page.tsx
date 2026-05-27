@@ -33,15 +33,22 @@ export default function VariantE() {
   }, []);
 
   return (
-    <div style={{ backgroundColor: '#09092A', minHeight: '100vh' }}>
+    <div style={{ backgroundColor: '#0E0720', minHeight: '100vh' }}>
       <Nav theme="dark" />
 
       {/* ━━ Hero Section ━━ */}
+      {/*
+        All positions derived from Figma node 18:15049 (frame "D", 1540×2022px).
+        Viewport baseline: 1540w × 900h.
+        x% = figma_x / 1540 × 100
+        y% = figma_y / 900 × 100
+      */}
       <section
         className="relative overflow-hidden"
         style={{
           height: '100vh',
-          background: 'linear-gradient(180deg, #080A22 0%, #0B0C2C 25%, #15103A 50%, #38180A 74%, #1A0800 100%)',
+          // Frame fill: #0E0720 (r:0.055 g:0.027 b:0.125). Gradient adds volcanic warmth below.
+          background: 'linear-gradient(180deg, #0E0720 0%, #110A28 30%, #1A1040 52%, #38180A 76%, #1A0800 100%)',
         }}
       >
         {/* ── Twinkle keyframe ── */}
@@ -49,7 +56,7 @@ export default function VariantE() {
           @keyframes twinkle { 0%,100%{opacity:0.25} 50%{opacity:0.9} }
         `}</style>
 
-        {/* ── Stars ── */}
+        {/* ── Stars — Figma "stars" group: x=-8,y=120 spans full width ── */}
         <div
           className="absolute inset-0 pointer-events-none"
           style={{ transform: `translateY(${scrollY * 0.04}px)` }}
@@ -65,64 +72,81 @@ export default function VariantE() {
           </svg>
         </div>
 
-        {/* ── Far terrain (mountain_layer_1) ── */}
+        {/* ── Far terrain — mountain_layer_1: x=0,y=771,w=1540 (84% down) ── */}
         <div
           className="absolute bottom-0 w-full pointer-events-none"
-          style={{ transform: `translateY(${scrollY * 0.08}px)` }}
+          style={{ transform: `translateY(${scrollY * 0.06}px)` }}
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/assets/mountain_layer_1.svg" alt="" aria-hidden="true" style={{ display: 'block', width: '100%' }} />
         </div>
 
-        {/* ── Mid terrain (mountain_layer_3) ── */}
+        {/* ── Near terrain — mountain_5: x=4,y=764,w=1540 (85% down) ── */}
         <div
           className="absolute bottom-0 w-full pointer-events-none"
-          style={{ transform: `translateY(${scrollY * 0.18}px)` }}
-        >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/assets/mountain_layer_3.svg" alt="" aria-hidden="true" style={{ display: 'block', width: '100%' }} />
-        </div>
-
-        {/* ── Near terrain (mountain_5) ── */}
-        <div
-          className="absolute bottom-0 w-full pointer-events-none"
-          style={{ transform: `translateY(${scrollY * 0.30}px)` }}
+          style={{ transform: `translateY(${scrollY * 0.12}px)` }}
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/assets/mountain_5.svg" alt="" aria-hidden="true" style={{ display: 'block', width: '100%' }} />
         </div>
 
-        {/* ── Small high cloud — top-left bg ── */}
+        {/* ── cloud_1_layer_6 #1 — x=-35,y=431: left=-2.3%,top=47.9%,w=26.2% ── */}
         <div
           className="absolute pointer-events-none"
           style={{
-            left: '8%', top: '4%', width: '22%',
-            opacity: 0.55,
-            transform: `translateY(${scrollY * 0.06}px)`,
+            left: '-2.3%', top: '47.9%', width: '26.2%',
+            opacity: 0.7,
+            transform: `translateY(${scrollY * 0.07}px)`,
           }}
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/assets/cloud_1_layer_6.svg" alt="" aria-hidden="true" style={{ display: 'block', width: '100%' }} />
         </div>
 
-        {/* ── Small high cloud — top-right bg ── */}
+        {/* ── cloud_1_layer_6 #2 — x=1245,y=293: left=80.8%,top=32.6%,w=22.1% ── */}
         <div
           className="absolute pointer-events-none"
           style={{
-            right: '22%', top: '2%', width: '18%',
-            opacity: 0.45,
-            transform: `translateY(${scrollY * 0.05}px)`,
+            left: '80.8%', top: '32.6%', width: '22.1%',
+            opacity: 0.6,
+            transform: `translateY(${scrollY * 0.06}px)`,
           }}
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/assets/cloud_1_layer_6-1.svg" alt="" aria-hidden="true" style={{ display: 'block', width: '100%' }} />
         </div>
 
-        {/* ── LEFT large purple cloud (behind text, mid-hero) ── */}
+        {/* ── cloud_1_layer_6 #3 — x=614,y=340: left=39.9%,top=37.8%,w=16.3% ── */}
         <div
           className="absolute pointer-events-none"
           style={{
-            left: '-2%', top: '36%', width: '24%',
+            left: '39.9%', top: '37.8%', width: '16.3%',
+            opacity: 0.5,
+            transform: `translateY(${scrollY * 0.08}px)`,
+          }}
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/assets/cloud_1_layer_6.svg" alt="" aria-hidden="true" style={{ display: 'block', width: '100%' }} />
+        </div>
+
+        {/* ── cloud_1_layer_6 #4 — x=1243,y=573: left=80.7%,top=63.7%,w=20.5% ── */}
+        <div
+          className="absolute pointer-events-none"
+          style={{
+            left: '80.7%', top: '63.7%', width: '20.5%',
+            opacity: 0.55,
+            transform: `translateY(${scrollY * 0.09}px)`,
+          }}
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/assets/cloud_1_layer_6-1.svg" alt="" aria-hidden="true" style={{ display: 'block', width: '100%' }} />
+        </div>
+
+        {/* ── cloud_1_layer_5 LEFT — x=98,y=304: left=6.4%,top=33.8%,w=45.9% ── */}
+        <div
+          className="absolute pointer-events-none"
+          style={{
+            left: '6.4%', top: '33.8%', width: '45.9%',
             transform: `translateY(${scrollY * 0.12}px)`,
           }}
         >
@@ -130,11 +154,11 @@ export default function VariantE() {
           <img src="/assets/cloud_1_layer_5.svg" alt="" aria-hidden="true" style={{ display: 'block', width: '100%' }} />
         </div>
 
-        {/* ── RIGHT large purple cloud (framing rocks) ── */}
+        {/* ── cloud_1_layer_5 RIGHT — x=1213,y=392: left=78.8%,top=43.6%,w=42.2% (intentionally overflows right) ── */}
         <div
           className="absolute pointer-events-none"
           style={{
-            right: '-2%', top: '18%', width: '26%',
+            left: '78.8%', top: '43.6%', width: '42.2%',
             transform: `translateY(${scrollY * 0.10}px)`,
           }}
         >
@@ -142,96 +166,84 @@ export default function VariantE() {
           <img src="/assets/cloud_1_layer_5-1.svg" alt="" aria-hidden="true" style={{ display: 'block', width: '100%' }} />
         </div>
 
-        {/* ── Tall pointed dark monolith — LEFT of main formation ── */}
+        {/* ── cloud_1_layer_5 BOTTOM — x=861,y=587: left=55.9%,top=65.2%,w=38.1% ── */}
         <div
-          className="absolute bottom-0 pointer-events-none"
+          className="absolute pointer-events-none"
           style={{
-            left: '24%', height: '60vh',
-            transform: `translateY(${scrollY * 0.22}px)`,
+            left: '55.9%', top: '65.2%', width: '38.1%',
+            transform: `translateY(${scrollY * 0.11}px)`,
           }}
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/assets/rock_layer_2.svg" alt="" aria-hidden="true" style={{ display: 'block', height: '100%', width: 'auto' }} />
+          <img src="/assets/cloud_1_layer_5.svg" alt="" aria-hidden="true" style={{ display: 'block', width: '100%' }} />
         </div>
 
-        {/* ── Secondary lava cliff — RIGHT of main formation ── */}
+        {/* ── lava_1_layer_5 (main formation group): x=260,y=189,w=1246,h=641 ── */}
         <div
           className="absolute bottom-0 pointer-events-none"
           style={{
-            right: '-1%', height: '62vh',
+            left: '16.9%', height: '71.2vh',
             transform: `translateY(${scrollY * 0.20}px)`,
-          }}
-        >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/assets/lava_1_layer_5.svg" alt="" aria-hidden="true" style={{ display: 'block', height: '100%', width: 'auto' }} />
-        </div>
-
-        {/* ── MAIN lava cliff — centrepiece of the hero ── */}
-        <div
-          className="absolute bottom-0 pointer-events-none"
-          style={{
-            left: '28%', height: '84vh',
-            transform: `translateY(${scrollY * 0.25}px)`,
           }}
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/assets/lava_layer_4.svg" alt="" aria-hidden="true" style={{ display: 'block', height: '100%', width: 'auto' }} />
         </div>
 
-        {/* ── Flat dark rock cluster — bottom-left foreground ── */}
+        {/* ── Secondary lava cliff right edge — Layer 2: x=1458,y=629,w=93,h=140 ── */}
         <div
           className="absolute bottom-0 pointer-events-none"
           style={{
-            left: '1%', height: '18vh',
-            transform: `translateY(${scrollY * 0.48}px)`,
+            right: '-1%', height: '50vh',
+            transform: `translateY(${scrollY * 0.18}px)`,
+          }}
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/assets/lava_1_layer_5.svg" alt="" aria-hidden="true" style={{ display: 'block', height: '100%', width: 'auto' }} />
+        </div>
+
+        {/* ── rock_3_layer_4 left: x=-73,y=586,w=200,h=173 → left=-4.7%,bottom ── */}
+        <div
+          className="absolute bottom-0 pointer-events-none"
+          style={{
+            left: '-4.7%', height: '19.2vh',
+            transform: `translateY(${scrollY * 0.42}px)`,
           }}
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/assets/rock_3_layer_4.svg" alt="" aria-hidden="true" style={{ display: 'block', height: '100%', width: 'auto' }} />
         </div>
 
-        {/* ── Spiky lava rock cluster — centre-left foreground ── */}
+        {/* ── rock_1_layer_4: x=159,y=703,w=112,h=130 → left=10.3% ── */}
         <div
           className="absolute bottom-0 pointer-events-none"
           style={{
-            left: '14%', height: '22vh',
-            transform: `translateY(${scrollY * 0.44}px)`,
+            left: '10.3%', height: '14.4vh',
+            transform: `translateY(${scrollY * 0.38}px)`,
           }}
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/assets/rock_1_layer_4.svg" alt="" aria-hidden="true" style={{ display: 'block', height: '100%', width: 'auto' }} />
         </div>
 
-        {/* ── Spiky lava rock cluster mirror — right foreground ── */}
+        {/* ── rock_2_layer_4: x=465,y=616,w=117,h=141 → left=30.2% ── */}
         <div
           className="absolute bottom-0 pointer-events-none"
           style={{
-            right: '16%', height: '20vh',
+            left: '30.2%', height: '15.7vh',
             transform: `translateY(${scrollY * 0.44}px)`,
-          }}
-        >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/assets/rock_1_layer_4-1.svg" alt="" aria-hidden="true" style={{ display: 'block', height: '100%', width: 'auto' }} />
-        </div>
-
-        {/* ── Small lava rock — left edge ── */}
-        <div
-          className="absolute bottom-0 pointer-events-none"
-          style={{
-            left: '6%', height: '14vh',
-            transform: `translateY(${scrollY * 0.50}px)`,
           }}
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/assets/rock_2_layer_4.svg" alt="" aria-hidden="true" style={{ display: 'block', height: '100%', width: 'auto' }} />
         </div>
 
-        {/* ── Lava drip accent ── */}
+        {/* ── lava_1_layer_4 accent: x=597,y=654,w=140,h=154 → left=38.8% ── */}
         <div
-          className="absolute pointer-events-none"
+          className="absolute bottom-0 pointer-events-none"
           style={{
-            left: '29%', bottom: '8vh', height: '12vh',
-            transform: `translateY(${scrollY * 0.35}px)`,
+            left: '38.8%', height: '17.1vh',
+            transform: `translateY(${scrollY * 0.32}px)`,
             opacity: 0.9,
           }}
         >
@@ -239,35 +251,40 @@ export default function VariantE() {
           <img src="/assets/lava_1_layer_4.svg" alt="" aria-hidden="true" style={{ display: 'block', height: '100%', width: 'auto' }} />
         </div>
 
-        {/* ━━ Hero text — LEFT side ━━ */}
+        {/* ━━ Hero text — Figma Frame 22: x=152,y=132,w=488 ━━ */}
+        {/*
+          paddingLeft  = 152/1540 = 9.87%
+          paddingTop   = 132/900  = 14.67%
+          paddingRight = (1540-640)/1540 = 58.4%  (text ends at x=640 = 41.6% from left)
+          fontSize     = 52px at 1540px = 3.38vw, weight=700
+          subtitle     = 28px at 1540px = 1.82vw, weight=400
+        */}
         <div
           className="absolute inset-0 flex flex-col justify-start z-10 pointer-events-none"
           style={{
-            paddingLeft: 'max(5vw, 48px)',
-            paddingRight: '50%',
-            paddingTop: 'max(10vh, 88px)',
+            paddingLeft: 'max(9.87vw, 80px)',
+            paddingRight: '58.4%',
+            paddingTop: 'max(14.7vh, 116px)',
           }}
         >
           <div style={{ pointerEvents: 'auto' }}>
             <h1
-              className="font-extrabold text-white leading-none mb-5"
+              className="font-bold text-white mb-4"
               style={{
-                fontSize: 'clamp(44px, 4.8vw, 82px)',
-                letterSpacing: '-0.03em',
-                lineHeight: 1.08,
+                fontSize: 'clamp(34px, 3.38vw, 56px)',
+                letterSpacing: '-0.02em',
+                lineHeight: '56px',
               }}
             >
-              Where great<br />
-              learning is<br />
-              forged
+              Where great learning is forged
             </h1>
 
             <p
-              className="mb-8 leading-relaxed"
+              className="mb-8"
               style={{
-                fontSize: 'clamp(15px, 1.2vw, 19px)',
-                color: 'rgba(255,255,255,0.68)',
-                maxWidth: 420,
+                fontSize: 'clamp(18px, 1.82vw, 30px)',
+                lineHeight: 1.43,
+                color: 'rgba(255,255,255,0.72)',
               }}
             >
               Curriculum-aligned experiences designed<br />
@@ -276,27 +293,27 @@ export default function VariantE() {
 
             <div className="flex gap-4 flex-wrap">
               <button
-                className="inline-flex items-center gap-2 font-semibold rounded-lg transition-all text-white shadow-lg"
+                className="inline-flex items-center gap-2 font-bold rounded-lg transition-all text-white shadow-lg"
                 style={{
-                  padding: '14px 28px',
+                  padding: '12px 24px',
                   backgroundColor: '#F97316',
-                  fontSize: 'clamp(14px, 1.1vw, 17px)',
+                  fontSize: 'clamp(13px, 1.04vw, 16px)',
                   border: 'none',
                   cursor: 'pointer',
                 }}
                 onMouseEnter={e => (e.currentTarget.style.backgroundColor = '#EA580C')}
                 onMouseLeave={e => (e.currentTarget.style.backgroundColor = '#F97316')}
               >
-                Join the pilot <ChevronRight size={17} />
+                Join the pilot <ChevronRight size={16} />
               </button>
 
               <button
                 className="font-semibold rounded-lg transition-all text-white"
                 style={{
-                  padding: '14px 28px',
+                  padding: '12px 24px',
                   backgroundColor: 'rgba(255,255,255,0.08)',
                   border: '1.5px solid rgba(255,255,255,0.30)',
-                  fontSize: 'clamp(14px, 1.1vw, 17px)',
+                  fontSize: 'clamp(13px, 1.04vw, 16px)',
                   cursor: 'pointer',
                 }}
                 onMouseEnter={e => {
@@ -316,7 +333,7 @@ export default function VariantE() {
       </section>
 
       {/* ━━ Below-fold placeholder ━━ */}
-      <section style={{ padding: '120px 80px', backgroundColor: '#1A1F3A' }}>
+      <section style={{ padding: '120px 80px', backgroundColor: '#1A0800' }}>
         <div style={{ maxWidth: 800, margin: '0 auto', textAlign: 'center' }}>
           <p style={{ color: 'rgba(255,255,255,0.4)' }}>More sections coming soon…</p>
         </div>
