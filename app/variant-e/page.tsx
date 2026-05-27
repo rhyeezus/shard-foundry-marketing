@@ -41,7 +41,7 @@ export default function VariantE() {
         className="relative overflow-hidden"
         style={{
           height: '100vh',
-          background: 'linear-gradient(180deg, #09092A 0%, #120D35 22%, #1C1240 45%, #38180A 74%, #1A0800 100%)',
+          background: 'linear-gradient(180deg, #080A22 0%, #0B0C2C 25%, #15103A 50%, #38180A 74%, #1A0800 100%)',
         }}
       >
         {/* ── Twinkle keyframe ── */}
@@ -122,7 +122,7 @@ export default function VariantE() {
         <div
           className="absolute pointer-events-none"
           style={{
-            left: '-3%', top: '22%', width: '36%',
+            left: '-2%', top: '36%', width: '24%',
             transform: `translateY(${scrollY * 0.12}px)`,
           }}
         >
@@ -134,7 +134,7 @@ export default function VariantE() {
         <div
           className="absolute pointer-events-none"
           style={{
-            right: '-3%', top: '12%', width: '38%',
+            right: '-2%', top: '18%', width: '26%',
             transform: `translateY(${scrollY * 0.10}px)`,
           }}
         >
