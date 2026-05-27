@@ -40,6 +40,16 @@
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
+  /* ── Forge Palette Extensions ── */
+  --color-gem-ruby: var(--color-gem-ruby);
+  --color-gem-ruby-light: var(--color-gem-ruby-light);
+  --color-forge-navy: var(--color-forge-navy);
+  --color-slate-dark: var(--color-slate-dark);
+  --color-slate-mid: var(--color-slate-mid);
+  --color-lava-core: var(--color-lava-core);
+  --color-glow-orange: var(--color-glow-orange);
+  --color-red-accent: var(--color-red-accent);
+  --color-navy-deep: var(--color-navy-deep);
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
@@ -120,6 +130,17 @@
   --sidebar-accent-foreground: #e56b17;
   --sidebar-border: #E8E6E1;
   --sidebar-ring: #FF7A1F;
+
+  /* ── Extended Forge Palette — Reds & Dark Navy/Slates ── */
+  --color-gem-ruby: #D32F2F;         /* Deep red gem variant */
+  --color-gem-ruby-light: #FF6B6B;   /* Light ruby accent */
+  --color-forge-navy: #0A0E27;       /* Deep navy sky (night above forge) */
+  --color-slate-dark: #1A1F3A;       /* Dark slate for depth layers */
+  --color-slate-mid: #2D3B5C;        /* Mid-tone slate for transitions */
+  --color-lava-core: #FFB347;        /* Molten center (from brief) */
+  --color-glow-orange: #F97316;      /* Fire opal glow accent */
+  --color-red-accent: #E74C3C;       /* Warm red for highlights */
+  --color-navy-deep: #1A2847;        /* Another deep navy option */
 }
 
 .dark {
