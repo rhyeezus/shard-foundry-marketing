@@ -104,10 +104,10 @@ export default function VariantE() {
         className="relative overflow-hidden"
         style={{
           minHeight: '100svh',
-          // Sky → below-fold colour, darkening monotonically so the art dissolves
-          // into the same tone the next section starts on (no bright seam band).
-          background:
-            'linear-gradient(180deg, #09041A 0%, #0B0723 52%, #120D2E 100%)',
+          // Solid narrative-sky purple (no gradient). The art is masked to fade
+          // into this flat colour, which the first section also uses — so the
+          // hero and the page below merge with no seam.
+          backgroundColor: '#1A0D38',
         }}
       >
         {/* Hero art — masked so it dissolves to transparent at the bottom, leaving
@@ -123,26 +123,16 @@ export default function VariantE() {
             maskImage: 'linear-gradient(180deg, #000 0%, #000 68%, transparent 100%)',
           }}
         />
-        {/* Readability scrim — diagonal from the top-left (where the type always
-            sits) fading to clear at the bottom-right, so the headline stays legible
-            at every viewport while the lava and characters on the right stay bright. */}
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            background:
-              'linear-gradient(152deg, rgba(9,4,26,0.95) 0%, rgba(9,4,26,0.82) 26%, rgba(9,4,26,0.42) 48%, rgba(9,4,26,0) 68%)',
-          }}
-        />
         <div className="relative z-10" style={{ paddingTop: 'max(40px, 5vh)' }}>
           <Container>
             <div style={{ width: '100%', maxWidth: '488px' }}>
               <h1
-                className="font-bold text-white mb-4"
+                className="font-bold text-white mb-3"
                 style={{ fontSize: 'clamp(34px, 3.38vw, 56px)', letterSpacing: '-0.02em', lineHeight: 1.07 }}
               >
                 Where great learning is forged
               </h1>
-              <p className="mb-8" style={{ fontSize: 'clamp(18px, 1.82vw, 30px)', lineHeight: 1.43, color: 'rgba(255,255,255,0.72)' }}>
+              <p className="mb-6" style={{ fontSize: 'clamp(18px, 1.82vw, 30px)', lineHeight: 1.43, color: 'rgba(255,255,255,0.72)' }}>
                 Curriculum-aligned experiences designed by teachers, for teachers.
               </p>
               <div className="flex gap-4 flex-wrap">
@@ -166,20 +156,10 @@ export default function VariantE() {
         </div>
       </section>
 
-      {/* ══ BELOW-FOLD — one continuous gradient so sections bleed seamlessly ══ */}
-      <div
-        className="relative"
-        style={{
-          background:
-            'linear-gradient(180deg, #120D2E 0%, #0F0B26 26%, #0A0E27 58%, #08060F 100%)',
-        }}
-      >
+      {/* ══ BELOW-FOLD — solid narrative-sky purple so it merges with the hero ══ */}
+      <div className="relative" style={{ backgroundColor: '#1A0D38' }}>
         {/* ── Intro + feature bento ── */}
         <section className="relative pt-28 pb-24">
-          <div
-            className="absolute inset-x-0 top-0 h-96 pointer-events-none"
-            style={{ background: 'radial-gradient(60% 100% at 50% 0%, rgba(123,75,255,0.22), transparent 70%)' }}
-          />
           <Container className="relative">
             <div className="max-w-2xl mb-14">
               <Eyebrow color="#FFB347">The platform</Eyebrow>
