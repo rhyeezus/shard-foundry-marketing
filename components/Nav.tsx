@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
 interface NavProps {
-  theme?: "light" | "dark";
+  theme?: "light" | "dark" | "amethyst";
 }
 
 const navLinks = [
@@ -15,15 +15,21 @@ const navLinks = [
 ];
 
 export function Nav({ theme = "light" }: NavProps) {
-  const isDark = theme === "dark";
+  const isAmethyst = theme === "amethyst";
+  const isDark = theme === "dark" || isAmethyst;
 
   return (
     <nav
       className={`sticky top-0 z-50 backdrop-blur-md border-b ${
-        isDark
+        isAmethyst
+          ? "border-white/10"
+          : isDark
           ? "bg-[#141312]/90 border-white/10"
           : "bg-white/80 border-gray-100"
       }`}
+      // Narrative sky mid (#1A0D38), slightly translucent so content blurs
+      // underneath on scroll.
+      style={isAmethyst ? { backgroundColor: "rgba(26,13,56,0.92)" } : undefined}
     >
       <div className="max-w-7xl mx-auto px-4 md:px-8 h-16 flex items-center justify-between">
         {/* Logo */}
@@ -41,25 +47,45 @@ export function Nav({ theme = "light" }: NavProps) {
           </span>
         </Link>
 
-        {/* Nav links — desktop */}
-        <div className="hidden md:flex items-center gap-7">
-          {navLinks.map(({ label, href }) => (
-            <a
-              key={label}
-              href={href}
-              className={`text-sm font-medium transition-colors duration-150 ${
-                isDark
-                  ? "text-white/70 hover:text-white"
-                  : "text-gray-600 hover:text-gray-900"
-              }`}
-            >
-              {label}
-            </a>
-          ))}
-        </div>
+        {/* Nav links — desktop (hidden on the minimal amethyst homepage nav) */}
+        {!isAmethyst && (
+          <div className="hidden md:flex items-center gap-7">
+            {navLinks.map(({ label, href }) => (
+              <a
+                key={label}
+                href={href}
+                className={`text-sm font-medium transition-colors duration-150 ${
+                  isDark
+                    ? "text-white/70 hover:text-white"
+                    : "text-gray-600 hover:text-gray-900"
+                }`}
+              >
+                {label}
+              </a>
+            ))}
+          </div>
+        )}
 
         {/* CTAs */}
         <div className="flex items-center gap-3">
+          {!isAmethyst && (
+            <Button
+              size="sm"
+              className="bg-brand-orange hover:bg-brand-orange-dark text-white rounded-lg"
+            >
+              Get in Touch
+            </Button>
+          )}
+          <Button
+            size="sm"
+            className={`hidden sm:inline-flex text-white rounded-lg ${
+              isAmethyst
+                ? "bg-brand-orange hover:bg-brand-orange-dark"
+                : "bg-brand-purple hover:bg-brand-purple-dark"
+            }`}
+          >
+            Create an account
+          </Button>
           <Button
             variant="ghost"
             size="sm"
@@ -70,12 +96,6 @@ export function Nav({ theme = "light" }: NavProps) {
             }
           >
             Sign In
-          </Button>
-          <Button
-            size="sm"
-            className="bg-brand-orange hover:bg-brand-orange-dark text-white rounded-lg"
-          >
-            Get in Touch
           </Button>
         </div>
       </div>

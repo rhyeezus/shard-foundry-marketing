@@ -1,413 +1,481 @@
-'use client';
-
-import { useEffect, useState } from 'react';
-import { ChevronRight } from 'lucide-react';
+import { ChevronRight, ArrowRight, CheckCircle, Award } from 'lucide-react';
 import { Nav } from '@/components/Nav';
 
 /*
- * Positions from Figma node 18:15049 (frame "D", 1540 × 2022).
- * Hero viewport baseline: 1540 w × 900 h.
- *
- *   left  = x / 1540 × 100%   (relative to frame width)
- *   top   = y / 900  × 100%   (relative to hero height, section is height:100vh)
- *   width = w / 1540 × 100%
- *
- * DOM order = back → front (later element = higher z-index = closer to viewer).
- * Figma children array is front → back (index 0 = topmost).
- * So we REVERSE the Figma index order when laying out in JSX.
- *
- * Excluded: all [HIDDEN] layers (mountain_5, cloud_1_layer_6 #4,
- * cloud_1_layer_5 bottom, rock_2_layer_4, lava_1_layer_4, etc.)
+ * Hero = the Figma art exported as a single PNG (art only, no text), used as a
+ * background image. Real HTML headline + CTAs are overlaid on top so they stay
+ * crisp, clickable and accessible.
  */
+const HERO_BG = '/assets/BG.png';
+
+/* Single source of truth for page width — matches the nav (max-w-7xl + gutters)
+ * so every section's left/right edges line up. */
+function Container({ children, className = '' }: { children: React.ReactNode; className?: string }) {
+  return <div className={`mx-auto w-full max-w-7xl px-6 md:px-8 ${className}`}>{children}</div>;
+}
+
+/* ── Content (best-of, drawn from variants A–D) ── */
+
+const features = [
+  {
+    title: 'Curriculum-aligned content',
+    desc: 'Interactive lessons mapped to the Australian Curriculum: Digital Technologies — data representation, algorithms, programming and more.',
+    gem: '#FF7A1F',
+    diamond: '/assets/orangegem.svg',
+  },
+  {
+    title: 'Teacher dashboards',
+    desc: 'Real-time classroom management with live progress tracking, activity monitoring and assessment tools — everything in one place.',
+    gem: '#2BC6B2',
+    diamond: '/assets/aqua_gem.svg',
+  },
+  {
+    title: 'Interactive learning tools',
+    desc: 'Whole-classroom discussions, collaborative activities and real-time shared exercises that keep every student engaged.',
+    gem: '#2BC6B2',
+    diamond: '/assets/aqua_gem.svg',
+  },
+  {
+    title: 'Partner content',
+    desc: 'A growing library of specialist content — professional development for teachers and enrichment programs for gifted learners.',
+    gem: '#FF7A1F',
+    diamond: '/assets/orangegem.svg',
+  },
+];
+
+const stats = [
+  { value: '15+', label: 'Years building the national curriculum', accent: '#2BC6B2' },
+  { value: '2016', label: 'ACCE/ACS ICT Educator of the Year', accent: '#FF7A1F' },
+  { value: 'v9.0', label: 'AC: Digital Technologies aligned', accent: '#7B4BFF' },
+];
+
+const curriculum = [
+  { year: 'Year 7', title: 'Data & Information', desc: 'Representation, integrity and the meaning behind the bits.' },
+  { year: 'Year 7', title: 'Digital Systems', desc: 'How hardware, software and networks fit together.' },
+  { year: 'Year 8', title: 'Creating Digital Solutions', desc: 'From brief to build — designing for real users.' },
+  { year: 'Year 8', title: 'Processes & Production', desc: 'Iterate, test and refine like a working developer.' },
+];
+
+const checklist = [
+  'Aligned to AC: DT v9.0 content descriptions',
+  'Full Year 7 & 8 scope and sequence, complete',
+  'Formative assessment built into every lesson',
+  'Print-ready teacher guides included',
+  'Offline-capable student activities',
+  'School administration dashboard',
+];
+
+const team = [
+  {
+    photo: '/teachers/bruce-fuda.webp',
+    name: 'Bruce Fuda',
+    role: 'Chief Operations Officer',
+    bio: 'Author of the Australian Curriculum: Digital Technologies. 2016 ACCE/ACS ICT Educator of the Year. Former Chief Education Officer at Grok Academy. School leader and teacher.',
+  },
+  {
+    photo: '/teachers/matthew-kameron.webp',
+    name: 'Matthew Kameron',
+    role: 'Chief Executive Officer',
+    bio: 'Executive leader in EdTech SaaS companies. Technical and product leadership. Former school leader and teacher. Master of Educational Leadership.',
+  },
+  {
+    photo: '/teachers/courtney-weaver.webp',
+    name: 'Courtney Weaver',
+    role: 'Head of Education',
+    bio: 'Digital Technology school leader. Former Head of Education at Grok Academy. Vice President of the Educational Computing Association of WA (ECAWA). ATAR Examination writer for Computer Science.',
+  },
+];
+
+function Eyebrow({ children, color = '#FF7A1F' }: { children: React.ReactNode; color?: string }) {
+  return (
+    <p className="text-xs font-semibold tracking-[0.18em] uppercase mb-4" style={{ color }}>
+      {children}
+    </p>
+  );
+}
 
 export default function VariantE() {
-  const [scrollY, setScrollY] = useState(0);
-
-  useEffect(() => {
-    const handleScroll = () => setScrollY(window.scrollY);
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   return (
-    <div style={{ backgroundColor: '#0D0620', minHeight: '100vh' }}>
-      <Nav theme="dark" />
+    <div className="overflow-x-clip" style={{ backgroundColor: '#0D0620', minHeight: '100vh' }}>
+      <Nav theme="amethyst" />
 
+      {/* ══ HERO ══ */}
       <section
         className="relative overflow-hidden"
         style={{
-          height: '100vh',
-          background: 'linear-gradient(180deg, #0E0720 0%, #130B2A 40%, #1C1244 65%, #251008 87%, #1A0800 100%)',
+          minHeight: '100svh',
+          // Solid narrative-sky purple (no gradient). The art is masked to fade
+          // into this flat colour, which the first section also uses — so the
+          // hero and the page below merge with no seam.
+          backgroundColor: '#1A0D38',
         }}
       >
-        <style>{`@keyframes twinkle { 0%,100%{opacity:0.3} 50%{opacity:1.0} }`}</style>
-
-        {/* ── LAYER ORDER: back → front ────────────────────────────────────── */}
-
-        {/* [36] mountain_layer_1 — deepest terrain (x=0 y=797 w=1540) */}
-        <div className="absolute bottom-0 w-full pointer-events-none" style={{
-          transform: `translateY(${scrollY * 0.04}px)`,
-          opacity: 0.85,
-        }}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/assets/mountain_layer_1.svg" alt="" aria-hidden="true" style={{ display: 'block', width: '100%' }} />
-        </div>
-
-        {/* [33] mountain_layer_1 — near terrain (x=0 y=762 w=1540) */}
-        <div className="absolute bottom-0 w-full pointer-events-none" style={{
-          transform: `translateY(${scrollY * 0.06}px)`,
-        }}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/assets/mountain_layer_1.svg" alt="" aria-hidden="true" style={{ display: 'block', width: '100%' }} />
-        </div>
-
-        {/* [10] cloud_1_layer_5 RIGHT — x=1213 y=392 w=650 — op=0.70 */}
-        {/*      left=78.8%  top=43.6%  width=42.2% (overflows right)  */}
-        <div className="absolute pointer-events-none" style={{
-          left: '78.8%', top: '43.6%', width: '42.2%',
-          opacity: 0.70,
-          transform: `translateY(${scrollY * 0.10}px)`,
-        }}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/assets/cloud_1_layer_5-1.svg" alt="" aria-hidden="true" style={{ display: 'block', width: '100%' }} />
-        </div>
-
-        {/* [9] cloud_1_layer_5 LEFT — x=98 y=304 w=707 — op=0.70 */}
-        {/*     left=6.4%  top=33.8%  width=45.9%                   */}
-        <div className="absolute pointer-events-none" style={{
-          left: '6.4%', top: '33.8%', width: '45.9%',
-          opacity: 0.70,
-          transform: `translateY(${scrollY * 0.12}px)`,
-        }}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/assets/cloud_1_layer_5.svg" alt="" aria-hidden="true" style={{ display: 'block', width: '100%' }} />
-        </div>
-
-        {/* [7] cloud_1_layer_6 centre — x=614 y=340 w=251 — op=0.70 */}
-        {/*     left=39.9%  top=37.8%  width=16.3%                   */}
-        <div className="absolute pointer-events-none" style={{
-          left: '39.9%', top: '37.8%', width: '16.3%',
-          opacity: 0.70,
-          transform: `translateY(${scrollY * 0.08}px)`,
-        }}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/assets/cloud_1_layer_6.svg" alt="" aria-hidden="true" style={{ display: 'block', width: '100%' }} />
-        </div>
-
-        {/* [6] cloud_1_layer_6 right — x=1245 y=293 w=340 — op=0.70 */}
-        {/*     left=80.8%  top=32.6%  width=22.1%                   */}
-        <div className="absolute pointer-events-none" style={{
-          left: '80.8%', top: '32.6%', width: '22.1%',
-          opacity: 0.70,
-          transform: `translateY(${scrollY * 0.06}px)`,
-        }}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/assets/cloud_1_layer_6-1.svg" alt="" aria-hidden="true" style={{ display: 'block', width: '100%' }} />
-        </div>
-
-        {/* [5] cloud_1_layer_6 left — x=-35 y=431 w=403 — op=0.70 */}
-        {/*     left=-2.3%  top=47.9%  width=26.2%                  */}
-        <div className="absolute pointer-events-none" style={{
-          left: '-2.3%', top: '47.9%', width: '26.2%',
-          opacity: 0.70,
-          transform: `translateY(${scrollY * 0.07}px)`,
-        }}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/assets/cloud_1_layer_6.svg" alt="" aria-hidden="true" style={{ display: 'block', width: '100%' }} />
-        </div>
-
-        {/* [15] lava_1_layer_5 GROUP — x=260 y=189 w=1246 h=641 */}
-        {/*      Left+centre lava formation. left=16.9%  height=71vh */}
-        <div className="absolute bottom-0 pointer-events-none" style={{
-          left: '16.9%',
-          height: '71vh',
-          transform: `translateY(${scrollY * 0.16}px)`,
-        }}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/assets/lava_layer_4.svg" alt="" aria-hidden="true"
-            style={{ display: 'block', height: '100%', width: 'auto' }} />
-        </div>
-
-        {/* Right lava formation — anchored to right edge */}
-        <div className="absolute bottom-0 pointer-events-none" style={{
-          right: '0',
-          height: '60vh',
-          transform: `translateY(${scrollY * 0.14}px)`,
-        }}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/assets/lava_1_layer_5.svg" alt="" aria-hidden="true"
-            style={{ display: 'block', height: '100%', width: 'auto' }} />
-        </div>
-
-        {/* [32] Слой 4 — large left rock x=-40 y=604 w=276 h=241 */}
-        {/*     left=-2.6%  top=67.1%  height=26.8vh               */}
-        <div className="absolute pointer-events-none" style={{
-          left: '-2.6%', top: '67.1%',
-          height: '26.8vh',
-          transform: `translateY(${scrollY * 0.36}px)`,
-        }}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/assets/rock_3_layer_4.svg" alt="" aria-hidden="true"
-            style={{ display: 'block', height: '100%', width: 'auto' }} />
-        </div>
-
-        {/* [30] Слой 5 — left cluster rock x=84 y=504 w=195 h=170 */}
-        {/*     left=5.5%  top=56.0%  height=18.9vh                */}
-        <div className="absolute pointer-events-none" style={{
-          left: '5.5%', top: '56.0%',
-          height: '18.9vh',
-          transform: `translateY(${scrollY * 0.32}px)`,
-        }}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/assets/rock_3_layer_4-1.svg" alt="" aria-hidden="true"
-            style={{ display: 'block', height: '100%', width: 'auto' }} />
-        </div>
-
-        {/* [28] Layer 2 — far right edge x=1458 y=629 w=93 h=140 */}
-        {/*     right edge, height=20vh                            */}
-        <div className="absolute bottom-0 pointer-events-none" style={{
-          right: '-0.5%',
-          height: '20vh',
-          transform: `translateY(${scrollY * 0.24}px)`,
-        }}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/assets/Layer 2.svg" alt="" aria-hidden="true"
-            style={{ display: 'block', height: '100%', width: 'auto' }} />
-        </div>
-
-        {/* [27] Слой 2 — left-centre rock x=267 y=595 w=172 h=118 */}
-        {/*     left=17.3%  top=66.2%  height=13.1vh               */}
-        <div className="absolute pointer-events-none" style={{
-          left: '17.3%', top: '66.2%',
-          height: '13.1vh',
-          transform: `translateY(${scrollY * 0.30}px)`,
-        }}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/assets/rock_1_layer_4.svg" alt="" aria-hidden="true"
-            style={{ display: 'block', height: '100%', width: 'auto' }} />
-        </div>
-
-        {/* [25] rock_3_layer_4 — far left overflow x=-73 y=586 w=200 h=173 */}
-        {/*     left=-4.8%  bottom  height=19.2vh                           */}
-        <div className="absolute bottom-0 pointer-events-none" style={{
-          left: '-4.8%',
-          height: '19.2vh',
-          transform: `translateY(${scrollY * 0.38}px)`,
-        }}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/assets/rock_3_layer_4.svg" alt="" aria-hidden="true"
-            style={{ display: 'block', height: '100%', width: 'auto' }} />
-        </div>
-
-        {/* [22] Слой 2 — small far-left rock x=27 y=521 w=107 h=105 */}
-        {/*     left=1.8%  top=57.9%  height=11.7vh                  */}
-        <div className="absolute pointer-events-none" style={{
-          left: '1.8%', top: '57.9%',
-          height: '11.7vh',
-          transform: `translateY(${scrollY * 0.28}px)`,
-        }}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/assets/rock_3_layer_4.svg" alt="" aria-hidden="true"
-            style={{ display: 'block', height: '100%', width: 'auto' }} />
-        </div>
-
-        {/* [18] lava_2_layer_4 — thin column x=742 y=547 w=60 h=139 */}
-        {/*     left=48.2%  top=60.8%  height=15.4vh                 */}
-        <div className="absolute pointer-events-none" style={{
-          left: '48.2%', top: '60.8%',
-          height: '15.4vh',
-          transform: `translateY(${scrollY * 0.20}px)`,
-        }}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/assets/lava_2_layer_4.svg" alt="" aria-hidden="true"
-            style={{ display: 'block', height: '100%', width: 'auto' }} />
-        </div>
-
-        {/* [39] rock_1_layer_4 LEFT — x=159 y=703 w=112 h=130 */}
-        {/*     left=10.3%  top=78.1%  height=14.4vh            */}
-        <div className="absolute pointer-events-none" style={{
-          left: '10.3%', top: '78.1%',
-          height: '14.4vh',
-          transform: `translateY(${scrollY * 0.22}px)`,
-        }}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/assets/rock_1_layer_4.svg" alt="" aria-hidden="true"
-            style={{ display: 'block', height: '100%', width: 'auto' }} />
-        </div>
-
-        {/* [49] Layer 1 — centre-right rock x=714 y=729 w=202 h=138 */}
-        {/*     left=46.4%  top=81.0%  height=15.3vh                */}
-        <div className="absolute pointer-events-none" style={{
-          left: '46.4%', top: '81.0%',
-          height: '15.3vh',
-          transform: `translateY(${scrollY * 0.20}px)`,
-        }}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/assets/rock_1_layer_4-1.svg" alt="" aria-hidden="true"
-            style={{ display: 'block', height: '100%', width: 'auto' }} />
-        </div>
-
-        {/* [48] Слой 6 — right cluster x=1122 y=749 w=202 h=138 */}
-        {/*     left=72.9%  top=83.2%  height=15.3vh             */}
-        <div className="absolute pointer-events-none" style={{
-          left: '72.9%', top: '83.2%',
-          height: '15.3vh',
-          transform: `translateY(${scrollY * 0.18}px)`,
-        }}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/assets/rock_1_layer_4-1.svg" alt="" aria-hidden="true"
-            style={{ display: 'block', height: '100%', width: 'auto' }} />
-        </div>
-
-        {/* [47] Слой 3 — bottom-centre rock x=352 y=808 w=172 h=118 */}
-        {/*     left=22.9%  top=89.8%  height=13.1vh                */}
-        <div className="absolute pointer-events-none" style={{
-          left: '22.9%', top: '89.8%',
-          height: '13.1vh',
-          transform: `translateY(${scrollY * 0.24}px)`,
-        }}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/assets/rock_1_layer_4.svg" alt="" aria-hidden="true"
-            style={{ display: 'block', height: '100%', width: 'auto' }} />
-        </div>
-
-        {/* [38] rock_1_layer_4 RIGHT — x=558 y=799 w=112 h=130 */}
-        {/*     left=36.2%  top=88.8%  height=14.4vh             */}
-        <div className="absolute pointer-events-none" style={{
-          left: '36.2%', top: '88.8%',
-          height: '14.4vh',
-          transform: `translateY(${scrollY * 0.22}px)`,
-        }}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/assets/rock_1_layer_4.svg" alt="" aria-hidden="true"
-            style={{ display: 'block', height: '100%', width: 'auto' }} />
-        </div>
-
-        {/* [37] Layer 3 — far right accent x=1353 y=699 w=96 h=146 */}
-        {/*     left=87.8%  top=77.7%  height=16.2vh               */}
-        <div className="absolute pointer-events-none" style={{
-          left: '87.8%', top: '77.7%',
-          height: '16.2vh',
-          transform: `translateY(${scrollY * 0.16}px)`,
-        }}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/assets/rock_1_layer_4-1.svg" alt="" aria-hidden="true"
-            style={{ display: 'block', height: '100%', width: 'auto' }} />
-        </div>
-
-        {/* [35] Layer 4 — right-side rock x=1067 y=689 w=123 h=186 */}
-        {/*     left=69.3%  top=76.6%  height=20.7vh               */}
-        <div className="absolute pointer-events-none" style={{
-          left: '69.3%', top: '76.6%',
-          height: '20.7vh',
-          transform: `translateY(${scrollY * 0.14}px)`,
-        }}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/assets/rock_1_layer_4-1.svg" alt="" aria-hidden="true"
-            style={{ display: 'block', height: '100%', width: 'auto' }} />
-        </div>
-
-        {/* [34] Слой 2 right — x=962 y=738 w=107 h=105 */}
-        {/*     left=62.5%  top=82.0%  height=11.7vh    */}
-        <div className="absolute pointer-events-none" style={{
-          left: '62.5%', top: '82.0%',
-          height: '11.7vh',
-          transform: `translateY(${scrollY * 0.12}px)`,
-        }}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/assets/rock_3_layer_4.svg" alt="" aria-hidden="true"
-            style={{ display: 'block', height: '100%', width: 'auto' }} />
-        </div>
-
-        {/* [1] stars — op=0.60, positioned above mountains but transparent background */}
+        {/* Hero art — masked so it dissolves to transparent at the bottom, leaving
+            the gradient (#241655) to meet the below-fold seamlessly. No hard edge. */}
         <div
           className="absolute inset-0 pointer-events-none"
-          style={{ opacity: 0.6, transform: `translateY(${scrollY * 0.03}px)`, mixBlendMode: 'screen' }}
-        >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/assets/stars.svg" alt="" aria-hidden="true"
-            style={{ display: 'block', width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }} />
-        </div>
-
-        {/* ━━ [50] Frame 22 — Hero text x=152 y=132 w=488 ━━ */}
-        <div
-          className="absolute inset-0 flex flex-col justify-start z-10 pointer-events-none"
           style={{
-            paddingLeft: 'max(9.87vw, 80px)',
-            paddingRight: '58.4%',
-            paddingTop: 'max(14.7vh, 116px)',
+            backgroundImage: `url(${HERO_BG})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center bottom',
+            backgroundRepeat: 'no-repeat',
+            WebkitMaskImage: 'linear-gradient(180deg, #000 0%, #000 68%, transparent 100%)',
+            maskImage: 'linear-gradient(180deg, #000 0%, #000 68%, transparent 100%)',
           }}
-        >
-          <div style={{ pointerEvents: 'auto' }}>
-            <h1
-              className="font-bold text-white mb-4"
-              style={{
-                fontSize: 'clamp(34px, 3.38vw, 56px)',
-                letterSpacing: '-0.02em',
-                lineHeight: '56px',
-              }}
-            >
-              Where great learning is forged
-            </h1>
-
-            <p
-              className="mb-8"
-              style={{
-                fontSize: 'clamp(18px, 1.82vw, 30px)',
-                lineHeight: 1.43,
-                color: 'rgba(255,255,255,0.72)',
-              }}
-            >
-              Curriculum-aligned experiences designed by teachers, for teachers.
-            </p>
-
-            <div className="flex gap-4 flex-wrap">
-              <button
-                className="inline-flex items-center gap-2 font-bold rounded-lg transition-all text-white shadow-lg"
-                style={{
-                  padding: '12px 24px',
-                  backgroundColor: '#F97316',
-                  fontSize: 'clamp(13px, 1.04vw, 16px)',
-                  border: 'none',
-                  cursor: 'pointer',
-                }}
-                onMouseEnter={e => (e.currentTarget.style.backgroundColor = '#EA580C')}
-                onMouseLeave={e => (e.currentTarget.style.backgroundColor = '#F97316')}
+        />
+        <div className="relative z-10" style={{ paddingTop: 'max(40px, 5vh)' }}>
+          <Container>
+            <div style={{ width: '100%', maxWidth: '488px' }}>
+              <h1
+                className="font-bold text-white mb-3"
+                style={{ fontSize: 'clamp(34px, 3.38vw, 56px)', letterSpacing: '-0.02em', lineHeight: 1.07 }}
               >
-                Join the pilot <ChevronRight size={16} />
-              </button>
-
-              <button
-                className="font-semibold rounded-lg transition-all text-white"
-                style={{
-                  padding: '12px 24px',
-                  backgroundColor: 'rgba(255,255,255,0.08)',
-                  border: '1.5px solid rgba(255,255,255,0.30)',
-                  fontSize: 'clamp(13px, 1.04vw, 16px)',
-                  cursor: 'pointer',
-                }}
-                onMouseEnter={e => {
-                  e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.14)';
-                  e.currentTarget.style.borderColor = 'rgba(255,255,255,0.55)';
-                }}
-                onMouseLeave={e => {
-                  e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.08)';
-                  e.currentTarget.style.borderColor = 'rgba(255,255,255,0.30)';
-                }}
-              >
-                See the platform
-              </button>
+                Where great learning is forged
+              </h1>
+              <p className="mb-6" style={{ fontSize: 'clamp(18px, 1.82vw, 30px)', lineHeight: 1.43, color: 'rgba(255,255,255,0.72)' }}>
+                Curriculum-aligned experiences designed by teachers, for teachers.
+              </p>
+              <div className="flex gap-4 flex-wrap">
+                <a
+                  href="#schools"
+                  className="inline-flex items-center gap-2 font-bold rounded-lg text-white shadow-lg bg-[#F97316] hover:bg-[#EA580C] transition-colors"
+                  style={{ padding: '12px 24px', fontSize: 'clamp(13px, 1.04vw, 16px)' }}
+                >
+                  Join the pilot <ChevronRight size={16} />
+                </a>
+                <a
+                  href="#platform"
+                  className="inline-flex items-center font-semibold rounded-lg text-white border border-white/30 bg-white/[0.08] hover:bg-white/[0.14] hover:border-white/55 transition-colors"
+                  style={{ padding: '12px 24px', fontSize: 'clamp(13px, 1.04vw, 16px)' }}
+                >
+                  See the platform
+                </a>
+              </div>
             </div>
-          </div>
+          </Container>
         </div>
       </section>
 
-      {/* ━━ Below-fold placeholder ━━ */}
-      <section style={{ padding: '120px 80px', backgroundColor: '#1A0800' }}>
-        <div style={{ maxWidth: 800, margin: '0 auto', textAlign: 'center' }}>
-          <p style={{ color: 'rgba(255,255,255,0.4)' }}>More sections coming soon…</p>
-        </div>
-      </section>
+      {/* ══ BELOW-FOLD — solid narrative-sky purple so it merges with the hero ══ */}
+      <div className="relative" style={{ backgroundColor: '#1A0D38' }}>
+        {/* ── Intro + feature bento ── */}
+        <section className="relative pt-28 pb-24">
+          <Container className="relative">
+            <div className="max-w-2xl mb-14">
+              <Eyebrow color="#FFB347">The platform</Eyebrow>
+              <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight leading-[1.08] mb-5">
+                Everything teachers need, in one forge.
+              </h2>
+              <p className="text-lg text-white/55 leading-relaxed">
+                Built around the realities of Australian classrooms. Not a content library, not a quiz
+                engine — a complete teaching platform.
+              </p>
+            </div>
+
+            {/* Bento: 2 × 2 */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              {features.map((f) => (
+                <div
+                  key={f.title}
+                  className="group relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.03] p-8 transition-colors hover:border-white/20"
+                >
+                  <div
+                    className="absolute -right-10 -top-10 w-40 h-40 rounded-full blur-2xl opacity-30 transition-opacity group-hover:opacity-50 pointer-events-none"
+                    style={{ background: f.gem }}
+                  />
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={f.diamond}
+                    alt=""
+                    aria-hidden
+                    className="relative mb-4 h-14 w-auto"
+                  />
+                  <h3 className="relative text-xl font-bold text-white mb-2">{f.title}</h3>
+                  <p className="relative text-sm text-white/55 leading-relaxed max-w-md">{f.desc}</p>
+                </div>
+              ))}
+            </div>
+          </Container>
+        </section>
+
+        {/* ── Platform showcase: dashboard + stats ── */}
+        <section id="platform" className="relative py-24">
+          <Container className="grid lg:grid-cols-2 gap-14 items-center">
+            {/* Product shot with gems perched on the bottom corners */}
+            <div className="relative pb-10">
+              <div
+                className="absolute -inset-6 rounded-[2rem] blur-3xl opacity-40 pointer-events-none"
+                style={{ background: 'radial-gradient(ellipse at 60% 60%, #F97316, transparent 70%)' }}
+              />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/assets/productimg1.png"
+                alt="Shard Learning teacher dashboard"
+                className="relative z-10 w-full rounded-2xl shadow-2xl"
+              />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/assets/orangegem.svg"
+                alt=""
+                aria-hidden
+                className="absolute z-20 left-0 bottom-0 w-[34%] -translate-x-1/3 translate-y-[18%] pointer-events-none"
+              />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/assets/aqua_gem.svg"
+                alt=""
+                aria-hidden
+                className="absolute z-20 right-0 bottom-0 w-[34%] translate-x-1/3 translate-y-[18%] pointer-events-none"
+              />
+            </div>
+
+            {/* Copy + stats */}
+            <div>
+              <Eyebrow color="#2BC6B2">Teacher command centre</Eyebrow>
+              <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight mb-5 leading-tight">
+                Plan, teach and observe — without leaving the room.
+              </h2>
+              <p className="text-white/55 leading-relaxed mb-10">
+                Set up classes in seconds, drop students in by code, push modules live, and watch
+                progress update in real time. The whole workflow a teacher actually runs, in one screen.
+              </p>
+              <div className="grid grid-cols-3 gap-4">
+                {stats.map((s) => (
+                  <div
+                    key={s.label}
+                    className="rounded-2xl border border-white/10 bg-white/[0.04] p-5"
+                    style={{ borderTopColor: s.accent, borderTopWidth: 2 }}
+                  >
+                    <p className="text-2xl font-bold text-white mb-1 tracking-tight">{s.value}</p>
+                    <p className="text-xs text-white/45 leading-snug">{s.label}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </Container>
+        </section>
+
+        {/* ── Curriculum authority + scope ── */}
+        <section id="technologies" className="relative py-24">
+          <div
+            className="absolute inset-x-0 top-1/3 h-80 pointer-events-none"
+            style={{ background: 'radial-gradient(50% 100% at 70% 50%, rgba(249,115,22,0.16), transparent 70%)' }}
+          />
+          <Container className="relative">
+            <div className="grid lg:grid-cols-2 gap-14 items-stretch mb-20">
+              {/* Authority card */}
+              <div className="relative flex flex-col justify-center rounded-3xl border border-white/10 p-10" style={{ background: 'linear-gradient(160deg, #120d2e, #0a0a1f)' }}>
+                <Eyebrow color="#FF7A1F">Curriculum authority</Eyebrow>
+                <h3 className="text-3xl font-bold text-white mb-1">Bruce Fuda</h3>
+                <p className="text-white/55 text-sm mb-8">Author, Australian Curriculum: Digital Technologies</p>
+                <div className="inline-flex items-center gap-3 bg-orange-500/15 border border-orange-500/25 rounded-xl px-4 py-3 mb-8">
+                  <div className="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center shrink-0">
+                    <Award className="size-4 text-white" />
+                  </div>
+                  <div>
+                    <p className="text-xs font-semibold text-orange-300">2016 ACCE/ACS Award</p>
+                    <p className="text-xs text-white/50">ICT Educator of the Year</p>
+                  </div>
+                </div>
+                <p className="text-sm text-white/55 leading-relaxed">
+                  Former Chief Education Officer at Grok Academy. The curriculum isn&apos;t adapted
+                  after the fact — it&apos;s authored by the person who wrote the national standard.
+                </p>
+              </div>
+
+              {/* Checklist */}
+              <div>
+                <Eyebrow color="#FF7A1F">Digital Technologies</Eyebrow>
+                <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight mb-5 leading-tight">
+                  The complete curriculum.<br />Built from the source.
+                </h2>
+                <p className="text-white/55 leading-relaxed mb-8">
+                  Not adapted from overseas materials or mapped after the fact. Every content
+                  description, every strand, every proficiency level — authored by the same team who
+                  wrote the national standard.
+                </p>
+                <div className="space-y-3 mb-9">
+                  {checklist.map((c) => (
+                    <div key={c} className="flex items-center gap-3">
+                      <CheckCircle className="size-4 text-orange-400 shrink-0" />
+                      <span className="text-sm text-white/80">{c}</span>
+                    </div>
+                  ))}
+                </div>
+                <a
+                  href="#schools"
+                  className="inline-flex items-center gap-2 font-semibold rounded-lg text-white bg-[#F97316] hover:bg-[#EA580C] transition-colors px-7 py-3"
+                >
+                  Join the pilot <ArrowRight className="size-4" />
+                </a>
+              </div>
+            </div>
+
+            {/* Scope grid */}
+            <div>
+              <h3 className="text-center text-sm font-semibold tracking-[0.18em] uppercase text-white/40 mb-8">
+                Year 7 &amp; 8 scope &amp; sequence
+              </h3>
+              <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                {curriculum.map((m) => (
+                  <div key={m.title} className="relative rounded-2xl border border-white/10 bg-white/[0.03] p-6 overflow-hidden hover:border-white/20 transition-colors">
+                    <div className="absolute left-0 top-0 h-full w-1" style={{ background: 'linear-gradient(180deg,#FFB347,#F97316)' }} />
+                    <span className="inline-block text-[11px] font-semibold tracking-wide uppercase text-orange-300/90 mb-2">{m.year}</span>
+                    <h4 className="text-lg font-bold text-white mb-1.5">{m.title}</h4>
+                    <p className="text-sm text-white/50 leading-relaxed">{m.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </Container>
+        </section>
+
+        {/* ── Mission ── */}
+        <section id="mission" className="relative py-28">
+          <div
+            className="absolute inset-0 pointer-events-none"
+            style={{ background: 'radial-gradient(50% 70% at 50% 50%, rgba(123,75,255,0.18), transparent 70%)' }}
+          />
+          <Container className="relative">
+            <div className="max-w-3xl mx-auto text-center">
+              <Eyebrow color="#A750FF">Mission</Eyebrow>
+              <h2 className="text-3xl md:text-[2.75rem] font-bold text-white tracking-tight leading-[1.12] mb-6">
+                Quality education should be accessible, interactive, and curriculum-aligned.
+              </h2>
+              <p className="text-lg text-white/55 leading-relaxed">
+                Shard Learning empowers teachers with tools to deliver engaging digital literacy
+                education that meets national standards while respecting classroom realities.
+              </p>
+            </div>
+          </Container>
+        </section>
+
+        {/* ── Team ── */}
+        <section id="team" className="relative py-24">
+          <Container>
+            <div className="text-center mb-14">
+              <Eyebrow color="#2BC6B2">Founding team</Eyebrow>
+              <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight">Built by educators.</h2>
+            </div>
+            <div className="grid sm:grid-cols-3 gap-6">
+              {team.map((m) => (
+                <div key={m.name} className="rounded-2xl border border-white/10 bg-white/[0.03] p-8 text-center">
+                  <div
+                    className="w-20 h-20 rounded-full mx-auto mb-4 p-[2px]"
+                    style={{ background: 'linear-gradient(135deg, rgba(255,122,31,0.6), rgba(123,75,255,0.6))' }}
+                  >
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={m.photo}
+                      alt={m.name}
+                      className="w-full h-full rounded-full object-cover"
+                    />
+                  </div>
+                  <h3 className="font-semibold text-white mb-1">{m.name}</h3>
+                  <span className="inline-flex text-xs font-semibold bg-orange-500/15 text-orange-300 px-2.5 py-1 rounded-full mb-4">{m.role}</span>
+                  <p className="text-sm text-white/50 leading-relaxed">{m.bio}</p>
+                </div>
+              ))}
+            </div>
+          </Container>
+        </section>
+
+        {/* ── Contact ── */}
+        <section id="schools" className="relative py-24 scroll-mt-20">
+          <Container className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-stretch">
+            {/* Left — partners */}
+            <div className="flex flex-col">
+              <Eyebrow color="#7B4BFF">Partners</Eyebrow>
+              <div className="flex-1 flex flex-col justify-center rounded-2xl border border-white/10 bg-white/[0.03] p-8">
+                <p className="text-2xl font-bold mb-3" style={{ color: '#2BC6B2' }}>Growing Up Greatness</p>
+                <p className="text-sm text-white/55 leading-relaxed mb-4">
+                  Growing Up Greatness works with schools, educators and school leaders to implement
+                  high-quality pedagogy for diverse classrooms through consultancy, coaching, and
+                  teacher professional learning.
+                </p>
+                <a
+                  href="https://growingupgreatness.com"
+                  className="text-sm font-medium transition-colors"
+                  style={{ color: '#7B4BFF' }}
+                >
+                  growingupgreatness.com
+                </a>
+              </div>
+            </div>
+
+            {/* Right — heading + form */}
+            <div>
+              <Eyebrow color="#FF7A1F">For schools</Eyebrow>
+              <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight mb-3">Get in touch.</h2>
+              <p className="text-white/55 leading-relaxed mb-8">
+                Join the pilot and help shape what great learning looks like.
+              </p>
+              <form className="space-y-5">
+              <div className="grid sm:grid-cols-2 gap-5">
+                <Field label="Name" id="e-name" placeholder="Your name" />
+                <Field label="Email" id="e-email" type="email" placeholder="you@school.edu.au" />
+              </div>
+              <Field label="School or organisation" id="e-school" placeholder="Your school" />
+              <div>
+                <label htmlFor="e-msg" className="block text-sm font-medium text-white/70 mb-2">Message</label>
+                <textarea
+                  id="e-msg"
+                  rows={5}
+                  placeholder="Tell us about your school…"
+                  className="w-full rounded-lg bg-white/[0.04] border border-white/15 px-4 py-3 text-white placeholder-white/30 focus:border-[#F97316] focus:outline-none focus:ring-1 focus:ring-[#F97316] transition-colors"
+                />
+              </div>
+              <button
+                type="submit"
+                className="w-full font-semibold rounded-lg text-white bg-[#F97316] hover:bg-[#EA580C] transition-colors py-3.5"
+              >
+                Send message
+              </button>
+            </form>
+            </div>
+          </Container>
+        </section>
+      </div>
+
+      {/* ══ FOOTER ══ */}
+      <footer className="bg-[#07060F] text-white/45 py-10 border-t border-white/10">
+        <Container className="flex flex-col sm:flex-row justify-between items-center gap-4 text-sm">
+          <div className="flex items-center gap-2">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/logo.svg" alt="Shard Learning" width={18} height={18} />
+            <span>© 2026 Shard Learning Pty Ltd. All rights reserved.</span>
+          </div>
+          <div className="flex gap-6">
+            {['Privacy Policy', 'Terms of Use'].map((i) => (
+              <a key={i} href="#" className="hover:text-white transition-colors">{i}</a>
+            ))}
+          </div>
+        </Container>
+      </footer>
+    </div>
+  );
+}
+
+function Field({
+  label,
+  id,
+  type = 'text',
+  placeholder,
+}: {
+  label: string;
+  id: string;
+  type?: string;
+  placeholder?: string;
+}) {
+  return (
+    <div>
+      <label htmlFor={id} className="block text-sm font-medium text-white/70 mb-2">{label}</label>
+      <input
+        id={id}
+        type={type}
+        placeholder={placeholder}
+        className="w-full rounded-lg bg-white/[0.04] border border-white/15 px-4 py-3 text-white placeholder-white/30 focus:border-[#F97316] focus:outline-none focus:ring-1 focus:ring-[#F97316] transition-colors"
+      />
     </div>
   );
 }
