@@ -104,13 +104,25 @@ export default function VariantE() {
         className="relative overflow-hidden"
         style={{
           minHeight: '100svh',
-          backgroundColor: '#09041A',
-          backgroundImage: `url(${HERO_BG})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center bottom',
-          backgroundRepeat: 'no-repeat',
+          // Sky → below-fold colour, darkening monotonically so the art dissolves
+          // into the same tone the next section starts on (no bright seam band).
+          background:
+            'linear-gradient(180deg, #09041A 0%, #0B0723 52%, #120D2E 100%)',
         }}
       >
+        {/* Hero art — masked so it dissolves to transparent at the bottom, leaving
+            the gradient (#241655) to meet the below-fold seamlessly. No hard edge. */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            backgroundImage: `url(${HERO_BG})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center bottom',
+            backgroundRepeat: 'no-repeat',
+            WebkitMaskImage: 'linear-gradient(180deg, #000 0%, #000 68%, transparent 100%)',
+            maskImage: 'linear-gradient(180deg, #000 0%, #000 68%, transparent 100%)',
+          }}
+        />
         {/* Readability scrim — diagonal from the top-left (where the type always
             sits) fading to clear at the bottom-right, so the headline stays legible
             at every viewport while the lava and characters on the right stay bright. */}
@@ -121,17 +133,7 @@ export default function VariantE() {
               'linear-gradient(152deg, rgba(9,4,26,0.95) 0%, rgba(9,4,26,0.82) 26%, rgba(9,4,26,0.42) 48%, rgba(9,4,26,0) 68%)',
           }}
         />
-        {/* Bottom fade — dissolves the art into the below-fold colour (#241655)
-            so there's no hard seam between the hero and the next section. */}
-        <div
-          className="absolute inset-x-0 bottom-0 pointer-events-none"
-          style={{
-            height: '40%',
-            background:
-              'linear-gradient(180deg, rgba(36,22,85,0) 0%, rgba(36,22,85,0.55) 58%, #241655 100%)',
-          }}
-        />
-        <div className="relative z-10" style={{ paddingTop: 'max(96px, 13vh)' }}>
+        <div className="relative z-10" style={{ paddingTop: 'max(40px, 5vh)' }}>
           <Container>
             <div style={{ width: '100%', maxWidth: '488px' }}>
               <h1
@@ -169,7 +171,7 @@ export default function VariantE() {
         className="relative"
         style={{
           background:
-            'linear-gradient(180deg, #241655 0%, #1B1340 9%, #14112F 22%, #0E0C24 40%, #0A0E27 60%, #0A0C20 80%, #08060F 100%)',
+            'linear-gradient(180deg, #120D2E 0%, #0F0B26 26%, #0A0E27 58%, #08060F 100%)',
         }}
       >
         {/* ── Intro + feature bento ── */}
@@ -280,9 +282,9 @@ export default function VariantE() {
             style={{ background: 'radial-gradient(50% 100% at 70% 50%, rgba(249,115,22,0.16), transparent 70%)' }}
           />
           <Container className="relative">
-            <div className="grid lg:grid-cols-2 gap-14 items-center mb-20">
+            <div className="grid lg:grid-cols-2 gap-14 items-stretch mb-20">
               {/* Authority card */}
-              <div className="relative rounded-3xl border border-white/10 p-10" style={{ background: 'linear-gradient(160deg, #120d2e, #0a0a1f)' }}>
+              <div className="relative flex flex-col justify-center rounded-3xl border border-white/10 p-10" style={{ background: 'linear-gradient(160deg, #120d2e, #0a0a1f)' }}>
                 <Eyebrow color="#FF7A1F">Curriculum authority</Eyebrow>
                 <h3 className="text-3xl font-bold text-white mb-1">Bruce Fuda</h3>
                 <p className="text-white/55 text-sm mb-8">Author, Australian Curriculum: Digital Technologies</p>
@@ -372,7 +374,7 @@ export default function VariantE() {
         <section id="team" className="relative py-24">
           <Container>
             <div className="text-center mb-14">
-              <Eyebrow color="#2BC6B2">Founding team &amp; partners</Eyebrow>
+              <Eyebrow color="#2BC6B2">Founding team</Eyebrow>
               <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight">Built by educators.</h2>
             </div>
             <div className="grid sm:grid-cols-3 gap-6">
@@ -395,11 +397,16 @@ export default function VariantE() {
                 </div>
               ))}
             </div>
+          </Container>
+        </section>
 
-            {/* Partners */}
-            <div className="mt-16 text-center">
+        {/* ── Contact ── */}
+        <section id="schools" className="relative py-24 scroll-mt-20">
+          <Container className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-stretch">
+            {/* Left — partners */}
+            <div className="flex flex-col">
               <Eyebrow color="#7B4BFF">Partners</Eyebrow>
-              <div className="mx-auto max-w-xl rounded-2xl border border-white/10 bg-white/[0.03] p-8">
+              <div className="flex-1 flex flex-col justify-center rounded-2xl border border-white/10 bg-white/[0.03] p-8">
                 <p className="text-2xl font-bold mb-3" style={{ color: '#2BC6B2' }}>Growing Up Greatness</p>
                 <p className="text-sm text-white/55 leading-relaxed mb-4">
                   Growing Up Greatness works with schools, educators and school leaders to implement
@@ -415,40 +422,36 @@ export default function VariantE() {
                 </a>
               </div>
             </div>
-          </Container>
-        </section>
 
-        {/* ── Contact ── */}
-        <section id="schools" className="relative py-24 scroll-mt-20">
-          <Container>
+            {/* Right — heading + form */}
             <div>
-              <div className="text-center mb-12">
-                <Eyebrow color="#FF7A1F">For schools</Eyebrow>
-                <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight mb-3">Get in touch.</h2>
-                <p className="text-white/50">Join the pilot and help shape what great learning looks like.</p>
-              </div>
+              <Eyebrow color="#FF7A1F">For schools</Eyebrow>
+              <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight mb-3">Get in touch.</h2>
+              <p className="text-white/55 leading-relaxed mb-8">
+                Join the pilot and help shape what great learning looks like.
+              </p>
               <form className="space-y-5">
-                <div className="grid sm:grid-cols-2 gap-5">
-                  <Field label="Name" id="e-name" placeholder="Your name" />
-                  <Field label="Email" id="e-email" type="email" placeholder="you@school.edu.au" />
-                </div>
-                <Field label="School or organisation" id="e-school" placeholder="Your school" />
-                <div>
-                  <label htmlFor="e-msg" className="block text-sm font-medium text-white/70 mb-2">Message</label>
-                  <textarea
-                    id="e-msg"
-                    rows={5}
-                    placeholder="Tell us about your school…"
-                    className="w-full rounded-lg bg-white/[0.04] border border-white/15 px-4 py-3 text-white placeholder-white/30 focus:border-[#F97316] focus:outline-none focus:ring-1 focus:ring-[#F97316] transition-colors"
-                  />
-                </div>
-                <button
-                  type="submit"
-                  className="w-full font-semibold rounded-lg text-white bg-[#F97316] hover:bg-[#EA580C] transition-colors py-3.5"
-                >
-                  Send message
-                </button>
-              </form>
+              <div className="grid sm:grid-cols-2 gap-5">
+                <Field label="Name" id="e-name" placeholder="Your name" />
+                <Field label="Email" id="e-email" type="email" placeholder="you@school.edu.au" />
+              </div>
+              <Field label="School or organisation" id="e-school" placeholder="Your school" />
+              <div>
+                <label htmlFor="e-msg" className="block text-sm font-medium text-white/70 mb-2">Message</label>
+                <textarea
+                  id="e-msg"
+                  rows={5}
+                  placeholder="Tell us about your school…"
+                  className="w-full rounded-lg bg-white/[0.04] border border-white/15 px-4 py-3 text-white placeholder-white/30 focus:border-[#F97316] focus:outline-none focus:ring-1 focus:ring-[#F97316] transition-colors"
+                />
+              </div>
+              <button
+                type="submit"
+                className="w-full font-semibold rounded-lg text-white bg-[#F97316] hover:bg-[#EA580C] transition-colors py-3.5"
+              >
+                Send message
+              </button>
+            </form>
             </div>
           </Container>
         </section>

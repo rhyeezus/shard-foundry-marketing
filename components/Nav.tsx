@@ -27,8 +27,9 @@ export function Nav({ theme = "light" }: NavProps) {
           ? "bg-[#141312]/90 border-white/10"
           : "bg-white/80 border-gray-100"
       }`}
-      // Deep amethyst, slightly translucent so content blurs underneath on scroll.
-      style={isAmethyst ? { backgroundColor: "rgba(45,27,105,0.92)" } : undefined}
+      // Narrative sky mid (#1A0D38), slightly translucent so content blurs
+      // underneath on scroll.
+      style={isAmethyst ? { backgroundColor: "rgba(26,13,56,0.92)" } : undefined}
     >
       <div className="max-w-7xl mx-auto px-4 md:px-8 h-16 flex items-center justify-between">
         {/* Logo */}
@@ -46,34 +47,42 @@ export function Nav({ theme = "light" }: NavProps) {
           </span>
         </Link>
 
-        {/* Nav links — desktop */}
-        <div className="hidden md:flex items-center gap-7">
-          {navLinks.map(({ label, href }) => (
-            <a
-              key={label}
-              href={href}
-              className={`text-sm font-medium transition-colors duration-150 ${
-                isDark
-                  ? "text-white/70 hover:text-white"
-                  : "text-gray-600 hover:text-gray-900"
-              }`}
-            >
-              {label}
-            </a>
-          ))}
-        </div>
+        {/* Nav links — desktop (hidden on the minimal amethyst homepage nav) */}
+        {!isAmethyst && (
+          <div className="hidden md:flex items-center gap-7">
+            {navLinks.map(({ label, href }) => (
+              <a
+                key={label}
+                href={href}
+                className={`text-sm font-medium transition-colors duration-150 ${
+                  isDark
+                    ? "text-white/70 hover:text-white"
+                    : "text-gray-600 hover:text-gray-900"
+                }`}
+              >
+                {label}
+              </a>
+            ))}
+          </div>
+        )}
 
         {/* CTAs */}
         <div className="flex items-center gap-3">
+          {!isAmethyst && (
+            <Button
+              size="sm"
+              className="bg-brand-orange hover:bg-brand-orange-dark text-white rounded-lg"
+            >
+              Get in Touch
+            </Button>
+          )}
           <Button
             size="sm"
-            className="bg-brand-orange hover:bg-brand-orange-dark text-white rounded-lg"
-          >
-            Get in Touch
-          </Button>
-          <Button
-            size="sm"
-            className="hidden sm:inline-flex bg-brand-purple hover:bg-brand-purple-dark text-white rounded-lg"
+            className={`hidden sm:inline-flex text-white rounded-lg ${
+              isAmethyst
+                ? "bg-brand-orange hover:bg-brand-orange-dark"
+                : "bg-brand-purple hover:bg-brand-purple-dark"
+            }`}
           >
             Create an account
           </Button>
