@@ -21,21 +21,25 @@ const features = [
     title: 'Curriculum-aligned content',
     desc: 'Interactive lessons mapped to the Australian Curriculum: Digital Technologies — data representation, algorithms, programming and more.',
     gem: '#FF7A1F',
+    diamond: '/assets/orangegem.svg',
   },
   {
     title: 'Teacher dashboards',
     desc: 'Real-time classroom management with live progress tracking, activity monitoring and assessment tools — everything in one place.',
     gem: '#2BC6B2',
+    diamond: '/assets/aqua_gem.svg',
   },
   {
     title: 'Interactive learning tools',
     desc: 'Whole-classroom discussions, collaborative activities and real-time shared exercises that keep every student engaged.',
-    gem: '#7B4BFF',
+    gem: '#2BC6B2',
+    diamond: '/assets/aqua_gem.svg',
   },
   {
     title: 'Partner content',
     desc: 'A growing library of specialist content — professional development for teachers and enrichment programs for gifted learners.',
-    gem: '#FF6B6B',
+    gem: '#FF7A1F',
+    diamond: '/assets/orangegem.svg',
   },
 ];
 
@@ -50,13 +54,11 @@ const curriculum = [
   { year: 'Year 7', title: 'Digital Systems', desc: 'How hardware, software and networks fit together.' },
   { year: 'Year 8', title: 'Creating Digital Solutions', desc: 'From brief to build — designing for real users.' },
   { year: 'Year 8', title: 'Processes & Production', desc: 'Iterate, test and refine like a working developer.' },
-  { year: 'Year 9', title: 'Computational Thinking', desc: 'Decomposition, abstraction and algorithm design.' },
-  { year: 'Year 10', title: 'Advanced Digital Projects', desc: 'Ambitious, portfolio-grade builds with depth.' },
 ];
 
 const checklist = [
   'Aligned to AC: DT v9.0 content descriptions',
-  'Year 7–10 scope and sequence, complete',
+  'Full Year 7 & 8 scope and sequence, complete',
   'Formative assessment built into every lesson',
   'Print-ready teacher guides included',
   'Offline-capable student activities',
@@ -65,22 +67,22 @@ const checklist = [
 
 const team = [
   {
-    initials: 'JM',
-    name: 'James Mitchell',
-    role: 'Curriculum Lead',
-    bio: 'Author of the Australian Curriculum: Digital Technologies. 15 years building national education standards.',
+    photo: '/teachers/bruce-fuda.webp',
+    name: 'Bruce Fuda',
+    role: 'Chief Operations Officer',
+    bio: 'Author of the Australian Curriculum: Digital Technologies. 2016 ACCE/ACS ICT Educator of the Year. Former Chief Education Officer at Grok Academy. School leader and teacher.',
   },
   {
-    initials: 'SC',
-    name: 'Sarah Chen',
-    role: 'Product',
-    bio: 'Secondary DT teacher turned product designer. Classroom-first, always.',
+    photo: '/teachers/matthew-kameron.webp',
+    name: 'Matthew Kameron',
+    role: 'Chief Executive Officer',
+    bio: 'Executive leader in EdTech SaaS companies. Technical and product leadership. Former school leader and teacher. Master of Educational Leadership.',
   },
   {
-    initials: 'AB',
-    name: 'Alex Brown',
-    role: 'Engineering',
-    bio: 'EdTech engineer with 500k+ student deployments to his name.',
+    photo: '/teachers/courtney-weaver.webp',
+    name: 'Courtney Weaver',
+    role: 'Head of Education',
+    bio: 'Digital Technology school leader. Former Head of Education at Grok Academy. Vice President of the Educational Computing Association of WA (ECAWA). ATAR Examination writer for Computer Science.',
   },
 ];
 
@@ -94,8 +96,8 @@ function Eyebrow({ children, color = '#FF7A1F' }: { children: React.ReactNode; c
 
 export default function VariantE() {
   return (
-    <div className="overflow-x-hidden" style={{ backgroundColor: '#0D0620', minHeight: '100vh' }}>
-      <Nav theme="dark" />
+    <div className="overflow-x-clip" style={{ backgroundColor: '#0D0620', minHeight: '100vh' }}>
+      <Nav theme="amethyst" />
 
       {/* ══ HERO ══ */}
       <section
@@ -109,11 +111,24 @@ export default function VariantE() {
           backgroundRepeat: 'no-repeat',
         }}
       >
+        {/* Readability scrim — diagonal from the top-left (where the type always
+            sits) fading to clear at the bottom-right, so the headline stays legible
+            at every viewport while the lava and characters on the right stay bright. */}
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
             background:
-              'linear-gradient(90deg, rgba(9,4,26,0.75) 0%, rgba(9,4,26,0.35) 35%, rgba(9,4,26,0) 60%)',
+              'linear-gradient(152deg, rgba(9,4,26,0.95) 0%, rgba(9,4,26,0.82) 26%, rgba(9,4,26,0.42) 48%, rgba(9,4,26,0) 68%)',
+          }}
+        />
+        {/* Bottom fade — dissolves the art into the below-fold colour (#241655)
+            so there's no hard seam between the hero and the next section. */}
+        <div
+          className="absolute inset-x-0 bottom-0 pointer-events-none"
+          style={{
+            height: '40%',
+            background:
+              'linear-gradient(180deg, rgba(36,22,85,0) 0%, rgba(36,22,85,0.55) 58%, #241655 100%)',
           }}
         />
         <div className="relative z-10" style={{ paddingTop: 'max(96px, 13vh)' }}>
@@ -130,7 +145,7 @@ export default function VariantE() {
               </p>
               <div className="flex gap-4 flex-wrap">
                 <a
-                  href="#join"
+                  href="#schools"
                   className="inline-flex items-center gap-2 font-bold rounded-lg text-white shadow-lg bg-[#F97316] hover:bg-[#EA580C] transition-colors"
                   style={{ padding: '12px 24px', fontSize: 'clamp(13px, 1.04vw, 16px)' }}
                 >
@@ -186,9 +201,12 @@ export default function VariantE() {
                     className="absolute -right-10 -top-10 w-40 h-40 rounded-full blur-2xl opacity-30 transition-opacity group-hover:opacity-50 pointer-events-none"
                     style={{ background: f.gem }}
                   />
-                  <div
-                    className="relative w-9 h-9 mb-5 rotate-45 rounded-[6px]"
-                    style={{ background: `linear-gradient(135deg, ${f.gem}, rgba(255,255,255,0.25))`, boxShadow: `0 0 24px ${f.gem}66` }}
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={f.diamond}
+                    alt=""
+                    aria-hidden
+                    className="relative mb-4 h-14 w-auto"
                   />
                   <h3 className="relative text-xl font-bold text-white mb-2">{f.title}</h3>
                   <p className="relative text-sm text-white/55 leading-relaxed max-w-md">{f.desc}</p>
@@ -277,13 +295,10 @@ export default function VariantE() {
                     <p className="text-xs text-white/50">ICT Educator of the Year</p>
                   </div>
                 </div>
-                <div className="flex flex-wrap gap-2">
-                  {['ACTDIK023', 'ACTDIP026', 'ACTDIK034', 'ACTDIP036'].map((code) => (
-                    <span key={code} className="font-mono text-xs bg-white/[0.06] text-white/55 px-2 py-0.5 rounded border border-white/15">
-                      {code}
-                    </span>
-                  ))}
-                </div>
+                <p className="text-sm text-white/55 leading-relaxed">
+                  Former Chief Education Officer at Grok Academy. The curriculum isn&apos;t adapted
+                  after the fact — it&apos;s authored by the person who wrote the national standard.
+                </p>
               </div>
 
               {/* Checklist */}
@@ -306,7 +321,7 @@ export default function VariantE() {
                   ))}
                 </div>
                 <a
-                  href="#join"
+                  href="#schools"
                   className="inline-flex items-center gap-2 font-semibold rounded-lg text-white bg-[#F97316] hover:bg-[#EA580C] transition-colors px-7 py-3"
                 >
                   Join the pilot <ArrowRight className="size-4" />
@@ -317,9 +332,9 @@ export default function VariantE() {
             {/* Scope grid */}
             <div>
               <h3 className="text-center text-sm font-semibold tracking-[0.18em] uppercase text-white/40 mb-8">
-                Year 7–10 scope &amp; sequence
+                Year 7 &amp; 8 scope &amp; sequence
               </h3>
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+              <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
                 {curriculum.map((m) => (
                   <div key={m.title} className="relative rounded-2xl border border-white/10 bg-white/[0.03] p-6 overflow-hidden hover:border-white/20 transition-colors">
                     <div className="absolute left-0 top-0 h-full w-1" style={{ background: 'linear-gradient(180deg,#FFB347,#F97316)' }} />
@@ -346,7 +361,7 @@ export default function VariantE() {
                 Quality education should be accessible, interactive, and curriculum-aligned.
               </h2>
               <p className="text-lg text-white/55 leading-relaxed">
-                Shard Foundry empowers teachers with tools to deliver engaging digital literacy
+                Shard Learning empowers teachers with tools to deliver engaging digital literacy
                 education that meets national standards while respecting classroom realities.
               </p>
             </div>
@@ -363,8 +378,16 @@ export default function VariantE() {
             <div className="grid sm:grid-cols-3 gap-6">
               {team.map((m) => (
                 <div key={m.name} className="rounded-2xl border border-white/10 bg-white/[0.03] p-8 text-center">
-                  <div className="w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center" style={{ background: 'linear-gradient(135deg, rgba(255,122,31,0.25), rgba(123,75,255,0.25))' }}>
-                    <span className="text-lg font-semibold text-white">{m.initials}</span>
+                  <div
+                    className="w-20 h-20 rounded-full mx-auto mb-4 p-[2px]"
+                    style={{ background: 'linear-gradient(135deg, rgba(255,122,31,0.6), rgba(123,75,255,0.6))' }}
+                  >
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={m.photo}
+                      alt={m.name}
+                      className="w-full h-full rounded-full object-cover"
+                    />
                   </div>
                   <h3 className="font-semibold text-white mb-1">{m.name}</h3>
                   <span className="inline-flex text-xs font-semibold bg-orange-500/15 text-orange-300 px-2.5 py-1 rounded-full mb-4">{m.role}</span>
@@ -372,11 +395,31 @@ export default function VariantE() {
                 </div>
               ))}
             </div>
+
+            {/* Partners */}
+            <div className="mt-16 text-center">
+              <Eyebrow color="#7B4BFF">Partners</Eyebrow>
+              <div className="mx-auto max-w-xl rounded-2xl border border-white/10 bg-white/[0.03] p-8">
+                <p className="text-2xl font-bold mb-3" style={{ color: '#2BC6B2' }}>Growing Up Greatness</p>
+                <p className="text-sm text-white/55 leading-relaxed mb-4">
+                  Growing Up Greatness works with schools, educators and school leaders to implement
+                  high-quality pedagogy for diverse classrooms through consultancy, coaching, and
+                  teacher professional learning.
+                </p>
+                <a
+                  href="https://growingupgreatness.com"
+                  className="text-sm font-medium transition-colors"
+                  style={{ color: '#7B4BFF' }}
+                >
+                  growingupgreatness.com
+                </a>
+              </div>
+            </div>
           </Container>
         </section>
 
         {/* ── Contact ── */}
-        <section id="join" className="relative py-24 scroll-mt-20">
+        <section id="schools" className="relative py-24 scroll-mt-20">
           <Container>
             <div>
               <div className="text-center mb-12">
@@ -417,10 +460,10 @@ export default function VariantE() {
           <div className="flex items-center gap-2">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/logo.svg" alt="Shard Learning" width={18} height={18} />
-            <span>© 2026 Shard Learning. All rights reserved.</span>
+            <span>© 2026 Shard Learning Pty Ltd. All rights reserved.</span>
           </div>
           <div className="flex gap-6">
-            {['Privacy', 'Terms', 'Contact'].map((i) => (
+            {['Privacy Policy', 'Terms of Use'].map((i) => (
               <a key={i} href="#" className="hover:text-white transition-colors">{i}</a>
             ))}
           </div>
