@@ -2,11 +2,10 @@ import { ChevronRight, ArrowRight, CheckCircle, Award } from 'lucide-react';
 import { Nav } from '@/components/Nav';
 
 /*
- * Hero = the Figma art exported as a single PNG (art only, no text), used as a
- * background image. Real HTML headline + CTAs are overlaid on top so they stay
- * crisp, clickable and accessible.
+ * Hero = lava waterfall video (background), with masking fade to transparent.
+ * Real HTML headline + CTAs are overlaid on top so they stay crisp, clickable and accessible.
  */
-const HERO_BG = '/assets/BG.png';
+const HERO_VIDEO = '/assets/Lava_waterfall_in_cartoon_style_202606101721.mp4';
 
 /* Single source of truth for page width — matches the nav (max-w-7xl + gutters)
  * so every section's left/right edges line up. */
@@ -110,19 +109,21 @@ export default function VariantE() {
           backgroundColor: '#1A0D38',
         }}
       >
-        {/* Hero art — masked so it dissolves to transparent at the bottom, leaving
-            the gradient (#241655) to meet the below-fold seamlessly. No hard edge. */}
-        <div
-          className="absolute inset-0 pointer-events-none"
+        {/* Hero video — masked so it dissolves to transparent at the bottom, leaving
+            the gradient (#1A0D38) to meet the below-fold seamlessly. No hard edge. */}
+        <video
+          className="absolute inset-0 pointer-events-none w-full h-full object-cover"
           style={{
-            backgroundImage: `url(${HERO_BG})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center bottom',
-            backgroundRepeat: 'no-repeat',
             WebkitMaskImage: 'linear-gradient(180deg, #000 0%, #000 68%, transparent 100%)',
             maskImage: 'linear-gradient(180deg, #000 0%, #000 68%, transparent 100%)',
           }}
-        />
+          autoPlay
+          loop
+          muted
+          playsInline
+        >
+          <source src={HERO_VIDEO} type="video/mp4" />
+        </video>
         <div className="relative z-10" style={{ paddingTop: 'max(40px, 5vh)' }}>
           <Container>
             <div style={{ width: '100%', maxWidth: '488px' }}>
