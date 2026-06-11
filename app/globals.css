@@ -50,6 +50,18 @@
   --color-glow-orange: var(--color-glow-orange);
   --color-red-accent: var(--color-red-accent);
   --color-navy-deep: var(--color-navy-deep);
+  /* ── Narrative — Forest World ── */
+  --color-forest-sky-deep: var(--color-forest-sky-deep);
+  --color-forest-sky-mid: var(--color-forest-sky-mid);
+  --color-forest-sky-near: var(--color-forest-sky-near);
+  --color-forest-floor: var(--color-forest-floor);
+  --color-forest-enchant: var(--color-forest-enchant);
+  --color-forest-warm-moss: var(--color-forest-warm-moss);
+  /* ── Canopy Accents — Forest World ── */
+  --color-wisp-glow: var(--color-wisp-glow);
+  --color-wisp-core: var(--color-wisp-core);
+  --color-rose-bloom: var(--color-rose-bloom);
+  --color-rose-bloom-light: var(--color-rose-bloom-light);
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
@@ -141,6 +153,20 @@
   --color-glow-orange: #F97316;      /* Fire opal glow accent */
   --color-red-accent: #E74C3C;       /* Warm red for highlights */
   --color-navy-deep: #1A2847;        /* Another deep navy option */
+
+  /* ── Narrative — Forest World ── */
+  --color-forest-sky-deep:     #040d08;
+  --color-forest-sky-mid:      #0a1f12;
+  --color-forest-sky-near:     #1a3d2b;
+  --color-forest-floor:        #0d1a0d;
+  --color-forest-enchant:      #2d1566;
+  --color-forest-warm-moss:    #c8d9b0;
+
+  /* ── Canopy Accents — Forest World ── */
+  --color-wisp-glow:           #00e5a0;
+  --color-wisp-core:           #80ffcc;
+  --color-rose-bloom:          #e040a0;
+  --color-rose-bloom-light:    #f9a8d4;
 }
 
 .dark {

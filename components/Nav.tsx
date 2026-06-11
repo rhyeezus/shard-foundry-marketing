@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
 interface NavProps {
-  theme?: "light" | "dark" | "amethyst";
+  theme?: "light" | "dark" | "amethyst" | "forest";
 }
 
 const navLinks = [
@@ -16,20 +16,29 @@ const navLinks = [
 
 export function Nav({ theme = "light" }: NavProps) {
   const isAmethyst = theme === "amethyst";
-  const isDark = theme === "dark" || isAmethyst;
+  const isForest = theme === "forest";
+  // Narrative themes share the minimal homepage nav layout
+  const isNarrative = isAmethyst || isForest;
+  const isDark = theme === "dark" || isNarrative;
 
   return (
     <nav
       className={`sticky top-0 z-50 backdrop-blur-md border-b ${
-        isAmethyst
+        isNarrative
           ? "border-white/10"
           : isDark
           ? "bg-[#141312]/90 border-white/10"
           : "bg-white/80 border-gray-100"
       }`}
-      // Narrative sky mid (#1A0D38), slightly translucent so content blurs
-      // underneath on scroll.
-      style={isAmethyst ? { backgroundColor: "rgba(26,13,56,0.92)" } : undefined}
+      // Narrative sky (amethyst #1A0D38 / forest #040d08), slightly translucent
+      // so content blurs underneath on scroll.
+      style={
+        isAmethyst
+          ? { backgroundColor: "rgba(26,13,56,0.92)" }
+          : isForest
+          ? { backgroundColor: "rgba(4,13,8,0.92)" }
+          : undefined
+      }
     >
       <div className="max-w-7xl mx-auto px-4 md:px-8 h-16 flex items-center justify-between">
         {/* Logo */}
@@ -47,8 +56,8 @@ export function Nav({ theme = "light" }: NavProps) {
           </span>
         </Link>
 
-        {/* Nav links — desktop (hidden on the minimal amethyst homepage nav) */}
-        {!isAmethyst && (
+        {/* Nav links — desktop (hidden on the minimal narrative homepage nav) */}
+        {!isNarrative && (
           <div className="hidden md:flex items-center gap-7">
             {navLinks.map(({ label, href }) => (
               <a
@@ -68,7 +77,7 @@ export function Nav({ theme = "light" }: NavProps) {
 
         {/* CTAs */}
         <div className="flex items-center gap-3">
-          {!isAmethyst && (
+          {!isNarrative && (
             <Button
               size="sm"
               className="bg-brand-orange hover:bg-brand-orange-dark text-white rounded-lg"
@@ -79,7 +88,7 @@ export function Nav({ theme = "light" }: NavProps) {
           <Button
             size="sm"
             className={`hidden sm:inline-flex text-white rounded-lg ${
-              isAmethyst
+              isNarrative
                 ? "bg-brand-orange hover:bg-brand-orange-dark"
                 : "bg-brand-purple hover:bg-brand-purple-dark"
             }`}

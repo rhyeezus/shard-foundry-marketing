@@ -62,6 +62,18 @@ const variants = [
     arrowColor: "text-white/40 group-hover:text-white/80",
     border: "",
   },
+  {
+    href: "/variant-f",
+    tag: "Variant F",
+    tagColor: "text-[#00e5a0]",
+    title: "Forest World",
+    desc: "Enchanted forest skin. Bioluminescent mint-teal light source, rose bloom accents, same structure as Variant E.",
+    bg: "bg-[#040d08] hover:bg-[#0a1f12]",
+    titleColor: "text-white",
+    descColor: "text-white/60",
+    arrowColor: "text-white/40 group-hover:text-white/80",
+    border: "",
+  },
 ];
 
 export default function Home() {
