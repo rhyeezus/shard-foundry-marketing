@@ -3,54 +3,6 @@ import Link from "next/link";
 
 const variants = [
   {
-    href: "/variant-a",
-    tag: "Variant A",
-    tagColor: "text-orange-400",
-    title: "Authority Dark",
-    desc: "Linear-inspired. Full navy, dense type hierarchy, dark surface cards. Premium SaaS craft adapted for education.",
-    bg: "bg-[#162550] hover:bg-[#1e3a6e]",
-    titleColor: "text-white",
-    descColor: "text-white/60",
-    arrowColor: "text-white/40 group-hover:text-white/80",
-    border: "",
-  },
-  {
-    href: "/variant-b",
-    tag: "Variant B",
-    tagColor: "text-orange-500",
-    title: "Clean Authority",
-    desc: "Vercel-inspired. White canvas, sharp typography, orange CTAs pop. Modern developer-platform energy for education.",
-    bg: "bg-white hover:shadow-md",
-    titleColor: "text-gray-900",
-    descColor: "text-gray-600",
-    arrowColor: "text-gray-300 group-hover:text-gray-600",
-    border: "border border-gray-200",
-  },
-  {
-    href: "/variant-c",
-    tag: "Variant C",
-    tagColor: "text-[#6080ff]",
-    title: "Warm Institutional",
-    desc: "Stripe-inspired. Atmospheric gradient hero, editorial type, credentials-forward. Trusted institution energy.",
-    bg: "bg-gradient-to-br from-[#162550]/5 to-[#6080ff]/10 hover:border-[#6080ff]/30",
-    titleColor: "text-gray-900",
-    descColor: "text-gray-600",
-    arrowColor: "text-gray-300 group-hover:text-[#6080ff]",
-    border: "border border-gray-200",
-  },
-  {
-    href: "/variant-d",
-    tag: "Variant D",
-    tagColor: "text-purple-400",
-    title: "Glass & Motion",
-    desc: "Mesh gradient hero with frosted glass grid, animated diamond, purple glass nav, scroll-aware FAB. Live and experimental.",
-    bg: "bg-[#2e1065] hover:bg-[#3b0764]",
-    titleColor: "text-white",
-    descColor: "text-white/60",
-    arrowColor: "text-white/40 group-hover:text-white/80",
-    border: "",
-  },
-  {
     href: "/variant-e",
     tag: "Variant E",
     tagColor: "text-orange-400",
@@ -95,8 +47,8 @@ export default function Home() {
           Choose a variant.
         </h1>
         <p className="text-gray-600 text-base mb-10 leading-relaxed">
-          Three landing page directions. One design system catalogue. Pick one
-          to review or open the design system for component reference.
+          Two landing page themes. One design system catalogue. Pick one to
+          review or open the design system for component reference.
         </p>
 
         {/* Variant cards */}
