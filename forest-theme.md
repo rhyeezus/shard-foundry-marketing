@@ -1,164 +1,204 @@
-# Shard Learning — Forest Theme Spec
+# Shard Learning — Forest World Theme
 
-> Companion to the existing lava/forge theme in `globals.css`.
-> The forest theme is a full parallel to the narrative + forge-accents token groups.
-> Gem palette (Fire Opal, Sapphire, Aquamarine, Amethyst) is shared — no changes needed.
+> Sibling to `lava.md`. Shared system (tokens, type, components, structure, motion) lives in `DESIGN.md`
+> — this doc owns **only** the forest world's palette and treatment.
+>
+> **Route:** `/variant-f` (also `/2`)
+> **Hero video:** `/assets/forest-theme.mp4` (non-negotiable)
 
 ---
 
-## 1. CSS tokens to add to globals.css
+## 1. World concept
 
-Add these two blocks inside `:root {}`, directly beneath the existing forge accent tokens.
+**An enchanted canopy at twilight.** Not dark mode — a lifted, glowing, magical twilight lit from within
+the foliage by bioluminescence. Whimsical and dreamlike, never childish, never pink-only.
+
+**Audience:** youth female, ages 8–16.
+**Energy:** whimsical, magical, enchanted.
+**Light source:** bioluminescence — cool mint-teal, leaking from within the foliage. Where lava is lit by
+fire from below, forest is lit by glow from within.
+
+This is the cool-light counterpart to the lava world. See `DESIGN.md` → "One product, two worlds" and the
+**lit from within** principle.
+
+---
+
+## 2. Direction — twilight, not near-black
+
+The previous forest build was a dark recolour of lava — near-black greens (`#020908` footer) that read as
+a "dark green dungeon." The corrected direction is **mid-tone twilight**: greens stay rich but breathe,
+and never bottom out to black.
+
+| Decision | Old (retired) | New (twilight) |
+|---|---|---|
+| Base never fully blacks out | `#020908` footer | `#0a2018` deepest |
+| Cards | `white/[0.03]` (shadowed) | `white/[0.06]`→`0.10` (moonlit) |
+| Body text | `white/55` (failing AA) | mint-tinted off-white, brighter |
+| Bioluminescence | restrained | generous — the hero device |
+| CTA | molten orange (leftover) | **rose bloom** (in-world) |
+
+---
+
+## 3. Palette — twilight forest
+
+### Surfaces — page descent
+
+A lifted teal-twilight gradient that never reaches black:
+
+```
+background: linear-gradient(180deg,
+  #123a2a 0%,    /* canopy top — lifted, breathing green */
+  #0e2a20 45%,   /* mid canopy */
+  #0a2018 100%); /* forest floor — deepest, still green, never black */
+```
+
+| Role | Token | Hex | Usage |
+|---|---|---|---|
+| Canopy top | `--color-forest-canopy` | `#123a2a` | Top of page descent |
+| Mid canopy | `--color-forest-sky-near` | `#1a3d2b` | Mid sections |
+| Forest floor | `--color-forest-floor-lift` | `#0a2018` | Footer / deepest — **not** `#020908` |
+| Enchant purple | `--color-forest-enchant` | `#2d1566` | Magical depth in shadows/mid-tones |
+| Authority card | — | `linear-gradient(160deg, #163d2b, #0e2a20)` | Bruce Fuda card (lifted) |
+
+### Accents — canopy
+
+| Role | Token | Hex | Usage |
+|---|---|---|---|
+| Bioluminescent mint (primary light) | `--color-wisp-glow` | `#00e5a0` | The world's light. Glow leaks, scope edges, data, eyebrows |
+| Wisp core (hotspot) | `--color-wisp-core` | `#80ffcc` | Inner light of glows, gem hotspots |
+| Rose bloom (eye-draw accent) | `--color-rose-bloom` | `#e040a0` | The magic spark — 2–3 per scene max |
+| Rose bloom light | `--color-rose-bloom-light` | `#f9a8d4` | Rose highlight variant |
+| **Rose CTA** | — | `#e85aa4` (hover `#d64493`) | Primary CTA — see §6 |
+| Petal/sun warm | — | `#f4b942` | Warmth without "fire" — sparingly |
+
+### Card surfaces (moonlit, over twilight)
+
+| Role | Value |
+|---|---|
+| Card fill | `bg-white/[0.06]` → hover `white/[0.10]` (brighter than lava — moonlit, not shadowed) |
+| Card border | `border-wisp-glow/15` mint hairline → hover `wisp-glow/30` |
+| Card glow (hover) | soft mint inner glow — foliage lit from within |
+
+---
+
+## 4. Treatment — twilight enchantment
+
+**Bioluminescence is the hero device.** Mint `#00e5a0` glow leaks from behind cards, along curriculum
+scope edges, behind the gems — as if the foliage itself is lit. Generous where lava's fire is
+restrained-warm.
+
+**Headline bloom.** Soft mint radial bloom behind the H1 — text sits in a pool of bioluminescent light.
+
+**Drifting wisps + floating spores** throughout the page (not just hero). Soft, slow, dreamlike blurred
+mint dots on a GSAP loop. This is where "whimsical" is earned — forest's equivalent of lava's rising embers.
+
+**Foreground foliage.** Thin parallax layer of soft-focus ferns/fronds at the bottom of the hero, framing
+the video — the cool-light counterpart to lava's rock rim.
+
+**Rose bloom as the magic spark.** `#e040a0` is the world's designated eye-draw accent — use it on no more
+than **2–3 elements per scene**: the mission section, one gem halo, the CTA. The "flower in the dark wood."
+
+**Glowing gems.** Same gem SVGs, lit by mint instead of fire — mint glow halo behind each, subtle parallax
+drift.
+
+**Curriculum code chips** (`font-mono`) styled **glowing/etched into living wood** — soft mint inset glow.
+
+---
+
+## 5. Eyebrow rule (forest)
+
+Per `DESIGN.md`'s shared eyebrow discipline:
+- Default eyebrow = **wisp-glow mint `#00e5a0`** (the world's primary accent).
+- Eyebrows adjacent to a CTA = **rose `#e85aa4`** (the action colour).
+- No other eyebrow colours.
+
+---
+
+## 6. CTA — rose, not orange
+
+Forest's primary CTA is **rose bloom `#e85aa4`** (hover `#d64493`), **not** molten orange.
+
+Rationale:
+- Mint is the *ambient light* of the entire world — a mint CTA would dissolve into the atmosphere.
+- The CTA must **contrast** the world to say "act here." Rose against cool mint-lit twilight pops exactly
+  the way molten orange pops against lava's purple — it is the *structural sibling* of lava's CTA, not a copy.
+- Rose is already the world's designated eye-draw accent (§4), so it reads as native.
+
+This supersedes the earlier "CTAs stay orange across both themes" rule — the two worlds are deliberately
+distinct, and a shared orange undercut the forest identity.
+
+---
+
+## 7. CSS tokens
+
+Defined in `globals.css` under `:root {}` and mirrored in `@theme inline {}` so they're available as
+Tailwind utilities (`bg-wisp-glow`, `text-rose-bloom`, etc.). The existing forest tokens stay; add the
+twilight-lift surface values from §3 (`forest-canopy`, `forest-floor-lift`) and the rose CTA value.
 
 ```css
-/* ── Narrative — Forest World ── */
---color-forest-sky-deep:     #040d08;   /* Deepest sky, base canvas */
---color-forest-sky-mid:      #0a1f12;   /* Mid sky, canopy shadow */
---color-forest-sky-near:     #1a3d2b;   /* Near sky, tree silhouette layer */
---color-forest-floor:        #0d1a0d;   /* Ground surface, dark moss */
---color-forest-enchant:      #2d1566;   /* Enchantment purple — maps to Return Purple */
---color-forest-warm-moss:    #c8d9b0;   /* Lit surface highlight — maps to Warm Stone */
+/* ── Forest World — twilight surfaces (lifted) ── */
+--color-forest-canopy:      #123a2a;
+--color-forest-floor-lift:  #0a2018;
 
-/* ── Canopy Accents — Forest World (replaces Forge Accents) ── */
---color-wisp-glow:           #00e5a0;   /* Primary bioluminescent light source */
---color-wisp-core:           #80ffcc;   /* Wisp hotspot / inner light */
---color-rose-bloom:          #e040a0;   /* Mushroom caps, flowers — forest-only accent */
---color-rose-bloom-light:    #f9a8d4;   /* Rose highlight variant */
-/* Gem highlights carry across unchanged from forge theme */
+/* ── Canopy accents ── */
+--color-wisp-glow:          #00e5a0;
+--color-wisp-core:          #80ffcc;
+--color-rose-bloom:         #e040a0;
+--color-rose-bloom-light:   #f9a8d4;
+--color-rose-cta:           #e85aa4;
+--color-rose-cta-hover:     #d64493;
 ```
 
 ---
 
-## 2. @theme inline extensions for Tailwind v4
+## 8. Lava → Forest mapping (corrected)
 
-Add these inside the `@theme inline {}` block in `globals.css`, alongside the existing forge colour extensions.
+The lava column here matches **what is actually shipped** (`/variant-e`). Earlier versions of this table
+listed `#0e0720` / `#162550` navy for lava — those were never shipped; corrected below.
 
-```css
-/* ── Forest World tokens — available as Tailwind utilities ── */
---color-forest-sky-deep:     #040d08;
---color-forest-sky-mid:      #0a1f12;
---color-forest-sky-near:     #1a3d2b;
---color-forest-floor:        #0d1a0d;
---color-forest-enchant:      #2d1566;
---color-forest-warm-moss:    #c8d9b0;
---color-wisp-glow:           #00e5a0;
---color-wisp-core:           #80ffcc;
---color-rose-bloom:          #e040a0;
---color-rose-bloom-light:    #f9a8d4;
-```
-
----
-
-## 3. Colour mapping — Lava → Forest
-
-| Role | Lava Token | Lava Hex | Forest Token | Forest Hex |
-|---|---|---|---|---|
-| Deepest sky | `Narrative/Sky Deep` | `#0e0720` | `--color-forest-sky-deep` | `#040d08` |
-| Mid sky | `Narrative/Sky Mid` | `#160a38` | `--color-forest-sky-mid` | `#0a1f12` |
-| Near sky | `Narrative/Sky Near` | `#2a1566` | `--color-forest-sky-near` | `#1a3d2b` |
-| Ground surface | `Narrative/Volcanic Floor` | `#1a0800` | `--color-forest-floor` | `#0d1a0d` |
-| Atmosphere accent | `Narrative/Return Purple` | `#4a1a8c` | `--color-forest-enchant` | `#2d1566` |
-| Lit surface | `Narrative/Warm Stone` | `#c8b89a` | `--color-forest-warm-moss` | `#c8d9b0` |
-| Primary glow | `Forge/Lava Glow` | `#f97316` | `--color-wisp-glow` | `#00e5a0` |
-| Glow core | `Forge/Lava Core` | `#ffb347` | `--color-wisp-core` | `#80ffcc` |
-| World accent | _(none)_ | — | `--color-rose-bloom` | `#e040a0` |
-| World accent light | _(none)_ | — | `--color-rose-bloom-light` | `#f9a8d4` |
-
-Gem highlights (Fire Opal, Sapphire, Amethyst, Aquamarine) are **unchanged** — they carry across both worlds.
+| Role | Lava (shipped) | Forest (twilight) |
+|---|---|---|
+| Canopy / sky top | `#1A0D38` | `#123a2a` |
+| Mid | `#1A0D38` | `#1a3d2b` |
+| Floor / footer | `#07060F` | `#0a2018` |
+| Atmosphere accent | `#7B4BFF` amethyst | `#2d1566` enchant |
+| Primary light source | `#F97316` fire | `#00e5a0` bioluminescence |
+| Light core | `#FFB347` lava core | `#80ffcc` wisp core |
+| World eye-draw accent | `#FF7A1F` | `#e040a0` rose bloom |
+| CTA | `#F97316` orange | `#e85aa4` rose |
+| Card fill | `white/[0.03]` | `white/[0.06]` (lifted) |
 
 ---
 
-## 4. Design intent
+## 8b. Light-mode (prototype) — `/variant-f-light`
 
-**Light source swap** — the single most important difference.
-Lava world = lit by fire (warm amber-orange).
-Forest world = lit by bioluminescence (cool mint-teal).
-Every atmospheric decision follows from this.
+The twilight Forest above is the current default. A **genuine light-mode** Forest is prototyped on a
+separate route, `/variant-f-light`, for side-by-side comparison. It targets the original
+"light/whimsical, not dark mode" brief: as you scroll past the hero, the page descends into a
+sun-dappled mint-white canvas rather than staying dark.
 
-**Colour temperature** — lava is warm-dominated; forest is cool-dominated with a single warm accent (rose bloom on mushrooms/flowers). Neither is neutral — both feel like fully inhabited worlds.
+Built via the theme system's `mode: 'light' | 'dark'` flag (see DESIGN.md) — same shared `WorldPage`,
+same structure, only tokens differ.
 
-**Rose bloom usage** — `--color-rose-bloom` (`#e040a0`) is the forest world's equivalent of Lava Glow in terms of visual hierarchy: it's the accent that draws the eye to important elements (gem glow halos, mushroom clusters, flower particles). Use sparingly — no more than 2–3 instances per scene.
+| Role | Value |
+|---|---|
+| Hero base (frames the dark video) | `#123A2A` canopy — fades fast into the canvas |
+| Below-fold canvas | `#F4FBF7` soft mint-white (primary surface) |
+| Body ink | `rgba(10,46,32,.82)` over emerald base `#0A2E20` (clears WCAG AA) |
+| Heading ink | `#0A2E20` deep emerald |
+| Card surface | solid `#FFFFFF` + soft mint drop-shadow `0 10px 40px -10px rgba(0,229,160,.18)` |
+| Contrast UI / data accent | `#059669` deeper teal — **mint `#00e5a0` loses its glow on white**, so teal carries eyebrows, ring strokes, icons |
+| Ambient mint | used as soft-focus glow/shadow, never as a fill |
+| CTA | rose `#e85aa4` (hover `#d64493`) — unchanged, the eye-draw against the light canvas |
+| Footer | `#0A2E20` deep emerald — grounds the foot |
+| Nav | white text/logo over the dark hero video, flips to emerald text + white/blur bar once scrolled onto the canvas |
 
-**Enchant purple** (`#2d1566`) maps directly to Return Purple — it's the atmosphere colour for magical depth in shadows and mid-tones. Slightly cooler than the lava equivalent.
+Hero text stays **white** on all variants (it always sits over the dark hero video). Only the
+below-fold text inverts to emerald ink in light mode.
 
----
+The twilight version remains the default until the light prototype is chosen.
 
-## 5. Claude Code implementation prompt
+## 9. What carries from the shared system
 
-Paste this into Claude Code when you're ready to implement:
-
----
-
-```
-Read DESIGN.md and app/globals.css before writing any code.
-
-I need a forest theme variant added to this project. The project already has a lava/forge world theme. The forest theme is a full parallel — same token structure, different colour values.
-
-## Token additions
-
-In `app/globals.css`, add the following inside the `:root {}` block, after the existing forge accent tokens:
-
-```css
-/* ── Narrative — Forest World ── */
---color-forest-sky-deep:     #040d08;
---color-forest-sky-mid:      #0a1f12;
---color-forest-sky-near:     #1a3d2b;
---color-forest-floor:        #0d1a0d;
---color-forest-enchant:      #2d1566;
---color-forest-warm-moss:    #c8d9b0;
-
-/* ── Canopy Accents — Forest World ── */
---color-wisp-glow:           #00e5a0;
---color-wisp-core:           #80ffcc;
---color-rose-bloom:          #e040a0;
---color-rose-bloom-light:    #f9a8d4;
-```
-
-Also add all of the above inside the `@theme inline {}` block so they're available as Tailwind utility classes (e.g. `bg-wisp-glow`, `text-rose-bloom`).
-
-## New route
-
-Create `app/variant-f/page.tsx` — a forest world variant of the hero, parallel in structure to `app/variant-e/page.tsx`.
-
-The structural layout of variant-f should mirror variant-e exactly:
-- Same Nav component with `theme="amethyst"` 
-- Same section order (hero, platform, curriculum authority, mission, team, contact, footer)
-- Same component patterns (Container, Eyebrow, feature bento, stat cards, curriculum scope grid, team cards, contact form)
-- Same copy (do not change any text content)
-
-The ONLY differences are:
-1. Hero background image: use `/assets/BG.png` as a placeholder — note in a comment that this should be swapped for the forest BG image when available
-2. Background colour: replace `#1A0D38` (lava sky deep) with `var(--color-forest-sky-deep)` (`#040d08`)
-3. Below-fold background: replace `#1A0D38` with `var(--color-forest-sky-mid)` (`#0a1f12`)
-4. All orange/lava accent colours replaced with forest equivalents:
-   - `#F97316` (lava glow / CTA orange) → keep as CTA orange — CTAs stay orange across both themes
-   - `#FFB347` (lava core warm) → `var(--color-wisp-glow)` (`#00e5a0`) for decorative glow elements only
-   - Radial gradient glows behind product images: replace orange with `var(--color-wisp-glow)`
-   - Stat card top border accents: first stat keeps orange, second uses `var(--color-wisp-glow)`, third uses `var(--color-rose-bloom)`
-   - Curriculum scope card left-edge gradient: replace orange gradient with `linear-gradient(180deg, var(--color-wisp-glow), var(--color-wisp-core))`
-   - Feature bento card glow blobs: replace gem colours with `var(--color-wisp-glow)` and `var(--color-rose-bloom)`
-5. Section eyebrow colours: replace `#FFB347` with `var(--color-wisp-glow)`, keep `#FF7A1F` for CTA eyebrows, replace `#2BC6B2` teal references with `var(--color-wisp-glow)`
-6. Mission section radial glow: replace purple/amethyst glow with `rgba(0, 229, 160, 0.18)` (wisp tint)
-7. Footer background: `#07060F` → `#020908` (forest void)
-
-CTAs (Join the pilot button, Send message button) remain `#F97316` orange — the action colour is consistent across both world themes.
-
-## Design system page update
-
-In `app/design-system/page.tsx`, add a "World Themes" section after the existing "Shard" section showing:
-- A swatch row for Narrative — Lava tokens (Sky Deep, Sky Mid, Sky Near, Volcanic Floor, Return Purple, Warm Stone)
-- A swatch row for Narrative — Forest tokens (Forest Sky Deep, Forest Sky Mid, Forest Sky Near, Forest Floor, Forest Enchant, Forest Warm Moss)  
-- A swatch row for Forge Accents (Lava Glow, Lava Core)
-- A swatch row for Canopy Accents (Wisp Glow, Wisp Core, Rose Bloom, Rose Bloom Light)
-
-## variants/page.tsx update
-
-Add variant-f to the variants index page with:
-- Tag: "Variant F"
-- Title: "Forest World"
-- Desc: "Enchanted forest skin. Bioluminescent mint-teal light source, rose bloom accents, same structure as Variant E."
-- Background: `bg-[#040d08] hover:bg-[#0a1f12]`
-- Title/desc colours: white/white-60
-
-Do not modify any existing files beyond the specific additions described above.
-```
+Structure, type scale, component shapes, section order, motion/GSAP — all in `DESIGN.md`, identical across
+both worlds. Only the **lighting and palette** here change per world.

@@ -62,6 +62,13 @@
   --color-wisp-core: var(--color-wisp-core);
   --color-rose-bloom: var(--color-rose-bloom);
   --color-rose-bloom-light: var(--color-rose-bloom-light);
+  /* ── Forest twilight surfaces + rose CTA (see forest-theme.md) ── */
+  --color-forest-canopy: var(--color-forest-canopy);
+  --color-forest-floor-lift: var(--color-forest-floor-lift);
+  --color-rose-cta: var(--color-rose-cta);
+  --color-rose-cta-hover: var(--color-rose-cta-hover);
+  /* ── Lava ember-warm descent target (see lava.md) ── */
+  --color-lava-ember-base: var(--color-lava-ember-base);
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
@@ -167,6 +174,15 @@
   --color-wisp-core:           #80ffcc;
   --color-rose-bloom:          #e040a0;
   --color-rose-bloom-light:    #f9a8d4;
+
+  /* ── Forest twilight surfaces (lifted — never blacks out) + rose CTA ── */
+  --color-forest-canopy:       #123a2a;   /* canopy top — lifted, breathing green */
+  --color-forest-floor-lift:   #0a2018;   /* forest floor / footer — deepest, still green */
+  --color-rose-cta:            #e85aa4;   /* forest primary CTA */
+  --color-rose-cta-hover:      #d64493;   /* forest CTA hover */
+
+  /* ── Lava ember-warm descent target (page runs hotter toward the forge) ── */
+  --color-lava-ember-base:     #1e0f30;
 }
 
 .dark {
@@ -316,4 +332,144 @@
     radial-gradient(ellipse 60% 45% at 65% 20%, #7B4BFF 0%, transparent 60%),
     radial-gradient(ellipse 45% 60% at 20% 75%, #2BC6B2 0%, transparent 65%);
   animation: blob-b 22s ease-in-out infinite alternate;
+}
+
+/* ============================================================
+   WORLD MOTION — ambient particles + glow
+   ============================================================
+   Particle drift is driven by GSAP loops (see ScrollScene).
+   These keyframes are the CSS-only fallback so the page still
+   feels alive without JS; reduced-motion neutralises them via
+   the global rule above.
+   ============================================================ */
+
+/* Gentle scale/opacity breathing for glow halos behind gems/cards */
+@keyframes glow-pulse {
+  0%, 100% { opacity: 0.45; transform: scale(1); }
+  50%      { opacity: 0.85; transform: scale(1.08); }
+}
+
+/* Embers rise (lava); wisps drift (forest) — slow, dreamlike */
+@keyframes particle-rise {
+  0%   { transform: translateY(0) translateX(0); opacity: 0; }
+  15%  { opacity: 0.9; }
+  85%  { opacity: 0.7; }
+  100% { transform: translateY(-120px) translateX(14px); opacity: 0; }
+}
+
+@keyframes particle-drift {
+  0%   { transform: translate(0, 0); opacity: 0.3; }
+  25%  { opacity: 0.9; }
+  50%  { transform: translate(18px, -22px); opacity: 0.6; }
+  75%  { opacity: 0.85; }
+  100% { transform: translate(0, 0); opacity: 0.3; }
+}
+
+.world-glow { animation: glow-pulse 6s ease-in-out infinite; }
+
+/* Scroll-reveal targets start hidden ONLY when motion is allowed and JS will
+   run to reveal them. Reduced-motion users (and the no-JS fallback handled in
+   WorldScene) keep content fully visible. */
+@media (prefers-reduced-motion: no-preference) {
+  .reveal {
+    opacity: 0;
+    transform: translateY(32px);
+  }
+  /* Word-split headline hides until JS splits + animates it (prevents flash). */
+  [data-words] { opacity: 0; }
+}
+
+/* Cinematic card hover — lift + glow ramp. Pairs with the world's accent. */
+.world-card {
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease;
+  will-change: transform;
+}
+.world-card:hover {
+  transform: translateY(-6px);
+}
+
+/* Soft-fill card with a gradient outline.
+   Driven by per-card vars:
+     --card-fill        → soft interior fill (e.g. soft rose)
+     --card-edge-from   → outline gradient start (softer pink)
+     --card-edge-to     → outline gradient end (harsher pink / contrast)
+     --card-glow        → hover glow colour
+   The gradient border uses the padding-box / border-box double-background trick
+   so the fill stays solid while the 1px edge is a gradient. */
+.world-card-soft {
+  border: 1px solid transparent;
+  background-image:
+    linear-gradient(var(--card-fill), var(--card-fill)),
+    linear-gradient(135deg, var(--card-edge-from), var(--card-edge-to));
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  /* Light mode sets a soft mint drop-shadow here; dark worlds default to none. */
+  box-shadow: var(--card-shadow, none);
+}
+.world-card-soft:hover {
+  box-shadow: 0 16px 48px -12px var(--card-glow, transparent);
+}
+
+/* Strata divider — a thin glowing horizon line between major sections */
+.strata-divider {
+  height: 1px;
+  width: 100%;
+  border: 0;
+  background: linear-gradient(90deg, transparent, var(--strata-color, rgba(255,255,255,0.25)), transparent);
+  opacity: 0.5;
+}
+
+/* ============================================================
+   GLOW SEAM — atmospheric section-to-section transition.
+   Replaces the hard hairline divider with a soft horizontal
+   bloom of the world's light (cyan on forest, ember on lava).
+   Reads as the bioluminescence/forge-light bleeding between
+   blocks rather than a rule. Driven by --seam-color (= t.light).
+   The element is zero-height in flow; the bloom is painted via
+   ::before/::after pseudo-glows that overflow it, so it adds no
+   vertical space and never pushes layout around.
+   ============================================================ */
+.glow-seam {
+  position: relative;
+  height: 0;
+  width: 100%;
+  pointer-events: none;
+}
+/* Wide, soft horizontal bloom centred on the seam line. */
+.glow-seam::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: min(72%, 880px);
+  height: 220px;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(
+    ellipse 60% 50% at 50% 50%,
+    var(--seam-color, rgba(255, 255, 255, 0.5)),
+    transparent 70%
+  );
+  opacity: 0.16;
+  filter: blur(28px);
+}
+/* A tighter, brighter hairline-of-light at the exact seam — gives the
+   bloom a crisp core so it still reads as a deliberate division. */
+.glow-seam::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: min(56%, 680px);
+  height: 1px;
+  transform: translate(-50%, -50%);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--seam-color, rgba(255, 255, 255, 0.5)),
+    transparent
+  );
+  opacity: 0.5;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .glow-seam::before { animation: glow-pulse 7s ease-in-out infinite; }
 }
