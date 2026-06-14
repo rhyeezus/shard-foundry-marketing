@@ -52,7 +52,7 @@ export function Nav({ theme = "light" }: NavProps) {
 
   return (
     <nav
-      className={`z-50 h-16 transition-[background-color,backdrop-filter,border-color] duration-300 ${
+      className={`nav-entrance z-50 h-16 transition-[background-color,backdrop-filter,border-color] duration-300 ${
         isNarrative
           ? scrolled
             ? `fixed top-0 inset-x-0 backdrop-blur-md border-b ${isForestLight ? "border-black/5" : "border-white/10"}`

@@ -38,39 +38,39 @@ export function WorldScene({ children }: { children: ReactNode }) {
           const { desktop } = ctx.conditions as { motion: boolean; desktop: boolean };
 
           // ── Cinematic reveals — fade + slide, batched + staggered.
-          //    Replay every time elements scroll into view (both directions), and
-          //    reset back out when they leave — not a one-shot on load. ──
+          //    Elements animate IN once and stay visible — no exit animations.
+          //    Animating out as users scroll causes the "clunky" feeling; leaving
+          //    content visible after it's been read feels natural and smooth. ──
           const animateIn = (els: Element[]) =>
             gsap.to(els, {
               y: 0,
               opacity: 1,
-              duration: 0.8,
-              ease: 'power3.out',
-              stagger: 0.1,
-              overwrite: true,
-            });
-          const animateOut = (els: Element[]) =>
-            gsap.to(els, {
-              y: 32,
-              opacity: 0,
-              duration: 0.4,
-              ease: 'power2.in',
+              duration: 0.55,
+              ease: 'power2.out',
+              stagger: 0.06,
               overwrite: true,
             });
           ScrollTrigger.batch('.reveal', {
             start: 'top 88%',
-            onEnter: animateIn,      // scrolling down into view
-            onEnterBack: animateIn,  // scrolling up into view
-            onLeave: animateOut,     // scrolled past the bottom
-            onLeaveBack: animateOut, // scrolled back above the top
+            onEnter: animateIn,
+            onEnterBack: animateIn,
           });
 
           // ── Hero headline — word-by-word rise ──
+          // Store original text once so we can re-split correctly after Fast Refresh.
+          // Without this, GSAP cleanup reverts word spans to opacity:0 and the
+          // data-split guard prevents re-animation, leaving the headline invisible.
           const headline = root.current?.querySelector<HTMLElement>('[data-words]');
-          if (headline && !headline.dataset.split) {
-            headline.dataset.split = '1';
-            const words = (headline.textContent || '').trim().split(/\s+/);
-            headline.textContent = '';
+          if (headline) {
+            if (!headline.dataset.original) {
+              headline.dataset.original = (headline.textContent || '').trim();
+            }
+            headline.innerHTML = '';
+            // Reveal h1 shell immediately — word spans provide the visual masking
+            // via overflow:hidden + yPercent:115 start. The CSS [data-words]{opacity:0}
+            // hides the h1 until JS runs; this sets it back to 1 before words animate in.
+            gsap.set(headline, { opacity: 1 });
+            const words = headline.dataset.original.split(/\s+/);
             words.forEach((w, i) => {
               const outer = document.createElement('span');
               outer.style.display = 'inline-block';
@@ -90,6 +90,20 @@ export function WorldScene({ children }: { children: ReactNode }) {
             });
           }
 
+            // As the headline rises in, push the subhead down to make room.
+            // The paragraph starts at paddingTop:0 (subhead visible immediately
+            // at the top-left corner), then grows to match the headline's
+            // rendered height so both elements sit cleanly once the animation lands.
+            const heroParagraph = root.current?.querySelector<HTMLElement>('[data-hero-p]');
+            if (heroParagraph) {
+              const targetPad = headline.getBoundingClientRect().height + 16;
+              gsap.fromTo(
+                heroParagraph,
+                { paddingTop: 0 },
+                { paddingTop: targetPad, duration: 0.9, ease: 'power4.out', delay: 0.15 }
+              );
+            }
+
           // ── Scrubbed parallax depth layers (desktop) ──
           if (desktop) {
             gsap.utils.toArray<HTMLElement>('[data-parallax]').forEach((el) => {
@@ -101,7 +115,7 @@ export function WorldScene({ children }: { children: ReactNode }) {
                   trigger: el.closest('section') || el,
                   start: 'top bottom',
                   end: 'bottom top',
-                  scrub: 0.6,
+                  scrub: 0.15,
                 },
               });
             });
@@ -114,7 +128,7 @@ export function WorldScene({ children }: { children: ReactNode }) {
                 yPercent: -18,
                 opacity: 0.2,
                 ease: 'none',
-                scrollTrigger: { trigger: heroSection, start: 'top top', end: 'bottom top', scrub: 0.6 },
+                scrollTrigger: { trigger: heroSection, start: 'top top', end: 'bottom top', scrub: 0.15 },
               });
             }
           }

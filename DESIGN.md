@@ -280,6 +280,28 @@ Classroom-safe: responsive, never distracting. The scroll *is* the descent throu
 - Card hover stays **CSS** (border + `y:-4` lift + glow) — cheaper than GSAP, matches transition language.
 - Authority award badge: single gentle scale-pulse on entry.
 
+### Responsive hero video
+
+The hero is `100svh` tall with `object-cover`, so the viewport aspect ratio determines the crop.
+To keep the composition intentional at every size, we **produce separate video masters per breakpoint**
+and swap the `<source>` via `useResponsiveVideo(t)` — no double-load, no visible flash.
+
+**Breakpoint map:**
+
+| Breakpoint | Viewport | Ratio to produce | Theme field |
+|---|---|---|---|
+| Mobile portrait | `< 768 px` | **9:16** | `heroVideoMobile` |
+| Tablet + desktop | `768 – 2559 px` | **16:9** | `heroVideo` *(required)* |
+| Ultrawide | `≥ 2560 px` | **21:9** | `heroVideoUltrawide` |
+
+**Rules:**
+- `heroVideo` (16:9) is always required — it is the fallback for any unset breakpoint.
+- `heroVideoMobile` and `heroVideoUltrawide` are optional; omit them until the asset exists.
+- When producing the 9:16 cut, keep the focal subject centred vertically — sky and ground will both be cropped.
+- `objectPosition` stays `center bottom` on landscape cuts (keeps the ground line); switch to `center center` for the 9:16 portrait cut inside the hook if needed.
+- The hook only fires on breakpoint-*category* changes, not on every pixel resize, so the video never reloads during normal window resizing.
+- Disable GSAP parallax scrub on the video below `md` (`matchMedia` guard) — the portrait crop has less vertical headroom for drift.
+
 ### Performance & reduced motion
 
 - Wrap all setup in `gsap.matchMedia()` keyed on `(prefers-reduced-motion: no-preference)`. The reduce

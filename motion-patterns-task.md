@@ -1,9 +1,8 @@
-# Motion Patterns — PARKED TASK (not yet implemented)
+# Motion Patterns — IMPLEMENTED (2026-06-14)
 
-> **Status:** Approved, deferred for later implementation (parked 2026-06-13).
-> This is a future task, not active work. When ready to build, follow the
-> "Scope: what we ARE doing" section below. Lives at the repo root alongside
-> `forest-theme.md` / `lava.md`.
+> **Status:** Complete. All four approved microinteractions shipped in the
+> session of 2026-06-14. See "Scope: what we ARE doing" for what was built.
+> Lives at the repo root alongside `forest-theme.md` / `lava.md`.
 
 ## Context
 

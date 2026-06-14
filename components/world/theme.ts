@@ -43,8 +43,17 @@ export interface WorldTheme {
   heroTextMuted: string;  // hero subheading
   heroOutline: string;    // ghost button / proof-strip border
   heroOutlineFill: string;// ghost button / proof-strip fill
-  /** Hero video — non-negotiable per brief. */
+  /** Hero video — non-negotiable per brief.
+   *  Desktop (16:9) is required. Mobile (9:16) and ultrawide (21:9) are optional;
+   *  when omitted the desktop source is used and object-cover crops gracefully.
+   *  Use `useResponsiveVideo(t)` in WorldPage — never reference these directly. */
   heroVideo: string;
+  /** 9:16 portrait crop for phones (< 768 px). Crop keeps the focal point centred
+   *  vertically — the sky and ground edges will both be cut. */
+  heroVideoMobile?: string;
+  /** 21:9 crop for ultrawide monitors (≥ 2560 px wide). Prevents edge-cropping
+   *  on 3440×1440 displays when the scene has important lateral detail. */
+  heroVideoUltrawide?: string;
   /** Page descent gradient (top → floor). */
   pageBackground: string;
   /** Solid colour at the top of the descent — the hero masks the video into
