@@ -65,6 +65,10 @@ const team = [
   },
 ];
 
+// Gem loops (transparent webm + HEVC-alpha mp4, watermark removed). Staging row —
+// reorder/relocate later. File naming: `${name}.webm` + `${name}-alpha.mp4`.
+const gems = ['black', 'teal', 'saphire', 'pink', 'orange', 'light-purple'];
+
 function Eyebrow({ children, color }: { children: React.ReactNode; color: string }) {
   return (
     <p className="text-xs font-semibold tracking-[0.18em] uppercase mb-4 reveal" style={{ color }}>
@@ -208,93 +212,116 @@ export function WorldPage({ t }: { t: WorldTheme }) {
         {/* ══ 2 · THE PLATFORM — feature showcase ══ */}
         <section id="platform" className="relative py-[clamp(3rem,7vw,9rem)]">
           <Container>
-            <div className="rounded-2xl p-8 mb-5" style={{ background: 'rgba(10,5,28,0.60)' }}>
-              <Eyebrow color={t.eyebrow}>The platform</Eyebrow>
-              <h2 className="font-bold tracking-tight leading-[1.08] mb-5 reveal" style={{ fontSize: 'clamp(1.75rem, 3vw, 2.5rem)', color: t.text.heading }}>
-                Everything teachers need, in one forge.
-              </h2>
-              <p className="leading-relaxed reveal" style={{ fontSize: 'clamp(1rem, 1.5vw, 1.125rem)', color: t.text.body }}>
-                Built around the realities of Australian classrooms. Not a content library, not a quiz engine. A complete teaching platform.
-              </p>
+            <div className="grid grid-cols-1 md:grid-cols-4 items-center gap-8 mb-5">
+              {/* Heading copy — the original section-header box. Spans 3 of 4
+                  columns (3/4 width). */}
+              <div className="md:col-span-3 rounded-2xl p-8" style={{ background: 'rgba(10,5,28,0.60)' }}>
+                <Eyebrow color={t.eyebrow}>The platform</Eyebrow>
+                <h2 className="font-bold tracking-tight leading-[1.08] mb-5 reveal" style={{ fontSize: 'clamp(1.75rem, 3vw, 2.5rem)', color: t.text.heading }}>
+                  Everything teachers need, in one forge.
+                </h2>
+                <p className="leading-relaxed reveal" style={{ fontSize: 'clamp(1rem, 1.5vw, 1.125rem)', color: t.text.body }}>
+                  Built around the realities of Australian classrooms. Not a content library, not a quiz engine. A complete teaching platform.
+                </p>
+              </div>
+              {/* Transparent forge character — square tile spanning 1 of 4 columns
+                  (1/4 width), scaling with the column. aspect-square + object-cover
+                  centre-crops the landscape source into the square (sides trimmed,
+                  figure kept). HEVC MP4 first for Safari, VP9 WebM second. */}
+              <div className="reveal md:col-span-1 w-full aspect-square overflow-hidden rounded-2xl">
+                <video
+                  className="h-full w-full object-cover"
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                >
+                  <source src="/video/characters/forge-alpha.mp4" type="video/mp4; codecs=hvc1" />
+                  <source src="/video/characters/forge.webm" type="video/webm" />
+                </video>
+              </div>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            {/* Bento — four content cards in a 2×2. The teacher + student video that
+                used to fill a full-height left column is hidden for now; flip `false`
+                to `true` (and set the grid back to `md:grid-cols-3`) to bring it back. */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              {false && (
+                <div className="reveal md:row-span-2 relative overflow-hidden rounded-3xl aspect-4/5 md:aspect-auto">
+                  <video className="absolute inset-0 h-full w-full object-cover" autoPlay loop muted playsInline>
+                    <source src="/video/characters/teacher-student-alpha.mp4" type="video/mp4; codecs=hvc1" />
+                    <source src="/video/characters/teacher-student.webm" type="video/webm" />
+                  </video>
+                </div>
+              )}
+              {/* Four content cards. */}
               {features.map((f) => (
                 <div key={f.title}
-                  className={`reveal world-card world-card-soft group relative overflow-hidden rounded-3xl p-8 ${f.span ? 'md:col-span-2 md:row-span-1' : ''}`}
+                  className="reveal world-card world-card-soft group relative overflow-hidden rounded-3xl p-8"
                   style={softCardStyle}>
                   <div className="relative flex items-center gap-2 mb-4">
                     <Sparkles className="size-5" style={{ color: t.light }} />
                   </div>
                   <h3 className="relative font-bold mb-2" style={{ fontSize: 'clamp(1rem, 1.6vw, 1.25rem)', color: softHeading }}>{f.title}</h3>
-                  <p className="relative text-sm leading-relaxed max-w-md mb-4" style={{ color: softText }}>{f.desc}</p>
+                  <p className="relative text-sm leading-relaxed mb-4" style={{ color: softText }}>{f.desc}</p>
                   <div className="relative flex flex-wrap gap-2">
                     {f.codes.map((c) => <Chip key={c} code={c} />)}
                   </div>
                 </div>
               ))}
-              <div className="reveal world-card world-card-soft group relative overflow-hidden rounded-3xl p-8 md:col-span-2" style={softCardStyle}>
-                <div className="relative flex flex-col md:flex-row gap-8 md:items-center">
-                  {/* Left — copy */}
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 mb-4"><Radio className="size-5" style={{ color: t.light }} /></div>
-                    <h3 className="font-bold mb-2" style={{ fontSize: 'clamp(1rem, 1.6vw, 1.25rem)', color: softHeading }}>Teacher dashboards</h3>
-                    <p className="text-sm leading-relaxed mb-5" style={{ color: softText }}>
-                      See every student&apos;s progress the moment it happens. Push a module live, monitor
-                      completion in real time, and intervene before anyone falls behind.
-                    </p>
-                    <div className="flex flex-wrap gap-2">
-                      {['Live class view', 'Module control', 'Completion tracking'].map((label) => (
-                        <span key={label} className="text-xs font-medium px-3 py-1 rounded-full border"
-                          style={{ borderColor: `${t.light}40`, color: t.lightCore, backgroundColor: `${t.light}12` }}>
-                          {label}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                  {/* Right — mini class snapshot */}
-                  <div className="shrink-0 rounded-2xl p-5 w-full md:w-56"
-                    style={{ backgroundColor: `${t.light}10`, border: `1px solid ${t.light}20` }}>
-                    <div className="flex items-center justify-between mb-3">
-                      <span className="text-xs font-semibold" style={{ color: softHeading }}>Period 3 · Live</span>
-                      <span className="flex items-center gap-1 text-xs" style={{ color: t.lightCore }}>
-                        <span className="inline-block w-1.5 h-1.5 rounded-full animate-pulse" style={{ backgroundColor: t.lightCore }} />
-                        24 students
-                      </span>
-                    </div>
-                    {/* Student status grid */}
-                    <div className="grid grid-cols-6 gap-1.5 mb-4">
-                      {Array.from({ length: 24 }).map((_, i) => (
-                        <div key={i} className="w-5 h-5 rounded-md"
-                          style={{
-                            backgroundColor: i < 19
-                              ? `${t.lightCore}cc`
-                              : i < 22
-                              ? `${t.accent}99`
-                              : `${t.light}30`,
-                          }} />
-                      ))}
-                    </div>
-                    <div className="flex items-center justify-between text-xs" style={{ color: softText }}>
-                      <span>19 on track</span>
-                      <span style={{ color: t.accent }}>3 need help</span>
-                    </div>
-                  </div>
+              {/* Teacher dashboards — class-snapshot graphic removed. */}
+              <div className="reveal world-card world-card-soft group relative overflow-hidden rounded-3xl p-8" style={softCardStyle}>
+                <div className="relative flex items-center gap-2 mb-4"><Radio className="size-5" style={{ color: t.light }} /></div>
+                <h3 className="relative font-bold mb-2" style={{ fontSize: 'clamp(1rem, 1.6vw, 1.25rem)', color: softHeading }}>Teacher dashboards</h3>
+                <p className="relative text-sm leading-relaxed mb-5" style={{ color: softText }}>
+                  See every student&apos;s progress the moment it happens. Push a module live, monitor
+                  completion in real time, and intervene before anyone falls behind.
+                </p>
+                <div className="relative flex flex-wrap gap-2">
+                  {['Live class view', 'Module control', 'Completion tracking'].map((label) => (
+                    <span key={label} className="text-xs font-medium px-3 py-1 rounded-full border"
+                      style={{ borderColor: `${t.light}40`, color: t.lightCore, backgroundColor: `${t.light}12` }}>
+                      {label}
+                    </span>
+                  ))}
                 </div>
               </div>
             </div>
-            {/* Product shot — framed centerpiece */}
-            <div className="reveal mt-8 mx-auto max-w-2xl rounded-2xl p-3 sm:p-4"
-              style={{
-                border: '1px solid transparent',
-                backgroundImage: `linear-gradient(${t.authorityCard}, ${t.authorityCard}), linear-gradient(135deg, ${t.softCard.edgeFrom}, ${t.softCard.edgeTo})`,
-                backgroundOrigin: 'border-box',
-                backgroundClip: 'padding-box, border-box',
-              }}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/assets/productimg1.png" alt="The Shard teacher dashboard — plan, teach and observe in one place" className="w-full" />
-            </div>
+            {/* Product shot — framed centerpiece. Hidden for now; flip `false` to
+                `true` to bring it back. */}
+            {false && (
+              <div className="reveal mt-8 mx-auto max-w-2xl rounded-2xl p-3 sm:p-4"
+                style={{
+                  border: '1px solid transparent',
+                  backgroundImage: `linear-gradient(${t.authorityCard}, ${t.authorityCard}), linear-gradient(135deg, ${t.softCard.edgeFrom}, ${t.softCard.edgeTo})`,
+                  backgroundOrigin: 'border-box',
+                  backgroundClip: 'padding-box, border-box',
+                }}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src="/assets/productimg1.png" alt="The Shard teacher dashboard — plan, teach and observe in one place" className="w-full" />
+              </div>
+            )}
           </Container>
         </section>
+
+        {/* ══ GEM PALETTE (staging) — all gems in a row, sized like the header gem.
+            Hidden for now (keying needs an After Effects pass); flip `false` to
+            `true` to bring the row back. ══ */}
+        {false && (
+          <section className="relative py-[clamp(2rem,5vw,4rem)]">
+            <Container>
+              <div className="flex flex-wrap justify-center gap-6">
+                {gems.map((name) => (
+                  <div key={name} className="reveal shrink-0 w-72 overflow-hidden rounded-2xl" style={{ aspectRatio: '8 / 7' }}>
+                    <video className="h-full w-full object-cover" autoPlay loop muted playsInline>
+                      <source src={`/video/gems/${name}-alpha.mp4`} type="video/mp4; codecs=hvc1" />
+                      <source src={`/video/gems/${name}.webm`} type="video/webm" />
+                    </video>
+                  </div>
+                ))}
+              </div>
+            </Container>
+          </section>
+        )}
 
         <div className="glow-seam" style={{ '--seam-color': 'rgba(80,40,160,0.45)' } as React.CSSProperties} />
 
@@ -356,19 +383,32 @@ export function WorldPage({ t }: { t: WorldTheme }) {
         {/* ══ 4 · FOUNDING TEAM ══ */}
         <section id="team" className="relative py-[clamp(3.5rem,8vw,10rem)]">
           <Container>
-            <div className="rounded-2xl p-8 mb-6" style={{ background: 'rgba(10,5,28,0.60)' }}>
-              <Eyebrow color={t.eyebrow}>The founding team</Eyebrow>
-              <h2 className="font-bold tracking-tight leading-[1.08] mb-[clamp(1rem,2vw,1.5rem)] reveal" style={{ fontSize: 'clamp(1.75rem, 3vw, 2.5rem)', color: t.text.heading }}>
-                The people who wrote the curriculum, building the tool to teach it.
-              </h2>
-              <p className="leading-relaxed reveal" style={{ fontSize: 'clamp(1rem, 1.5vw, 1.125rem)', color: t.text.body }}>
-                Not a typical EdTech founding team. Shard is built by the authors and leaders behind
-                Australia&apos;s national Digital Technologies curriculum.
-              </p>
+            {/* Same treatment as the platform header: header copy on the left
+                (3/4 width), diamond on the right (1/4-width square). */}
+            <div className="grid grid-cols-1 md:grid-cols-4 items-center gap-8 mb-6">
+              {/* Header copy — left, 3/4 width. */}
+              <div className="md:col-span-3 rounded-2xl p-8" style={{ background: 'rgba(10,5,28,0.60)' }}>
+                <Eyebrow color={t.eyebrow}>The founding team</Eyebrow>
+                <h2 className="font-bold tracking-tight leading-[1.08] mb-[clamp(1rem,2vw,1.5rem)] reveal" style={{ fontSize: 'clamp(1.75rem, 3vw, 2.5rem)', color: t.text.heading }}>
+                  The people who wrote the curriculum, building the tool to teach it.
+                </h2>
+                <p className="leading-relaxed reveal" style={{ fontSize: 'clamp(1rem, 1.5vw, 1.125rem)', color: t.text.body }}>
+                  Not a typical EdTech founding team. Shard is built by the authors and leaders behind
+                  Australia&apos;s national Digital Technologies curriculum.
+                </p>
+              </div>
+              {/* Diamond — right, 1/4 width square (matches the platform header tile). */}
+              <div className="reveal md:col-span-1 w-full aspect-square overflow-hidden rounded-2xl">
+                <video className="h-full w-full object-cover" autoPlay loop muted playsInline>
+                  <source src="/video/gems/black-alpha.mp4" type="video/mp4; codecs=hvc1" />
+                  <source src="/video/gems/black.webm" type="video/webm" />
+                </video>
+              </div>
             </div>
-            <div className="grid sm:grid-cols-2 gap-6">
-              {/* Bruce Fuda — lead author, kept in the dark authority styling */}
-              <div className="reveal world-card relative overflow-hidden flex flex-col rounded-2xl p-6" style={{ background: t.authorityCard, border: `1.5px solid ${t.authorityCardBorder}` }}>
+            <div className="grid sm:grid-cols-2 gap-6 auto-rows-fr">
+              {/* Bruce Fuda — lead author. Gradient border like the others, but its
+                  fill stays the dark authority colour (--card-fill override). */}
+              <div className="reveal world-card world-card-soft relative overflow-hidden flex flex-col rounded-2xl p-6" style={{ ...softCardStyle, ['--card-fill' as string]: t.authorityCard }}>
                 {/* Row 1 — identity */}
                 <div className="flex items-center gap-4 mb-4">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -395,7 +435,7 @@ export function WorldPage({ t }: { t: WorldTheme }) {
                   </div>
                 </div>
               </div>
-              {/* Partnership card — emphasised: keeps the gradient outline the profiles drop */}
+              {/* Partnership card — gradient border, soft fill. */}
               <div className="reveal world-card world-card-soft relative overflow-hidden rounded-2xl p-6 flex flex-col" style={softCardStyle}>
                 {/* Row 1 — identity */}
                 <div className="flex items-center gap-4 mb-4">
@@ -418,7 +458,7 @@ export function WorldPage({ t }: { t: WorldTheme }) {
                 </a>
               </div>
               {team.filter((m) => m.name !== 'Bruce Fuda').map((m) => (
-                <div key={m.name} className="reveal world-card world-card-soft relative overflow-hidden rounded-2xl p-6" style={{ ...softCardStyle, border: 'none' }}>
+                <div key={m.name} className="reveal world-card world-card-soft relative overflow-hidden rounded-2xl p-6" style={softCardStyle}>
                   {/* Row 1 — identity */}
                   <div className="flex items-center gap-4 mb-4">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -469,7 +509,8 @@ export function WorldPage({ t }: { t: WorldTheme }) {
             <p className="leading-relaxed mb-10 reveal" style={{ fontSize: 'clamp(1rem, 1.5vw, 1.125rem)', color: t.text.body }}>
               Join the pilot and help shape what great learning looks like.
             </p>
-            <div className="max-w-2xl">
+            <div className="grid md:grid-cols-2 gap-10 items-stretch">
+              {/* Form — left. */}
               <form className="space-y-5 reveal">
                 <div className="grid sm:grid-cols-2 gap-5">
                   <Field label="Name" id="w-name" placeholder="Your name" t={t} />
@@ -486,6 +527,15 @@ export function WorldPage({ t }: { t: WorldTheme }) {
                   Send message
                 </button>
               </form>
+              {/* Teacher + student loop beside the form. items-stretch matches the
+                  form's height; object-cover fills that height, cropping only the wide
+                  empty side margins of the frame so the characters scale up to match. */}
+              <div className="reveal relative min-h-80">
+                <video className="absolute inset-0 h-full w-full object-cover" autoPlay loop muted playsInline>
+                  <source src="/video/characters/teacher-student-alpha.mp4" type="video/mp4; codecs=hvc1" />
+                  <source src="/video/characters/teacher-student.webm" type="video/webm" />
+                </video>
+              </div>
             </div>
           </Container>
         </section>

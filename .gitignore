@@ -40,3 +40,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# raw video masters — kept local; only the web-delivery .webm/-alpha.mp4 are committed.
+# (.mov sources, plus the green-screen source .mp4s; -alpha.mp4 delivery files are re-included)
+public/video/gems/*.mov
+public/video/characters/*.mov
+public/video/gems/*.mp4
+!public/video/gems/*-alpha.mp4
