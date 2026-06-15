@@ -10,9 +10,9 @@ interface NavProps {
 
 const navLinks = [
   { label: "Platform", href: "#platform" },
-  { label: "Digital Technologies", href: "#technologies" },
-  { label: "Mission", href: "#mission" },
+  { label: "Curriculum", href: "#technologies" },
   { label: "Team", href: "#team" },
+  { label: "Mission", href: "#mission" },
   { label: "For Schools", href: "#schools" },
 ];
 
@@ -115,7 +115,7 @@ export function Nav({ theme = "light" }: NavProps) {
           )}
           <Button
             size="sm"
-            className={`hidden sm:inline-flex text-white rounded-lg transition-colors hover:brightness-110 ${
+            className={`hidden sm:inline-flex h-9 px-5 text-sm font-semibold text-white rounded-lg shadow-lg transition-colors hover:brightness-110 ${
               isNarrative ? "" : "bg-brand-purple hover:bg-brand-purple-dark"
             }`}
             // Narrative CTA matches the world's CTA colour: lava = orange, forest = rose.
@@ -127,17 +127,17 @@ export function Nav({ theme = "light" }: NavProps) {
                 : undefined
             }
           >
-            Create an account
+            Join the pilot
           </Button>
           <Button
             variant="ghost"
             size="sm"
             className={
               isForestLight
-                ? "rounded-lg transition-colors"
+                ? "h-9 px-5 text-sm font-semibold rounded-lg transition-colors"
                 : isDark
-                ? "border border-white/30 hover:border-white/60 text-white hover:bg-white/10 hover:text-white rounded-lg"
-                : "rounded-lg"
+                ? "h-9 px-5 text-sm font-semibold border border-white/30 hover:border-white/60 text-white hover:bg-white/10 hover:text-white rounded-lg"
+                : "h-9 px-5 text-sm font-semibold rounded-lg"
             }
             // Light-forest Sign In flips white→emerald with scroll, like the logo.
             style={isForestLight ? { color: onLightText } : undefined}
