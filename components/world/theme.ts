@@ -85,8 +85,10 @@ export interface WorldTheme {
   /** Body text colour to use ON the soft-card fill (high contrast vs the fill). */
   softCardText: string;
   softCardHeading: string;
-  /** Authority card gradient. */
+  /** Authority card background. */
   authorityCard: string;
+  /** Border colour for authority cards (1.5 px solid). */
+  authorityCardBorder: string;
   /** Ambient particle motion: embers rise, wisps drift. */
   particle: 'rise' | 'drift';
   /** Stata divider line colour. */
@@ -143,14 +145,14 @@ export const THEMES: Record<'lava' | 'forest' | 'forestLight', WorldTheme> = {
       border: 'rgba(255,255,255,0.10)',
       borderHover: 'rgba(255,255,255,0.20)',
     },
-    authorityCard: 'linear-gradient(160deg, #120d2e, #0a0a1f)',
-    // Lava keeps its elegant dark glass — subtle white fill, faint warm edge.
-    // (The soft rose/green fill treatment is a forest-world thing.)
+    authorityCard: '#0e0820',
+    authorityCardBorder: '#5a30a0',
+    // Opaque deep amethyst fill — gradient border runs ember orange → atmosphere violet.
     softCard: {
-      fill: 'rgba(255,255,255,0.03)',
-      edgeFrom: 'rgba(255,255,255,0.10)',
-      edgeTo: 'rgba(255,179,71,0.22)',
-      glow: 'rgba(249,115,22,0.20)',
+      fill: '#150a2e',
+      edgeFrom: 'rgba(249,115,22,0.65)',   // ember orange
+      edgeTo: 'rgba(123,75,255,0.55)',     // atmosphere violet
+      glow: 'rgba(249,115,22,0.15)',
       shadow: 'none',
     },
     softCardText: 'rgba(255,255,255,0.72)',
@@ -208,14 +210,14 @@ export const THEMES: Record<'lava' | 'forest' | 'forestLight', WorldTheme> = {
       border: 'rgba(18,180,183,0.16)',
       borderHover: 'rgba(18,180,183,0.32)',
     },
-    authorityCard: 'linear-gradient(160deg, #14474b, #0b3034)',
-    // Soft teal interior with a soft→deeper cyan outline gradient — a lighter,
-    // whimsical surface so text stands out against it.
+    authorityCard: '#060f09',
+    authorityCardBorder: '#2d5a3d',
+    // Opaque deep forest fill with solid teal border — no glass, no blur.
     softCard: {
-      fill: 'rgba(30,78,82,0.55)',           // soft muted teal
-      edgeFrom: 'rgba(125,240,239,0.45)',    // pale cyan (crystal core)
-      edgeTo: 'rgba(18,180,183,0.6)',        // deeper bioluminescent cyan
-      glow: 'rgba(18,180,183,0.35)',
+      fill: '#0a1f12',
+      edgeFrom: '#1a3d2b',
+      edgeTo: '#1a3d2b',
+      glow: 'rgba(18,180,183,0.20)',
       shadow: 'none',
     },
     softCardText: 'rgba(220,250,250,0.82)',  // cyan-tinted off-white
@@ -279,6 +281,7 @@ export const THEMES: Record<'lava' | 'forest' | 'forestLight', WorldTheme> = {
       borderHover: 'rgba(16,185,129,0.32)',
     },
     authorityCard: 'linear-gradient(160deg, #ffffff, #fdf2f6)',
+    authorityCardBorder: 'rgba(232,90,164,0.30)',
     // Warm-white card + soft sprawling rose shadow — the "enchanted" lift in light mode.
     softCard: {
       fill: '#ffffff',

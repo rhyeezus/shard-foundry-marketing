@@ -1,6 +1,6 @@
 'use client';
 
-import { ChevronRight, ArrowRight, CheckCircle, Award, Sparkles, Radio } from 'lucide-react';
+import { ChevronRight, ArrowRight, Award, Sparkles, Radio } from 'lucide-react';
 import { Nav } from '@/components/Nav';
 import { WorldScene } from './WorldScene';
 import { useResponsiveVideo } from './useResponsiveVideo';
@@ -33,26 +33,12 @@ const features = [
   },
 ];
 
-const stats = [
-  { value: '15+',  label: 'Years building the national curriculum', countUp: true  },
-  { value: '2016', label: 'ACCE/ACS ICT Educator of the Year',      countUp: false },
-  { value: 'v9.0', label: 'AC: Digital Technologies aligned',        countUp: false },
-];
 
 const curriculum = [
   { year: 'Year 7', code: 'AC9TDI8K01', title: 'Data & Information', desc: 'Representation, integrity and the meaning behind the bits.' },
   { year: 'Year 7', code: 'AC9TDI8K02', title: 'Digital Systems', desc: 'How hardware, software and networks fit together.' },
   { year: 'Year 8', code: 'AC9TDI8P09', title: 'Creating Digital Solutions', desc: 'From brief to build. Designing for real users.' },
   { year: 'Year 8', code: 'AC9TDI8P10', title: 'Processes & Production', desc: 'Iterate, test and refine like a working developer.' },
-];
-
-const checklist = [
-  'Aligned to AC: DT v9.0 content descriptions',
-  'Full Year 7 & 8 scope and sequence, complete',
-  'Formative assessment built into every lesson',
-  'Print-ready teacher guides included',
-  'Offline-capable student activities',
-  'School administration dashboard',
 ];
 
 const team = [
@@ -117,9 +103,6 @@ export function WorldPage({ t }: { t: WorldTheme }) {
   } as React.CSSProperties;
   const softText = t.softCardText;
   const softHeading = t.softCardHeading;
-
-  // Brand accent cycle — orange → teal → purple, consistent across both worlds.
-  const barColors = ['#FF7A1F', '#2BC6B2', '#7B4BFF'] as const;
 
   // Nav variant: lava → amethyst; dark forest → forest; light forest → forest-light.
   const navTheme = t.name === 'lava' ? 'amethyst' : t.mode === 'light' ? 'forest-light' : 'forest';
@@ -201,12 +184,12 @@ export function WorldPage({ t }: { t: WorldTheme }) {
                     subhead down — the subhead anchors to the true top corner.
                     padding-top on the p reserves visual room for the h1 once
                     it animates in (~h1 height + gap, scales with 5.5vw font). */}
-                <h1 data-words className="absolute inset-x-0 font-medium" style={{ top: 0, fontSize: 'clamp(0.85rem, 1.3vw, 1rem)', letterSpacing: '0.01em', lineHeight: 1.4, color: t.heroTextMuted }}>
+                <p data-words className="absolute inset-x-0 font-medium" style={{ top: 0, fontSize: 'clamp(0.85rem, 1.3vw, 1rem)', letterSpacing: '0.01em', lineHeight: 1.4, color: t.heroTextMuted }}>
                   Where great learning is forged
-                </h1>
-                <p data-hero-p className="font-bold mb-7" style={{ fontSize: 'clamp(1.5rem, 3.5vw, 2.75rem)', lineHeight: 1.15, color: t.heroText }}>
-                  Curriculum-aligned experiences designed by teachers, for teachers.
                 </p>
+                <h1 data-hero-p className="font-bold mb-7" style={{ fontSize: 'clamp(1.5rem, 3.5vw, 2.75rem)', lineHeight: 1.15, color: t.heroText }}>
+                  Curriculum-aligned experiences designed by teachers, for teachers.
+                </h1>
                 <div className="flex gap-4 flex-wrap reveal">
                   <a href="#schools" data-arrow className="inline-flex items-center gap-2 font-bold rounded-lg shadow-lg transition-colors hover:brightness-110"
                     style={{ padding: 'clamp(10px,1vw,14px) clamp(18px,1.8vw,28px)', fontSize: 'clamp(13px, 1.04vw, 16px)', backgroundColor: t.cta, color: t.text.onAccent }}>
@@ -222,109 +205,23 @@ export function WorldPage({ t }: { t: WorldTheme }) {
           </div>
         </section>
 
-        {/* ══ 2 · AUTHORITY BAND — promoted to lead ══ */}
-        <section id="team" className="relative py-[clamp(3.5rem,8vw,10rem)]">
-          <Container>
-            <div className="section-connector mb-[clamp(1rem,2vw,1.5rem)]" style={{ '--connector-color': t.light } as React.CSSProperties}>
-              <Eyebrow color={t.eyebrow}>The founding team</Eyebrow>
-              <h2 className="font-bold tracking-tight leading-[1.08] reveal" style={{ fontSize: 'clamp(1.75rem, 3vw, 2.5rem)', color: t.text.heading }}>
-                The people who wrote the curriculum, building the tool to teach it.
-              </h2>
-            </div>
-            <p className="leading-relaxed mb-[clamp(1.25rem,2.5vw,2rem)] reveal" style={{ fontSize: 'clamp(1rem, 1.5vw, 1.125rem)', color: t.text.body }}>
-              Not a typical EdTech founding team. Shard is built by the authors and leaders behind
-              Australia&apos;s national Digital Technologies curriculum.
-            </p>
-            {/* Full-width authority bar */}
-            <div className="flex items-center gap-4 rounded-xl px-6 py-5 mb-[clamp(2rem,4vw,3.5rem)]"
-              style={{ background: t.authorityCard }}>
-              <span className="flex h-11 w-11 items-center justify-center rounded-full shrink-0" style={{ backgroundColor: t.accent }}>
-                <Award className="size-5" style={{ color: '#fff' }} />
-              </span>
-              <div>
-                <p className="font-semibold leading-snug" style={{ fontSize: 'clamp(0.95rem, 1.4vw, 1.1rem)', color: t.text.heading }}>
-                  Built by the author of the Australian Curriculum: Digital Technologies
-                </p>
-                <p className="text-sm mt-0.5" style={{ color: t.text.muted }}>
-                  2016 ACCE/ACS ICT Educator of the Year · Former Chief Education Officer, Grok Academy
-                </p>
-              </div>
-            </div>
-            <div className="grid sm:grid-cols-3 gap-6">
-              {team.map((m, i) => {
-                const teamAccent = barColors[i % 3];
-                return (
-                <div key={m.name} className="reveal world-card world-card-soft relative overflow-hidden rounded-2xl p-8" style={softCardStyle}>
-                  <div className="absolute inset-x-0 top-0 h-[2px]" style={{ backgroundColor: teamAccent }} />
-                  <div className="w-20 h-20 rounded-full mb-5 p-[2px]"
-                    style={{ background: `linear-gradient(135deg, ${t.accent}, ${t.light})` }}>
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={m.photo} alt={m.name} className="w-full h-full rounded-full object-cover" />
-                  </div>
-                  <h3 className="font-semibold mb-1" style={{ fontSize: 'clamp(1rem, 1.4vw, 1.2rem)', color: softHeading }}>{m.name}</h3>
-                  <span className="inline-flex text-xs font-semibold px-2.5 py-1 rounded-full mb-3"
-                    style={{ backgroundColor: `${t.accent}26`, color: t.lightCore }}>{m.role}</span>
-                  <p className="text-sm font-medium mb-3" style={{ color: t.light }}>{m.cred}</p>
-                  <p className="text-sm leading-relaxed" style={{ color: softText }}>{m.bio}</p>
-                </div>
-                );
-              })}
-            </div>
-          </Container>
-        </section>
-
-        <div className="glow-seam" style={{ '--seam-color': 'rgba(80,40,160,0.45)' } as React.CSSProperties} />
-
-        {/* ══ 3 · LIVE PRODUCT SHOWCASE — "alive in use" ══ */}
+        {/* ══ 2 · THE PLATFORM — feature showcase ══ */}
         <section id="platform" className="relative py-[clamp(3rem,7vw,9rem)]">
           <Container>
-            <Eyebrow color={t.eyebrow}>Teacher command centre</Eyebrow>
-            <h2 className="font-bold tracking-tight mb-5 leading-tight reveal" style={{ fontSize: 'clamp(1.75rem, 3vw, 2.5rem)', color: t.text.heading }}>
-              Plan, teach and observe without leaving the room.
-            </h2>
-            <p className="leading-relaxed mb-10 reveal" style={{ fontSize: 'clamp(1rem, 1.5vw, 1.125rem)', color: t.text.body }}>
-              Set up classes in seconds, drop students in by code, push modules live, and watch progress
-              update in real time. The whole workflow a teacher actually runs, in one screen.
-            </p>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              {stats.map((s, i) => {
-                const accent = barColors[i % 3];
-                return (
-                  <div key={s.label} className="reveal world-card world-card-soft relative rounded-2xl p-5 overflow-hidden"
-                    style={softCardStyle}>
-                    <div className="absolute inset-x-0 top-0 h-[2px]" style={{ backgroundColor: accent }} />
-                    <p className="font-bold mb-1 tracking-tight" style={{ fontSize: 'clamp(1.1rem, 2vw, 1.5rem)', color: softHeading }}
-                      data-count={s.countUp ? s.value : undefined}>{s.value}</p>
-                    <p className="text-xs leading-snug" style={{ color: softText }}>{s.label}</p>
-                  </div>
-                );
-              })}
-            </div>
-          </Container>
-        </section>
-
-        <div className="glow-seam" style={{ '--seam-color': 'rgba(80,40,160,0.45)' } as React.CSSProperties} />
-
-        {/* ══ 4 · PLATFORM BENTO — real hierarchy ══ */}
-        <section className="relative py-[clamp(3rem,7vw,9rem)]">
-          <Container>
-            <div className="section-connector mb-5" style={{ '--connector-color': t.light } as React.CSSProperties}>
+            <div className="rounded-2xl p-8 mb-5" style={{ background: 'rgba(10,5,28,0.60)' }}>
               <Eyebrow color={t.eyebrow}>The platform</Eyebrow>
-              <h2 className="font-bold tracking-tight leading-[1.08] reveal" style={{ fontSize: 'clamp(1.75rem, 3vw, 2.5rem)', color: t.text.heading }}>
+              <h2 className="font-bold tracking-tight leading-[1.08] mb-5 reveal" style={{ fontSize: 'clamp(1.75rem, 3vw, 2.5rem)', color: t.text.heading }}>
                 Everything teachers need, in one forge.
               </h2>
+              <p className="leading-relaxed reveal" style={{ fontSize: 'clamp(1rem, 1.5vw, 1.125rem)', color: t.text.body }}>
+                Built around the realities of Australian classrooms. Not a content library, not a quiz engine. A complete teaching platform.
+              </p>
             </div>
-            <p className="leading-relaxed mb-[clamp(2rem,4vw,3.5rem)] reveal" style={{ fontSize: 'clamp(1rem, 1.5vw, 1.125rem)', color: t.text.body }}>
-              Built around the realities of Australian classrooms. Not a content library, not a quiz engine. A complete teaching platform.
-            </p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-              {features.map((f, i) => {
-                const bentoAccent = barColors[i % 3];
-                return (
+              {features.map((f) => (
                 <div key={f.title}
                   className={`reveal world-card world-card-soft group relative overflow-hidden rounded-3xl p-8 ${f.span ? 'md:col-span-2 md:row-span-1' : ''}`}
                   style={softCardStyle}>
-                  <div className="absolute inset-x-0 top-0 h-[2px]" style={{ backgroundColor: bentoAccent }} />
                   <div className="relative flex items-center gap-2 mb-4">
                     <Sparkles className="size-5" style={{ color: t.light }} />
                   </div>
@@ -334,17 +231,15 @@ export function WorldPage({ t }: { t: WorldTheme }) {
                     {f.codes.map((c) => <Chip key={c} code={c} />)}
                   </div>
                 </div>
-                );
-              })}
+              ))}
               <div className="reveal world-card world-card-soft group relative overflow-hidden rounded-3xl p-8 md:col-span-2" style={softCardStyle}>
-                <div className="absolute inset-x-0 top-0 h-[2px]" style={{ backgroundColor: barColors[0] }} />
                 <div className="relative flex flex-col md:flex-row gap-8 md:items-center">
                   {/* Left — copy */}
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-4"><Radio className="size-5" style={{ color: t.light }} /></div>
                     <h3 className="font-bold mb-2" style={{ fontSize: 'clamp(1rem, 1.6vw, 1.25rem)', color: softHeading }}>Teacher dashboards</h3>
                     <p className="text-sm leading-relaxed mb-5" style={{ color: softText }}>
-                      See every student's progress the moment it happens. Push a module live, monitor
+                      See every student&apos;s progress the moment it happens. Push a module live, monitor
                       completion in real time, and intervene before anyone falls behind.
                     </p>
                     <div className="flex flex-wrap gap-2">
@@ -387,108 +282,186 @@ export function WorldPage({ t }: { t: WorldTheme }) {
                 </div>
               </div>
             </div>
+            {/* Product shot — framed centerpiece */}
+            <div className="reveal mt-8 mx-auto max-w-2xl rounded-2xl p-3 sm:p-4"
+              style={{
+                border: '1px solid transparent',
+                backgroundImage: `linear-gradient(${t.authorityCard}, ${t.authorityCard}), linear-gradient(135deg, ${t.softCard.edgeFrom}, ${t.softCard.edgeTo})`,
+                backgroundOrigin: 'border-box',
+                backgroundClip: 'padding-box, border-box',
+              }}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/assets/productimg1.png" alt="The Shard teacher dashboard — plan, teach and observe in one place" className="w-full" />
+            </div>
           </Container>
         </section>
 
         <div className="glow-seam" style={{ '--seam-color': 'rgba(80,40,160,0.45)' } as React.CSSProperties} />
 
-        {/* ══ 5 · CURRICULUM AUTHORITY + SCOPE ══ */}
+        {/* ══ 3 · CURRICULUM AUTHORITY — the single trust beat ══ */}
         <section id="technologies" className="relative py-[clamp(3rem,7vw,9rem)]">
           <Container>
-            <Eyebrow color={t.eyebrowCta}>Curriculum authority</Eyebrow>
-            <h2 className="font-bold tracking-tight mb-5 leading-tight reveal" style={{ fontSize: 'clamp(1.75rem, 3vw, 2.5rem)', color: t.text.heading }}>
-              The complete curriculum. Built from the source.
-            </h2>
-            <p className="leading-relaxed mb-[clamp(2rem,4vw,3.5rem)] reveal" style={{ fontSize: 'clamp(1rem, 1.5vw, 1.125rem)', color: t.text.body }}>
-              Not adapted from overseas materials or mapped after the fact. Every content description,
-              every strand, every proficiency level authored by the same team who wrote the national standard.
-            </p>
-
-            <div className="grid lg:grid-cols-2 gap-10 mb-[clamp(2rem,4vw,3.5rem)]">
-              {/* Authority card */}
-              <div className="reveal world-card relative overflow-hidden flex flex-col justify-center rounded-3xl p-10" style={{ background: t.authorityCard }}>
-                <div className="flex items-center gap-5 mb-6">
-                  <div className="w-16 h-16 rounded-full shrink-0 p-[2px]"
-                    style={{ background: `linear-gradient(135deg, ${t.accent}, ${t.light})` }}>
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src="/teachers/bruce-fuda.webp" alt="Bruce Fuda" className="w-full h-full rounded-full object-cover" />
-                  </div>
-                  <div>
-                    <h3 className="font-bold" style={{ fontSize: 'clamp(1.25rem, 2vw, 1.5rem)', color: t.text.heading }}>Bruce Fuda</h3>
-                    <p className="text-sm" style={{ color: t.text.body }}>Author, Australian Curriculum: Digital Technologies</p>
-                  </div>
-                </div>
-                <div className="inline-flex items-center gap-3 rounded-xl px-4 py-3 mb-6 w-fit"
-                  style={{ backgroundColor: `${t.cta}26`, border: `1px solid ${t.cta}40` }}>
-                  <div className="w-8 h-8 rounded-full flex items-center justify-center shrink-0" style={{ backgroundColor: t.cta }}>
-                    <Award className="size-4" style={{ color: '#fff' }} />
-                  </div>
-                  <div>
-                    <p className="text-xs font-semibold" style={{ color: t.lightCore }}>2016 ACCE/ACS Award</p>
-                    <p className="text-xs" style={{ color: t.text.muted }}>ICT Educator of the Year</p>
-                  </div>
-                </div>
-                <p className="text-sm leading-relaxed" style={{ color: t.text.muted }}>
-                  Former Chief Education Officer at Grok Academy. The curriculum is authored by the person who wrote the national standard.
+            {/* Intro — bold centered typography */}
+            <div className="text-center mb-[clamp(2rem,4vw,3rem)]">
+              <Eyebrow color={t.eyebrowCta}>Curriculum authority</Eyebrow>
+              <h2 className="font-bold tracking-tight leading-[1.08] mb-5 reveal" style={{ fontSize: 'clamp(2rem, 4.5vw, 3.25rem)', color: t.text.heading }}>
+                The complete curriculum.<br />
+                <span style={{ color: t.lightCore }}>Built from the source.</span>
+              </h2>
+              <p className="leading-relaxed mx-auto max-w-3xl reveal" style={{ fontSize: 'clamp(1.05rem, 1.6vw, 1.25rem)', color: t.text.body }}>
+                Not adapted from overseas materials or mapped after the fact. Every content description,
+                every strand, every proficiency level authored by the same team who wrote the national standard.
+              </p>
+            </div>
+            {/* Authority bar — centered */}
+            <div className="flex items-center gap-4 rounded-xl px-6 py-5 mb-[clamp(2.5rem,5vw,4rem)] max-w-2xl mx-auto reveal"
+              style={{
+                border: '1.5px solid transparent',
+                backgroundImage: `linear-gradient(${t.authorityCard}, ${t.authorityCard}), linear-gradient(135deg, rgba(180,130,255,0.70), rgba(80,30,160,0.85))`,
+                backgroundOrigin: 'padding-box, border-box',
+                backgroundClip: 'padding-box, border-box',
+              }}>
+              <span className="flex h-11 w-11 items-center justify-center rounded-full shrink-0" style={{ backgroundColor: t.accent }}>
+                <Award className="size-5" style={{ color: '#fff' }} />
+              </span>
+              <div>
+                <p className="font-semibold leading-snug" style={{ fontSize: 'clamp(0.95rem, 1.4vw, 1.1rem)', color: t.text.heading }}>
+                  Built by the author of the Australian Curriculum: Digital Technologies
                 </p>
-              </div>
-
-              {/* Checklist */}
-              <div className="flex flex-col justify-center">
-                <div className="space-y-3 mb-9">
-                  {checklist.map((c) => (
-                    <div key={c} className="flex items-center gap-3 reveal">
-                      <CheckCircle className="size-4 shrink-0" style={{ color: t.lightCore }} />
-                      <span className="text-sm" style={{ color: t.text.bodyStrong }}>{c}</span>
-                    </div>
-                  ))}
-                </div>
-                <a href="#schools" data-arrow className="reveal inline-flex items-center gap-2 font-semibold rounded-lg transition-colors hover:brightness-110 px-7 py-3 w-fit" style={{ backgroundColor: t.cta, color: t.text.onAccent }}>
-                  Join the pilot <ArrowRight className="size-4 arrow-icon" />
-                </a>
+                <p className="text-sm mt-0.5" style={{ color: t.text.muted }}>
+                  2016 ACCE/ACS ICT Educator of the Year · Former Chief Education Officer, Grok Academy
+                </p>
               </div>
             </div>
 
-            {/* Scope grid */}
-            <h3 className="text-sm font-semibold tracking-[0.18em] uppercase mb-6 reveal" style={{ color: t.text.faint }}>
+            {/* Year 7 & 8 scope & sequence */}
+            <h3 className="text-sm font-semibold tracking-[0.18em] uppercase mb-6 text-center reveal" style={{ color: t.text.faint }}>
               Year 7 &amp; 8 scope &amp; sequence
             </h3>
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-              {curriculum.map((m, i) => {
-                const scopeAccent = barColors[i % 3];
-                return (
+              {curriculum.map((m) => (
                 <div key={m.title} className="reveal world-card world-card-soft relative rounded-2xl p-6 overflow-hidden" style={softCardStyle}>
-                  <div className="absolute inset-x-0 top-0 h-[2px]" style={{ backgroundColor: scopeAccent }} />
                   <span className="inline-block text-[11px] font-semibold tracking-wide uppercase mb-2" style={{ color: t.lightCore }}>{m.year}</span>
                   <h4 className="font-bold mb-1.5" style={{ fontSize: 'clamp(0.9rem, 1.4vw, 1.125rem)', color: softHeading }}>{m.title}</h4>
                   <p className="text-sm leading-relaxed mb-3" style={{ color: softText }}>{m.desc}</p>
                   <Chip code={m.code} />
                 </div>
-                );
-              })}
+              ))}
             </div>
           </Container>
         </section>
 
         <div className="glow-seam" style={{ '--seam-color': 'rgba(80,40,160,0.45)' } as React.CSSProperties} />
 
-        {/* ══ 6 · MISSION ══ */}
-        <section id="mission" className="relative py-[clamp(3.5rem,8vw,10rem)]">
+        {/* ══ 4 · FOUNDING TEAM ══ */}
+        <section id="team" className="relative py-[clamp(3.5rem,8vw,10rem)]">
           <Container>
-            <Eyebrow color={t.eyebrowCta}>Mission</Eyebrow>
-            <h2 className="font-bold tracking-tight leading-[1.1] mb-6 reveal" style={{ fontSize: 'clamp(1.75rem, 3vw, 2.5rem)', color: t.text.heading }}>
-              Quality education should be accessible, interactive, and curriculum-aligned.
-            </h2>
-            <p className="leading-relaxed reveal" style={{ fontSize: 'clamp(1rem, 1.5vw, 1.125rem)', color: t.text.body }}>
-              Shard Learning empowers teachers with tools to deliver engaging digital literacy education
-              that meets national standards while respecting classroom realities.
-            </p>
+            <div className="rounded-2xl p-8 mb-6" style={{ background: 'rgba(10,5,28,0.60)' }}>
+              <Eyebrow color={t.eyebrow}>The founding team</Eyebrow>
+              <h2 className="font-bold tracking-tight leading-[1.08] mb-[clamp(1rem,2vw,1.5rem)] reveal" style={{ fontSize: 'clamp(1.75rem, 3vw, 2.5rem)', color: t.text.heading }}>
+                The people who wrote the curriculum, building the tool to teach it.
+              </h2>
+              <p className="leading-relaxed reveal" style={{ fontSize: 'clamp(1rem, 1.5vw, 1.125rem)', color: t.text.body }}>
+                Not a typical EdTech founding team. Shard is built by the authors and leaders behind
+                Australia&apos;s national Digital Technologies curriculum.
+              </p>
+            </div>
+            <div className="grid sm:grid-cols-2 gap-6">
+              {/* Bruce Fuda — lead author, kept in the dark authority styling */}
+              <div className="reveal world-card relative overflow-hidden flex flex-col rounded-2xl p-6" style={{ background: t.authorityCard, border: `1.5px solid ${t.authorityCardBorder}` }}>
+                {/* Row 1 — identity */}
+                <div className="flex items-center gap-4 mb-4">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src="/teachers/bruce-fuda.webp" alt="Bruce Fuda" className="w-16 h-16 rounded-full shrink-0 object-cover" />
+                  <div className="min-w-0">
+                    <h3 className="font-semibold leading-tight mb-1.5" style={{ fontSize: 'clamp(1rem, 1.4vw, 1.2rem)', color: t.text.heading }}>Bruce Fuda</h3>
+                    <span className="inline-flex text-xs font-semibold px-2.5 py-0.5 rounded-full"
+                      style={{ backgroundColor: `${t.accent}26`, color: t.lightCore }}>Chief Operations Officer</span>
+                  </div>
+                </div>
+                {/* Row 2 — supporting */}
+                <p className="text-sm leading-relaxed mb-4" style={{ color: t.text.muted }}>
+                  Author of the Australian Curriculum: Digital Technologies. Former Chief Education Officer at Grok Academy.
+                </p>
+                {/* Award — anchored to the bottom */}
+                <div className="mt-auto flex items-center gap-2.5 rounded-lg px-3 py-2.5 w-fit"
+                  style={{ backgroundColor: `${t.cta}26`, border: `1px solid ${t.cta}40` }}>
+                  <span className="flex w-8 h-8 rounded-full items-center justify-center shrink-0" style={{ backgroundColor: t.cta }}>
+                    <Award className="size-4" style={{ color: '#fff' }} />
+                  </span>
+                  <div>
+                    <p className="text-xs font-semibold leading-tight" style={{ color: t.lightCore }}>2016 ACCE/ACS Award</p>
+                    <p className="text-[11px] leading-tight" style={{ color: t.text.muted }}>ICT Educator of the Year</p>
+                  </div>
+                </div>
+              </div>
+              {/* Partnership card — emphasised: keeps the gradient outline the profiles drop */}
+              <div className="reveal world-card world-card-soft relative overflow-hidden rounded-2xl p-6 flex flex-col" style={softCardStyle}>
+                {/* Row 1 — identity */}
+                <div className="flex items-center gap-4 mb-4">
+                  <span className="flex w-16 h-16 rounded-full shrink-0 items-center justify-center" style={{ backgroundColor: `${t.accent}26` }}>
+                    <Sparkles className="size-7" style={{ color: t.lightCore }} />
+                  </span>
+                  <div className="min-w-0">
+                    <span className="inline-flex text-[11px] font-semibold tracking-[0.18em] uppercase px-2.5 py-0.5 rounded-full mb-1.5"
+                      style={{ backgroundColor: `${t.accent}26`, color: t.lightCore }}>In partnership with</span>
+                    <h3 className="font-bold leading-tight" style={{ fontSize: 'clamp(1.05rem, 1.5vw, 1.25rem)', color: softHeading }}>Growing Up Greatness</h3>
+                  </div>
+                </div>
+                {/* Row 2 — supporting */}
+                <p className="text-sm leading-relaxed mb-4" style={{ color: softText }}>
+                  Works with schools, educators and leaders to implement high-quality pedagogy for diverse
+                  classrooms — through consultancy, coaching, and teacher professional learning.
+                </p>
+                <a href="https://growingupgreatness.com" className="mt-auto inline-flex items-center gap-1.5 text-sm font-semibold transition-colors hover:underline" style={{ color: t.accent }}>
+                  growingupgreatness.com <ArrowRight className="size-3.5" />
+                </a>
+              </div>
+              {team.filter((m) => m.name !== 'Bruce Fuda').map((m) => (
+                <div key={m.name} className="reveal world-card world-card-soft relative overflow-hidden rounded-2xl p-6" style={{ ...softCardStyle, border: 'none' }}>
+                  {/* Row 1 — identity */}
+                  <div className="flex items-center gap-4 mb-4">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={m.photo} alt={m.name} className="w-16 h-16 rounded-full shrink-0 object-cover" />
+                    <div className="min-w-0">
+                      <h3 className="font-semibold leading-tight mb-1.5" style={{ fontSize: 'clamp(1rem, 1.4vw, 1.2rem)', color: softHeading }}>{m.name}</h3>
+                      <span className="inline-flex text-xs font-semibold px-2.5 py-0.5 rounded-full mb-1.5"
+                        style={{ backgroundColor: `${t.accent}26`, color: t.lightCore }}>{m.role}</span>
+                      <p className="text-xs font-medium leading-snug" style={{ color: t.light }}>{m.cred}</p>
+                    </div>
+                  </div>
+                  {/* Row 2 — supporting */}
+                  <p className="text-sm leading-relaxed" style={{ color: softText }}>{m.bio}</p>
+                </div>
+              ))}
+            </div>
           </Container>
         </section>
 
         <div className="glow-seam" style={{ '--seam-color': 'rgba(80,40,160,0.45)' } as React.CSSProperties} />
 
-        {/* ══ 7 · CONTACT ══ */}
+        {/* ══ 5 · MISSION ══ */}
+        <section id="mission" className="relative py-[clamp(5rem,11vw,13rem)]">
+          <Container>
+            <div className="max-w-4xl mx-auto text-center">
+              <Eyebrow color={t.eyebrowCta}>Mission</Eyebrow>
+              <h2 className="font-bold tracking-tight leading-[1.08] mb-7 reveal" style={{ fontSize: 'clamp(2.25rem, 5vw, 3.75rem)', color: t.text.heading }}>
+                Quality education should be{' '}
+                <span style={{ color: t.lightCore }}>accessible</span>,{' '}
+                <span style={{ color: t.lightCore }}>interactive</span>, and{' '}
+                <span style={{ color: t.lightCore }}>curriculum-aligned</span>.
+              </h2>
+              <p className="leading-relaxed mx-auto max-w-2xl reveal" style={{ fontSize: 'clamp(1.125rem, 1.7vw, 1.35rem)', color: t.text.body }}>
+                Shard Learning empowers teachers with tools to deliver engaging digital literacy education
+                that meets national standards while respecting classroom realities.
+              </p>
+            </div>
+          </Container>
+        </section>
+
+        <div className="glow-seam" style={{ '--seam-color': 'rgba(80,40,160,0.45)' } as React.CSSProperties} />
+
+        {/* ══ 6 · CONTACT ══ */}
         <section id="schools" className="relative py-[clamp(3rem,7vw,9rem)] scroll-mt-20">
           <Container>
             <Eyebrow color={t.eyebrowCta}>For schools</Eyebrow>
@@ -496,7 +469,7 @@ export function WorldPage({ t }: { t: WorldTheme }) {
             <p className="leading-relaxed mb-10 reveal" style={{ fontSize: 'clamp(1rem, 1.5vw, 1.125rem)', color: t.text.body }}>
               Join the pilot and help shape what great learning looks like.
             </p>
-            <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
+            <div className="max-w-2xl">
               <form className="space-y-5 reveal">
                 <div className="grid sm:grid-cols-2 gap-5">
                   <Field label="Name" id="w-name" placeholder="Your name" t={t} />
@@ -513,18 +486,6 @@ export function WorldPage({ t }: { t: WorldTheme }) {
                   Send message
                 </button>
               </form>
-              <div className="reveal world-card world-card-soft relative overflow-hidden rounded-2xl p-8" style={softCardStyle}>
-                <div className="absolute inset-x-0 top-0 h-[2px]" style={{ backgroundColor: barColors[1] }} />
-                <p className="font-bold mb-3" style={{ fontSize: 'clamp(1.1rem, 2vw, 1.5rem)', color: t.light }}>Growing Up Greatness</p>
-                <p className="text-sm leading-relaxed mb-4" style={{ color: softText }}>
-                  Growing Up Greatness works with schools, educators and school leaders to implement
-                  high-quality pedagogy for diverse classrooms through consultancy, coaching, and teacher
-                  professional learning.
-                </p>
-                <a href="https://growingupgreatness.com" className="text-sm font-medium transition-colors hover:underline" style={{ color: t.accent }}>
-                  growingupgreatness.com
-                </a>
-              </div>
             </div>
           </Container>
         </section>
