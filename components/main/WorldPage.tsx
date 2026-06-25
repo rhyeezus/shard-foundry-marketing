@@ -7,6 +7,7 @@ import { useResponsiveVideo } from './useResponsiveVideo';
 import { Particles } from './Particles';
 import { TrustBar } from './TrustBar';
 import { HeroBubbleSequence } from './HeroBubbleSequence';
+import { PedagogyExplainer } from './PedagogyExplainer';
 import type { WorldTheme } from './theme';
 
 /* ── Single source of width — matches the nav so every section's edges align. ── */
@@ -215,9 +216,12 @@ export function WorldPage({ t }: { t: WorldTheme }) {
           </Container>
         </section>
 
-        {/* Anchor target for the hero's "See how →" link.
-            The full PedagogyExplainer section ships in the next pass. */}
-        <div id="pedagogy" className="scroll-mt-24" aria-hidden />
+        {/* ══ 1.7 · PEDAGOGY — "See how →" payoff: how we actually teach ══ */}
+        <section id="pedagogy" className="relative py-[clamp(3rem,7vw,9rem)] scroll-mt-20">
+          <Container>
+            <PedagogyExplainer t={t} />
+          </Container>
+        </section>
 
         {/* ══ 2 · THE PLATFORM — feature showcase ══ */}
         <section id="platform" className="relative py-[clamp(3rem,7vw,9rem)]">
