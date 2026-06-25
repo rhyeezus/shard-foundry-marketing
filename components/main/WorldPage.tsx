@@ -187,12 +187,15 @@ export function WorldPage({ t }: { t: WorldTheme }) {
                     subhead down — the subhead anchors to the true top corner.
                     padding-top on the p reserves visual room for the h1 once
                     it animates in (~h1 height + gap, scales with 5.5vw font). */}
-                <p data-words className="absolute inset-x-0 font-medium" style={{ top: 0, fontSize: 'clamp(0.85rem, 1.3vw, 1rem)', letterSpacing: '0.01em', lineHeight: 1.4, color: t.heroTextMuted }}>
-                  Built by the authors of the national curriculum
+                <p data-words className="absolute inset-x-0 font-semibold uppercase" style={{ top: 0, fontSize: 'clamp(0.7rem, 1vw, 0.8rem)', letterSpacing: '0.14em', lineHeight: 1.4, color: t.heroTextMuted }}>
+                  Years 5–8 · Australian Curriculum: Digital Technologies
                 </p>
-                <h1 data-hero-p className="font-bold mb-7" style={{ fontSize: 'clamp(1.5rem, 3.5vw, 2.75rem)', lineHeight: 1.15, color: t.heroText }}>
-                  Digital Technologies, taught the way it was written.
+                <h1 data-hero-p className="font-bold mb-4" style={{ fontSize: 'clamp(1.5rem, 3.5vw, 2.75rem)', lineHeight: 1.12, color: t.heroText }}>
+                  The complete Digital Technologies teaching program.
                 </h1>
+                <p className="font-medium mb-7" style={{ fontSize: 'clamp(1rem, 1.6vw, 1.25rem)', lineHeight: 1.45, color: t.heroTextStrong }}>
+                  Built by the people who wrote the curriculum — interactive, classroom-first, and fully aligned.
+                </p>
                 <TrustBar t={t} />
                 <div className="flex gap-4 flex-wrap reveal">
                   <a href="#schools" data-arrow className="inline-flex items-center gap-2 font-bold rounded-lg shadow-lg transition-colors hover:brightness-110"

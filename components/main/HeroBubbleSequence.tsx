@@ -23,7 +23,7 @@ type Beat = {
 
 const BEATS: Beat[] = [
   {
-    text: 'A complete teaching program — Year 5–6 and Year 7–8 Digital Technologies, fully curriculum-aligned.',
+    text: 'Two full year-level programs — Year 5–6 and Year 7–8 — every strand and content description covered.',
     character: '/students/student-1.png',
   },
   {
