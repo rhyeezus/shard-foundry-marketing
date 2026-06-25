@@ -380,6 +380,9 @@
   }
   /* Word-split headline hides until JS splits + animates it (prevents flash). */
   [data-words] { opacity: 0; }
+  /* Offering speech-bubbles start hidden + small; GSAP pops them in on scroll.
+     Selector only matches the /main landing — other variants have no bubbles. */
+  [data-bubble] { opacity: 0; transform: translateY(20px) scale(0.94); }
 }
 
 /* Cinematic card hover — lift + glow ramp. Pairs with the world's accent. */

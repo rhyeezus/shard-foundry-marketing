@@ -56,6 +56,24 @@ export function WorldScene({ children }: { children: ReactNode }) {
             onEnterBack: animateIn,
           });
 
+          // ── Offering speech-bubbles — pop in (scale + rise), staggered so the
+          //    three selling points land in sequence rather than all at once. ──
+          const popIn = (els: Element[]) =>
+            gsap.to(els, {
+              opacity: 1,
+              scale: 1,
+              y: 0,
+              duration: 0.6,
+              ease: 'back.out(1.4)',
+              stagger: 0.15,
+              overwrite: true,
+            });
+          ScrollTrigger.batch('[data-bubble]', {
+            start: 'top 85%',
+            onEnter: popIn,
+            onEnterBack: popIn,
+          });
+
           // ── Hero headline — word-by-word rise ──
           // Store original text once so we can re-split correctly after Fast Refresh.
           // Without this, GSAP cleanup reverts word spans to opacity:0 and the
@@ -172,10 +190,10 @@ export function WorldScene({ children }: { children: ReactNode }) {
           // within (or above) the viewport on load — or measurement is off — show
           // it immediately so the page is never a hazy wall of half-hidden elements.
           const revealVisible = () => {
-            gsap.utils.toArray<HTMLElement>('.reveal').forEach((el) => {
+            gsap.utils.toArray<HTMLElement>('.reveal, [data-bubble]').forEach((el) => {
               const r = el.getBoundingClientRect();
               if (r.top < window.innerHeight * 0.95) {
-                gsap.to(el, { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out', overwrite: 'auto' });
+                gsap.to(el, { opacity: 1, y: 0, scale: 1, duration: 0.6, ease: 'power3.out', overwrite: 'auto' });
               }
             });
           };
@@ -192,6 +210,7 @@ export function WorldScene({ children }: { children: ReactNode }) {
       // ── Reduced-motion branch: show everything instantly, no scrubbing ──
       mm.add('(prefers-reduced-motion: reduce)', () => {
         gsap.set('.reveal', { opacity: 1, y: 0 });
+        gsap.set('[data-bubble]', { opacity: 1, y: 0, scale: 1 });
       });
     },
     { scope: root }

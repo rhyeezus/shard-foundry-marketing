@@ -5,6 +5,8 @@ import { Nav } from './Nav';
 import { WorldScene } from './WorldScene';
 import { useResponsiveVideo } from './useResponsiveVideo';
 import { Particles } from './Particles';
+import { TrustBar } from './TrustBar';
+import { HeroBubbleSequence } from './HeroBubbleSequence';
 import type { WorldTheme } from './theme';
 
 /* ── Single source of width — matches the nav so every section's edges align. ── */
@@ -185,11 +187,12 @@ export function WorldPage({ t }: { t: WorldTheme }) {
                     padding-top on the p reserves visual room for the h1 once
                     it animates in (~h1 height + gap, scales with 5.5vw font). */}
                 <p data-words className="absolute inset-x-0 font-medium" style={{ top: 0, fontSize: 'clamp(0.85rem, 1.3vw, 1rem)', letterSpacing: '0.01em', lineHeight: 1.4, color: t.heroTextMuted }}>
-                  Where great learning is forged
+                  Built by the authors of the national curriculum
                 </p>
                 <h1 data-hero-p className="font-bold mb-7" style={{ fontSize: 'clamp(1.5rem, 3.5vw, 2.75rem)', lineHeight: 1.15, color: t.heroText }}>
-                  Curriculum-aligned experiences designed by teachers, for teachers.
+                  Digital Technologies, taught the way it was written.
                 </h1>
+                <TrustBar t={t} />
                 <div className="flex gap-4 flex-wrap reveal">
                   <a href="#schools" data-arrow className="inline-flex items-center gap-2 font-bold rounded-lg shadow-lg transition-colors hover:brightness-110"
                     style={{ padding: 'clamp(10px,1vw,14px) clamp(18px,1.8vw,28px)', fontSize: 'clamp(13px, 1.04vw, 16px)', backgroundColor: t.cta, color: t.text.onAccent }}>
@@ -204,6 +207,17 @@ export function WorldPage({ t }: { t: WorldTheme }) {
             </Container>
           </div>
         </section>
+
+        {/* ══ 1.5 · OFFERING — scroll-revealed selling points (Layer B) ══ */}
+        <section id="offering" className="relative py-[clamp(2.5rem,6vw,7rem)]">
+          <Container>
+            <HeroBubbleSequence t={t} />
+          </Container>
+        </section>
+
+        {/* Anchor target for the hero's "See how →" link.
+            The full PedagogyExplainer section ships in the next pass. */}
+        <div id="pedagogy" className="scroll-mt-24" aria-hidden />
 
         {/* ══ 2 · THE PLATFORM — feature showcase ══ */}
         <section id="platform" className="relative py-[clamp(3rem,7vw,9rem)]">
