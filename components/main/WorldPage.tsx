@@ -162,7 +162,7 @@ export function WorldPage({ t }: { t: WorldTheme }) {
             className="absolute pointer-events-none world-glow"
             data-parallax="-20"
             style={{
-              left: '-10%', top: '18%', width: '60%', height: '50%',
+              left: '-10%', top: '28%', width: '60%', height: '50%',
               background: `radial-gradient(ellipse at 40% 50%, ${t.light}33, transparent 70%)`,
               filter: 'blur(40px)',
             }}
@@ -172,7 +172,8 @@ export function WorldPage({ t }: { t: WorldTheme }) {
               (GSAP holds it at opacity:0 until it animates in) doesn't push
               the visible subhead down into the middle of the hero. The 64px
               top offset matches the fixed nav height exactly. */}
-          <div className="absolute inset-x-0 z-10" data-hero-content style={{ top: '96px' }}>
+          <div className="absolute inset-0 z-10 flex items-center">
+            <div className="w-full" data-hero-content>
             <Container>
               {/* Text block: 42vw keeps content in the left dark zone of the video
                   (stars/sky area). Both font clamps start from a small minimum
@@ -188,13 +189,13 @@ export function WorldPage({ t }: { t: WorldTheme }) {
                     padding-top on the p reserves visual room for the h1 once
                     it animates in (~h1 height + gap, scales with 5.5vw font). */}
                 <p data-words className="absolute inset-x-0 font-semibold uppercase" style={{ top: 0, fontSize: 'clamp(0.7rem, 1vw, 0.8rem)', letterSpacing: '0.14em', lineHeight: 1.4, color: t.heroTextMuted }}>
-                  Years 5–8 · Australian Curriculum: Digital Technologies
+                  Years 5–8 · Australian Curriculum
                 </p>
                 <h1 data-hero-p className="font-bold mb-4" style={{ fontSize: 'clamp(1.5rem, 3.5vw, 2.75rem)', lineHeight: 1.12, color: t.heroText }}>
-                  The complete Digital Technologies teaching program.
+                  The interactive platform for teaching Digital Technologies.
                 </h1>
                 <p className="font-medium mb-7" style={{ fontSize: 'clamp(1rem, 1.6vw, 1.25rem)', lineHeight: 1.45, color: t.heroTextStrong }}>
-                  Built by the people who wrote the curriculum — interactive, classroom-first, and fully aligned.
+                  Built by the people who wrote the curriculum — whole-class lessons you lead live, not solo screen time.
                 </p>
                 <TrustBar t={t} />
                 <div className="flex gap-4 flex-wrap reveal">
@@ -209,6 +210,7 @@ export function WorldPage({ t }: { t: WorldTheme }) {
                 </div>
               </div>
             </Container>
+            </div>
           </div>
         </section>
 
