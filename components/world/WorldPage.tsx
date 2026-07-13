@@ -2,7 +2,7 @@
 
 import { ChevronRight, ArrowRight, Award, Sparkles, Radio } from 'lucide-react';
 import { Nav } from '@/components/Nav';
-import { WorldScene } from './WorldScene';
+import WorldScene from './WorldScene';
 import { useResponsiveVideo } from './useResponsiveVideo';
 import { Particles } from './Particles';
 import type { WorldTheme } from './theme';
@@ -489,23 +489,22 @@ export function WorldPage({ t }: { t: WorldTheme }) {
             </div>
           </Container>
         </section>
+        {/* ══ FOOTER ══ */}
+        <footer className="text-white/45 py-10 border-t border-white/10" style={{ backgroundColor: t.footer }}>
+          <Container className="flex flex-col sm:flex-row justify-between items-center gap-4 text-sm">
+            <div className="flex items-center gap-2">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/logo.svg" alt="Shard Learning" width={18} height={18} />
+              <span>© 2026 Shard Learning Pty Ltd. All rights reserved.</span>
+            </div>
+            <div className="flex gap-6">
+              {['Privacy Policy', 'Terms of Use'].map((i) => (
+                <a key={i} href="#" className="footer-link hover:text-white transition-colors">{i}</a>
+              ))}
+            </div>
+          </Container>
+        </footer>
       </WorldScene>
-
-      {/* ══ FOOTER ══ */}
-      <footer className="text-white/45 py-10 border-t border-white/10" style={{ backgroundColor: t.footer }}>
-        <Container className="flex flex-col sm:flex-row justify-between items-center gap-4 text-sm">
-          <div className="flex items-center gap-2">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/logo.svg" alt="Shard Learning" width={18} height={18} />
-            <span>© 2026 Shard Learning Pty Ltd. All rights reserved.</span>
-          </div>
-          <div className="flex gap-6">
-            {['Privacy Policy', 'Terms of Use'].map((i) => (
-              <a key={i} href="#" className="footer-link hover:text-white transition-colors">{i}</a>
-            ))}
-          </div>
-        </Container>
-      </footer>
     </div>
   );
 }

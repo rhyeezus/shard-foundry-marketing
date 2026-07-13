@@ -138,17 +138,31 @@ export function WorldScene({ children }: { children: ReactNode }) {
               });
             });
 
-            // Hero content drifts up + fades as you leave (cinematic exit).
+            // ── Cinematic handoff — section 2 is a panel that slides UP and covers
+            //    the hero (see [data-cover-panel] in WorldPage). Trigger is the LAST
+            //    offering beat itself (not a percentage guess on the section), so the
+            //    condition is exact: the sequence only starts once that beat's bottom
+            //    edge has reached the top of the viewport — i.e. it is COMPLETELY off
+            //    screen. Nothing moves, fades, or gets covered before that. ──
             const heroContent = root.current?.querySelector<HTMLElement>('[data-hero-content]');
-            const heroSection = heroContent?.closest('section');
-            if (heroContent && heroSection) {
-              gsap.to(heroContent, {
-                yPercent: -18,
-                opacity: 0.2,
-                ease: 'none',
-                scrollTrigger: { trigger: heroSection, start: 'top top', end: 'bottom top', scrub: 0.15 },
-              });
+            const heroMedia = root.current?.querySelector<HTMLElement>('[data-hero-media]');
+            const lastBeat = root.current?.querySelector<HTMLElement>('[data-beat]:last-of-type');
+            const coverPanel = root.current?.querySelector<HTMLElement>('[data-cover-panel]');
+
+            if (lastBeat) {
+              const exitTrigger = { trigger: lastBeat, start: 'bottom top', end: 'bottom top-=25%', scrub: 0.3 };
+              if (heroContent) gsap.to(heroContent, { opacity: 0, ease: 'none', scrollTrigger: exitTrigger });
+              if (heroMedia) gsap.to(heroMedia, { opacity: 0, ease: 'none', scrollTrigger: exitTrigger });
+
+              if (coverPanel) {
+                gsap.fromTo(
+                  coverPanel,
+                  { yPercent: 8 },
+                  { yPercent: 0, ease: 'none', scrollTrigger: exitTrigger }
+                );
+              }
             }
+
           }
 
           // Stat / number count-ups — re-count every time they scroll into view.

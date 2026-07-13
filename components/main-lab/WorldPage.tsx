@@ -111,118 +111,116 @@ export function WorldPage({ t }: { t: WorldTheme }) {
   const navTheme = t.name === 'lava' ? 'amethyst' : t.mode === 'light' ? 'forest-light' : 'forest';
 
   return (
-    <div className="overflow-x-clip" style={{ background: t.pageBackground, minHeight: '100vh' }}>
+    // overflow-x clip guards against horizontal decorative bleed, but overflow-y
+    // MUST stay visible or it makes a scroll container that breaks the hero
+    // position:sticky video. Set both axes explicitly (overflow-x:clip can coerce
+    // a visible y-axis to auto otherwise).
+    <div style={{ background: t.pageBackground, minHeight: '100vh', overflowX: 'clip', overflowY: 'visible' }}>
       <Nav theme={navTheme} />
 
       <WorldScene>
-        {/* ══ 1 · HERO — a threshold into the world ══ */}
-        {/* Section height is driven by the video's native aspect ratio so the full
-            frame is always visible — no left/right cropping at any viewport width.
-            The ratio switches automatically when a breakpoint-specific video is
-            loaded (9:16 mobile → 16:9 desktop → 21:9 ultrawide). The heroBase fill
-            sits behind the video so the mask-dissolve at the bottom edge blends
-            into a matching flat colour — seamless hero→body transition, no seam. */}
-        <section
-          className="relative overflow-hidden w-full"
-          style={{ aspectRatio: heroAspectRatio, backgroundColor: t.heroBase }}
-        >
-          {/* Video fills the section exactly — no object-cover crop needed because
-              the container already matches the video's native aspect ratio. The
-              bottom-fade mask softens the cut into the page body below. */}
-          <video
-            className="absolute inset-0 w-full h-full pointer-events-none"
-            style={{
-              objectFit: 'fill',
-              WebkitMaskImage: 'linear-gradient(180deg, #000 50%, rgba(0,0,0,0.85) 68%, rgba(0,0,0,0.5) 82%, rgba(0,0,0,0.15) 93%, transparent 100%)',
-              maskImage: 'linear-gradient(180deg, #000 50%, rgba(0,0,0,0.85) 68%, rgba(0,0,0,0.5) 82%, rgba(0,0,0,0.15) 93%, transparent 100%)',
-            }}
-            autoPlay
-            loop
-            muted
-            playsInline
-          >
-            <source src={heroVideoSrc} type="video/mp4" />
-          </video>
-
-          {/* Colour bridge — fades from transparent to the exact body background
-              colour so the dissolve lands on a matching surface with no tonal jump. */}
-          <div
-            className="absolute inset-x-0 bottom-0 pointer-events-none z-[1]"
-            style={{
-              height: '35%',
-              background: `linear-gradient(to bottom, transparent, ${t.heroBase})`,
-            }}
-          />
-
-          {/* Ambient particles — embers (lava) / wisps (forest). */}
+        {/* ══ 1 · HERO — tall two-column: content scrolls (left), video sticks (right) ══ */}
+        {/* The section is as tall as the left column's content (headline + the three
+            offering cards). The right-hand video is sticky, so it pins at the top of
+            the viewport and keeps playing while the left column — headline first,
+            then the offering cards + images — scrolls up past it. On mobile it
+            collapses to a single column: video on top (not sticky), content below. */}
+        {/* NOTE: no `overflow-hidden` on this section — it would break the sticky
+            video (any non-visible overflow on an ancestor disables position:sticky).
+            Decorative layers are clipped individually instead. */}
+        <section id="hero" className="relative pt-16" style={{ backgroundColor: t.heroBase }}>
+          {/* Ambient particles across the hero — embers (lava) / wisps (forest). */}
           <Particles count={28} color={t.light} mode={t.particle} />
 
-          {/* Headline light-bloom — text sits in a pool of the world's light. */}
-          <div
-            className="absolute pointer-events-none world-glow"
-            data-parallax="-20"
-            style={{
-              left: '-10%', top: '28%', width: '60%', height: '50%',
-              background: `radial-gradient(ellipse at 40% 50%, ${t.light}33, transparent 70%)`,
-              filter: 'blur(40px)',
-            }}
-          />
+          <Container className="relative z-10">
+            <div className="grid md:grid-cols-[1fr_1.5fr] gap-8 lg:gap-14 md:items-stretch">
+              {/* ── LEFT · content & copy — scrolls past the sticky video ── */}
+              <div data-hero-content className="order-last md:order-first flex flex-col pb-[clamp(3rem,6vw,5rem)]">
+                {/* Headline block — sits one viewport tall so the video is fully
+                    in view alongside it before the offering cards begin. */}
+                <div className="flex flex-col justify-center min-h-[calc(100svh-4rem)]">
+                  <div style={{ position: 'relative', width: '100%' }}>
+                    <p data-words className="absolute inset-x-0 font-semibold uppercase" style={{ top: 0, fontSize: 'clamp(0.7rem, 1vw, 0.8rem)', letterSpacing: '0.14em', lineHeight: 1.4, color: t.heroTextMuted }}>
+                      Years 5–8 · Australian Curriculum
+                    </p>
+                    <h1 data-hero-p className="font-bold mb-4" style={{ fontSize: 'clamp(1.75rem, 3.2vw, 3rem)', lineHeight: 1.1, color: t.heroText }}>
+                      The interactive platform for teaching Digital Technologies.
+                    </h1>
+                    <p className="font-medium mb-7" style={{ fontSize: 'clamp(1rem, 1.6vw, 1.25rem)', lineHeight: 1.45, color: t.heroTextStrong }}>
+                      Built by the people who wrote the curriculum — whole-class lessons you lead live, not solo screen time.
+                    </p>
+                    <TrustBar t={t} />
+                    <div className="flex gap-4 flex-wrap reveal">
+                      <a href="#schools" data-arrow className="inline-flex items-center gap-2 font-bold rounded-lg shadow-lg transition-colors hover:brightness-110"
+                        style={{ padding: 'clamp(10px,1vw,14px) clamp(18px,1.8vw,28px)', fontSize: 'clamp(13px, 1.04vw, 16px)', backgroundColor: t.cta, color: t.text.onAccent }}>
+                        Join the pilot <ChevronRight size={16} className="arrow-icon" />
+                      </a>
+                      <a href="#platform" className="inline-flex items-center font-semibold rounded-lg border transition-colors hover:brightness-110"
+                        style={{ padding: 'clamp(10px,1vw,14px) clamp(18px,1.8vw,28px)', fontSize: 'clamp(13px, 1.04vw, 16px)', color: t.heroText, borderColor: t.heroOutline, backgroundColor: t.heroOutlineFill }}>
+                        See the platform
+                      </a>
+                    </div>
+                  </div>
+                </div>
 
-          {/* Absolutely pinned to the top of the section so the invisible h1
-              (GSAP holds it at opacity:0 until it animates in) doesn't push
-              the visible subhead down into the middle of the hero. The 64px
-              top offset matches the fixed nav height exactly. */}
-          <div className="absolute inset-0 z-10 flex items-center">
-            <div className="w-full" data-hero-content>
-            <Container>
-              {/* Text block: 42vw keeps content in the left dark zone of the video
-                  (stars/sky area). Both font clamps start from a small minimum
-                  so they scale continuously — no fixed floor that stops the
-                  shrink at mid-size viewports. The subhead is bold and large
-                  (~31px at 1109px) but smaller than the h1 so it doesn't
-                  overwhelm the hero or wrap past 3 lines in the 42vw column. */}
-              {/* position:relative so the absolutely-positioned h1 is contained here */}
-              <div style={{ position: 'relative', width: '100%', maxWidth: 'clamp(260px, 50vw, 640px)' }}>
-                {/* h1 is position:absolute so it takes ZERO layout space.
-                    The invisible GSAP state (opacity:0) no longer pushes the
-                    subhead down — the subhead anchors to the true top corner.
-                    padding-top on the p reserves visual room for the h1 once
-                    it animates in (~h1 height + gap, scales with 5.5vw font). */}
-                <p data-words className="absolute inset-x-0 font-semibold uppercase" style={{ top: 0, fontSize: 'clamp(0.7rem, 1vw, 0.8rem)', letterSpacing: '0.14em', lineHeight: 1.4, color: t.heroTextMuted }}>
-                  Years 5–8 · Australian Curriculum
-                </p>
-                <h1 data-hero-p className="font-bold mb-4" style={{ fontSize: 'clamp(1.5rem, 3.5vw, 2.75rem)', lineHeight: 1.12, color: t.heroText }}>
-                  The interactive platform for teaching Digital Technologies.
-                </h1>
-                <p className="font-medium mb-7" style={{ fontSize: 'clamp(1rem, 1.6vw, 1.25rem)', lineHeight: 1.45, color: t.heroTextStrong }}>
-                  Built by the people who wrote the curriculum — whole-class lessons you lead live, not solo screen time.
-                </p>
-                <TrustBar t={t} />
-                <div className="flex gap-4 flex-wrap reveal">
-                  <a href="#schools" data-arrow className="inline-flex items-center gap-2 font-bold rounded-lg shadow-lg transition-colors hover:brightness-110"
-                    style={{ padding: 'clamp(10px,1vw,14px) clamp(18px,1.8vw,28px)', fontSize: 'clamp(13px, 1.04vw, 16px)', backgroundColor: t.cta, color: t.text.onAccent }}>
-                    Join the pilot <ChevronRight size={16} className="arrow-icon" />
-                  </a>
-                  <a href="#platform" className="inline-flex items-center font-semibold rounded-lg border transition-colors hover:brightness-110"
-                    style={{ padding: 'clamp(10px,1vw,14px) clamp(18px,1.8vw,28px)', fontSize: 'clamp(13px, 1.04vw, 16px)', color: t.heroText, borderColor: t.heroOutline, backgroundColor: t.heroOutlineFill }}>
-                    See the platform
-                  </a>
+                {/* Offering cards + images — scroll up the left column one-by-one
+                    (via [data-bubble]) while the video stays pinned to the right. */}
+                <HeroBubbleSequence t={t} layout="stack" />
+              </div>
+
+              {/* ── RIGHT · sticky media — the grid cell stretches to the full row
+                  height (as tall as the left column), and this inner div pins at
+                  top-16 within it, so the video stays put until ALL of section 1's
+                  left-column content has scrolled past. ── */}
+              <div className="order-first md:order-last">
+                <div data-hero-media className="md:sticky md:top-16 flex items-center md:h-[calc(100svh-4rem)]">
+                <div
+                  className="relative w-full overflow-hidden rounded-3xl"
+                  style={{ aspectRatio: '4 / 3', backgroundColor: t.heroBase, border: `1px solid ${t.heroOutline}` }}
+                >
+                  <video
+                    key={heroVideoSrc}
+                    className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                  >
+                    <source src={heroVideoSrc} type="video/mp4" />
+                  </video>
+                  {/* Light-bloom over the media so the world glows from within the frame. */}
+                  <div
+                    className="absolute pointer-events-none world-glow"
+                    style={{
+                      left: '-10%', top: '30%', width: '70%', height: '50%',
+                      background: `radial-gradient(ellipse at 40% 50%, ${t.light}33, transparent 70%)`,
+                      filter: 'blur(40px)',
+                    }}
+                  />
+                </div>
                 </div>
               </div>
-            </Container>
             </div>
-          </div>
-        </section>
-
-        {/* ══ 1.5 · OFFERING — scroll-revealed selling points (Layer B) ══ */}
-        <section id="offering" className="relative py-[clamp(2.5rem,6vw,7rem)]">
-          <Container>
-            <HeroBubbleSequence t={t} />
           </Container>
+
         </section>
 
         {/* ══ 1.7 · PEDAGOGY — "See how →" payoff: how we actually teach ══ */}
-        <section id="pedagogy" className="relative py-[clamp(3rem,7vw,9rem)] scroll-mt-20">
+        {/* Reveal panel — slides up OVER the hero as section 1 releases, like a new
+            sheet dealt on top. Rounded top corners, a lifted drop-shadow, and a thin
+            top highlight hairline sell the "new section arriving" moment. */}
+        <section
+          id="pedagogy"
+          data-cover-panel
+          className="relative z-10 -mt-[8vh] rounded-t-[2.5rem] pt-[clamp(3rem,7vw,9rem)] pb-[clamp(3rem,7vw,9rem)] scroll-mt-20"
+          style={{
+            background: t.pageBackground,
+            boxShadow: `0 -32px 64px -24px rgba(0,0,0,0.55)`,
+          }}
+        >
+          {/* Top highlight edge — a thin catch-light along the panel's leading edge. */}
+          <div className="absolute inset-x-0 top-0 h-px pointer-events-none rounded-t-[2.5rem]"
+            style={{ background: `linear-gradient(90deg, transparent, ${t.light}66, transparent)` }} />
           <Container>
             <PedagogyExplainer t={t} />
           </Container>
