@@ -125,7 +125,7 @@ export const THEMES: Record<'lava' | 'forest' | 'forestLight', WorldTheme> = {
     heroTextMuted: 'rgba(255,255,255,0.78)',
     heroOutline: 'rgba(255,255,255,0.30)',
     heroOutlineFill: 'rgba(255,255,255,0.08)',
-    heroVideo: '/video/defee1f6-6cf8-4825-adaf-472ecd885ff2-2026-06-11.mp4',
+    heroVideo: '/video/hero-lava-comp1.mp4',
     // Two-tone molten descent — deep amethyst → ember-warm toward the forge.
     pageBackground:
       'linear-gradient(180deg, #1A0D38 0%, #1A0D38 40%, #1E0F30 72%, #150a26 100%)',

@@ -11,7 +11,7 @@ import type { WorldTheme } from './theme';
 export function TrustBar({ t }: { t: WorldTheme }) {
   return (
     <div
-      className="inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 mb-7"
+      className="inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 mb-6"
       style={{ background: t.surface.chipFill, border: `1px solid ${t.surface.chipBorder}` }}
     >
       <ShieldCheck className="size-3.5 shrink-0" style={{ color: t.lightCore }} />

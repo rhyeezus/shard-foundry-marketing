@@ -103,22 +103,19 @@ export function WorldScene({ children }: { children: ReactNode }) {
               gsap.fromTo(
                 inner,
                 { yPercent: 115, opacity: 0 },
-                { yPercent: 0, opacity: 1, duration: 0.9, ease: 'power4.out', delay: 0.15 + i * 0.07 }
+                { yPercent: 0, opacity: 1, duration: 0.9, ease: 'power4.out', delay: 0.2 + i * 0.05 }
               );
             });
           }
 
-            // As the headline rises in, push the subhead down to make room.
-            // The paragraph starts at paddingTop:0 (subhead visible immediately
-            // at the top-left corner), then grows to match the headline's
-            // rendered height so both elements sit cleanly once the animation lands.
-            const heroParagraph = root.current?.querySelector<HTMLElement>('[data-hero-p]');
-            if (heroParagraph) {
-              const targetPad = headline.getBoundingClientRect().height + 16;
+            // Eyebrow — a simple fade-up just ahead of the headline words, so
+            // the entrance emphasis stays on the headline itself.
+            const eyebrow = root.current?.querySelector<HTMLElement>('[data-hero-eyebrow]');
+            if (eyebrow) {
               gsap.fromTo(
-                heroParagraph,
-                { paddingTop: 0 },
-                { paddingTop: targetPad, duration: 0.9, ease: 'power4.out', delay: 0.15 }
+                eyebrow,
+                { opacity: 0, y: 12 },
+                { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out', delay: 0.05 }
               );
             }
 
@@ -139,18 +136,22 @@ export function WorldScene({ children }: { children: ReactNode }) {
             });
 
             // ── Cinematic handoff — section 2 is a panel that slides UP and covers
-            //    the hero (see [data-cover-panel] in WorldPage). Trigger is the LAST
-            //    offering beat itself (not a percentage guess on the section), so the
-            //    condition is exact: the sequence only starts once that beat's bottom
-            //    edge has reached the top of the viewport — i.e. it is COMPLETELY off
-            //    screen. Nothing moves, fades, or gets covered before that. ──
+            //    the hero (see [data-cover-panel] in WorldPage). Trigger is the hero
+            //    SECTION itself, not the last offering beat — the sticky video's
+            //    grid cell is height-matched to the content column (md:items-stretch
+            //    in WorldPage), so the video is only guaranteed to have fully
+            //    scrolled off-screen once the section's own bottom edge reaches the
+            //    top of the viewport. The last beat's bottom clears earlier (there's
+            //    padding after it), which used to start this handoff while the video
+            //    was still visibly scrolling out. Nothing moves, fades, or gets
+            //    covered before the section — and therefore the video — is gone. ──
             const heroContent = root.current?.querySelector<HTMLElement>('[data-hero-content]');
             const heroMedia = root.current?.querySelector<HTMLElement>('[data-hero-media]');
-            const lastBeat = root.current?.querySelector<HTMLElement>('[data-beat]:last-of-type');
+            const heroSection = root.current?.querySelector<HTMLElement>('#hero');
             const coverPanel = root.current?.querySelector<HTMLElement>('[data-cover-panel]');
 
-            if (lastBeat) {
-              const exitTrigger = { trigger: lastBeat, start: 'bottom top', end: 'bottom top-=25%', scrub: 0.3 };
+            if (heroSection) {
+              const exitTrigger = { trigger: heroSection, start: 'bottom top', end: 'bottom top-=25%', scrub: 0.3 };
               if (heroContent) gsap.to(heroContent, { opacity: 0, ease: 'none', scrollTrigger: exitTrigger });
               if (heroMedia) gsap.to(heroMedia, { opacity: 0, ease: 'none', scrollTrigger: exitTrigger });
 
@@ -225,6 +226,11 @@ export function WorldScene({ children }: { children: ReactNode }) {
       mm.add('(prefers-reduced-motion: reduce)', () => {
         gsap.set('.reveal', { opacity: 1, y: 0 });
         gsap.set('[data-bubble]', { opacity: 1, y: 0, scale: 1 });
+        // The headline carries [data-words], which the global CSS masks to
+        // opacity:0 until JS reveals it — the word-split code (which does the
+        // reveal) only runs in the motion branch, so reveal it here too or the
+        // headline stays invisible for reduced-motion users.
+        gsap.set('[data-words]', { opacity: 1 });
       });
     },
     { scope: root }

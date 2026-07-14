@@ -1,5 +1,8 @@
 'use client';
 
+import { useEffect, useRef } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ChevronRight, ArrowRight, Award, Sparkles, Radio } from 'lucide-react';
 import { Nav } from './Nav';
 import { WorldScene } from './WorldScene';
@@ -9,6 +12,8 @@ import { TrustBar } from './TrustBar';
 import { HeroBubbleSequence } from './HeroBubbleSequence';
 import { PedagogyExplainer } from './PedagogyExplainer';
 import type { WorldTheme } from './theme';
+
+gsap.registerPlugin(ScrollTrigger);
 
 /* ── Single source of width — matches the nav so every section's edges align. ── */
 function Container({ children, className = '' }: { children: React.ReactNode; className?: string }) {
@@ -77,7 +82,88 @@ function Eyebrow({ children, color }: { children: React.ReactNode; color: string
 }
 
 export function WorldPage({ t }: { t: WorldTheme }) {
-  const { src: heroVideoSrc, aspectRatio: heroAspectRatio } = useResponsiveVideo(t);
+  const { src: heroVideoSrc } = useResponsiveVideo(t);
+
+  // The sticky video's release-to-offscreen distance is its box's pinned TOP
+  // position + the box's own height (that's exactly how far it has to travel
+  // to fully leave the viewport once unpinned) — so the hero-exit spacer
+  // below is sized to match, instead of a flat 100svh guess. A flat guess
+  // forces the spacer to cover the OLD (near-full-viewport) wrapper height
+  // regardless of the video's real box, which made the exit feel long/empty.
+  //
+  // Because the video is now vertically CENTRED in the fold (see the media
+  // wrapper's min-h + items-center below), its pinned top isn't a constant
+  // 104px — it's 104 + half the leftover fold space above the box. We derive
+  // it from the live viewport + box height so the exit stays perfectly synced
+  // to where the box actually sits, at any window size.
+  //
+  // HERO_TOP_OFFSET (104px = the 64px fixed nav height + 40px of breathing
+  // room below it) must match the `pt-`/`top-`/`min-h-` values used on the
+  // section, headline block and media wrapper further down — keep all in sync.
+  const HERO_TOP_OFFSET = 104;
+  const mediaBoxRef = useRef<HTMLDivElement>(null);
+  const heroExitSpacerRef = useRef<HTMLDivElement>(null);
+
+  // Anchor scroll-driven hero animations to the section start on load. The
+  // browser's default scroll restoration re-opens a reloaded page at its
+  // previous scroll offset; with the hero's scrubbed reveal/exit animations
+  // that reads as "content loading in halfway through" rather than anchored
+  // to the top of the hero. Manual restoration + a scroll-to-top on mount
+  // guarantees the section (and its animations) always start from the top.
+  useEffect(() => {
+    const prev = 'scrollRestoration' in history ? history.scrollRestoration : undefined;
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+    window.scrollTo(0, 0);
+    return () => {
+      if (prev !== undefined) history.scrollRestoration = prev;
+    };
+  }, []);
+
+  useEffect(() => {
+    const mediaBox = mediaBoxRef.current;
+    const spacer = heroExitSpacerRef.current;
+    if (!mediaBox || !spacer) return;
+
+    // Size the spacer so the sticky video RELEASES exactly when the last
+    // hero copy beat has fully scrolled off the top of the viewport — copy
+    // out first, then the video slides away. Derived from the live geometry
+    // rather than a formula so it holds regardless of the video's centred
+    // height, the copy's length, or the viewport:
+    //
+    //   a sticky element of height H, offset T, inside a container of height
+    //   C, releases after (C − H) of scroll. We want that release point to
+    //   equal the page-Y at which the last beat's bottom edge reaches the
+    //   viewport top. Solving for the container (= this column, via
+    //   md:items-stretch) gives the spacer height below.
+    const sync = () => {
+      const wrapper = mediaBox.parentElement; // [data-hero-media] — the sticky el
+      const contentCol = spacer.parentElement; // [data-hero-content] — the container
+      const heroBeats = contentCol?.querySelectorAll('[data-beat]');
+      if (!wrapper || !contentCol || !heroBeats?.length) return;
+      const lastBeat = heroBeats[heroBeats.length - 1];
+
+      // Zero the spacer first so the column measures at its true content
+      // height (A) — everything above the spacer, which is invariant to it.
+      spacer.style.height = '0px';
+      const A = contentCol.getBoundingClientRect().height;
+      const stickyHeight = wrapper.getBoundingClientRect().height;
+      const lastBeatBottomPageY = lastBeat.getBoundingClientRect().bottom + window.scrollY;
+
+      // release scroll = C − stickyHeight; set C so it lands on the beat's exit.
+      const needed = lastBeatBottomPageY + stickyHeight - A;
+      spacer.style.height = `${Math.max(0, needed)}px`;
+      ScrollTrigger.refresh();
+    };
+
+    sync();
+    const ro = new ResizeObserver(sync);
+    ro.observe(mediaBox);
+    window.addEventListener('resize', sync);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener('resize', sync);
+    };
+  }, []);
 
   // Per-world chip styling: lava = etched metal; forest dark = glowing in wood;
   // forest light = a soft mint-tinted chip with deeper-teal text on white.
@@ -128,25 +214,35 @@ export function WorldPage({ t }: { t: WorldTheme }) {
         {/* NOTE: no `overflow-hidden` on this section — it would break the sticky
             video (any non-visible overflow on an ancestor disables position:sticky).
             Decorative layers are clipped individually instead. */}
-        <section id="hero" className="relative pt-16" style={{ backgroundColor: t.heroBase }}>
+        <section id="hero" className="relative pt-[104px]" style={{ backgroundColor: t.heroBase }}>
           {/* Ambient particles across the hero — embers (lava) / wisps (forest). */}
           <Particles count={28} color={t.light} mode={t.particle} />
 
           <Container className="relative z-10">
-            <div className="grid md:grid-cols-[1fr_1.5fr] gap-8 lg:gap-14 md:items-stretch">
+            <div className="grid md:grid-cols-[1fr_1.2fr] gap-8 lg:gap-14 md:items-stretch">
               {/* ── LEFT · content & copy — scrolls past the sticky video ── */}
               <div data-hero-content className="order-last md:order-first flex flex-col pb-[clamp(3rem,6vw,5rem)]">
-                {/* Headline block — sits one viewport tall so the video is fully
-                    in view alongside it before the offering cards begin. */}
-                <div className="flex flex-col justify-center min-h-[calc(100svh-4rem)]">
-                  <div style={{ position: 'relative', width: '100%' }}>
-                    <p data-words className="absolute inset-x-0 font-semibold uppercase" style={{ top: 0, fontSize: 'clamp(0.7rem, 1vw, 0.8rem)', letterSpacing: '0.14em', lineHeight: 1.4, color: t.heroTextMuted }}>
+                {/* Headline block — reserves the fold (one viewport minus the
+                    104px nav clearance) so the offering cards don't begin until
+                    a full viewport past it, and centres its copy vertically
+                    within that fold. The sticky video is centred in the same
+                    fold (see the media wrapper below), so copy and video share
+                    a vertical centre line. */}
+                <div className="flex flex-col md:justify-center md:min-h-[calc(100svh-104px)]">
+                  <div className="w-full">
+                    {/* Eyebrow — normal flow (was absolutely positioned): now a
+                        simple fade-up on load, so the word-by-word rise can move
+                        to the headline where the entrance emphasis belongs. */}
+                    <p data-hero-eyebrow className="font-semibold uppercase mb-4" style={{ fontSize: 'clamp(0.7rem, 1vw, 0.8rem)', letterSpacing: '0.14em', lineHeight: 1.4, color: t.heroTextMuted }}>
                       Years 5–8 · Australian Curriculum
                     </p>
-                    <h1 data-hero-p className="font-bold mb-4" style={{ fontSize: 'clamp(1.75rem, 3.2vw, 3rem)', lineHeight: 1.1, color: t.heroText }}>
+                    {/* Headline — carries [data-words]: WorldScene splits it and
+                        rises it word-by-word on load (the marquee moment). The
+                        global [data-words]{opacity:0} masks it until JS runs. */}
+                    <h1 data-words className="font-bold mb-4" style={{ fontSize: 'clamp(1.75rem, 3.2vw, 3rem)', lineHeight: 1.1, color: t.heroText }}>
                       The interactive platform for teaching Digital Technologies.
                     </h1>
-                    <p className="font-medium mb-7" style={{ fontSize: 'clamp(1rem, 1.6vw, 1.25rem)', lineHeight: 1.45, color: t.heroTextStrong }}>
+                    <p className="font-medium mb-9" style={{ fontSize: 'clamp(1rem, 1.6vw, 1.25rem)', lineHeight: 1.45, color: t.heroTextStrong }}>
                       Built by the people who wrote the curriculum — whole-class lessons you lead live, not solo screen time.
                     </p>
                     <TrustBar t={t} />
@@ -166,26 +262,52 @@ export function WorldPage({ t }: { t: WorldTheme }) {
                 {/* Offering cards + images — scroll up the left column one-by-one
                     (via [data-bubble]) while the video stays pinned to the right. */}
                 <HeroBubbleSequence t={t} layout="stack" />
+
+                {/* Spacer — reserves exactly enough extra scroll (synced via JS
+                    to the video's own rendered height, see the effect above)
+                    for the sticky video's unpin-and-slide-away cycle to
+                    happen entirely AFTER this column's content has fully
+                    cleared the screen. Without it, the video starts releasing
+                    as soon as the grid cell runs out of room, and since the
+                    cell is height-matched to this column (md:items-stretch
+                    below), that point lands well before the last offering
+                    card clears the screen — the video visibly slides away
+                    while copy is still scrolling by. Sized to the video's
+                    real box (not a flat 100svh guess) so this doesn't linger
+                    longer than the exit actually needs. Desktop/tablet only;
+                    mobile isn't sticky. */}
+                <div ref={heroExitSpacerRef} aria-hidden className="hidden md:block" />
               </div>
 
               {/* ── RIGHT · sticky media — the grid cell stretches to the full row
-                  height (as tall as the left column), and this inner div pins at
-                  top-16 within it, so the video stays put until ALL of section 1's
-                  left-column content has scrolled past. ── */}
+                  height (as tall as the left column, now padded by the spacer
+                  above), and this inner div pins at top-[104px] within it, so
+                  the video stays put until ALL of section 1's left-column
+                  content — offering cards AND the spacer — has scrolled past. ── */}
               <div className="order-first md:order-last">
-                <div data-hero-media className="md:sticky md:top-16 flex items-center md:h-[calc(100svh-4rem)]">
+                <div data-hero-media className="md:sticky md:top-[104px] md:min-h-[calc(100svh-104px)] flex items-center">
                 <div
+                  ref={mediaBoxRef}
                   className="relative w-full overflow-hidden rounded-3xl"
-                  style={{ aspectRatio: '4 / 3', backgroundColor: t.heroBase, border: `1px solid ${t.heroOutline}` }}
+                  style={{ aspectRatio: '4 / 3' }}
                 >
                   <video
                     key={heroVideoSrc}
+                    aria-hidden
                     className="absolute inset-0 w-full h-full object-cover pointer-events-none"
                     autoPlay
                     loop
                     muted
                     playsInline
                   >
+                    {/* Alpha video → real transparency so the ambient embers
+                        show through behind the characters. WebM (VP9+alpha) for
+                        Chrome/Firefox; HEVC+alpha (hvc1) for Safari; flattened
+                        H.264 MP4 (opaque, matches heroBase) as the final
+                        fallback. Order matters — each browser picks the first it
+                        can play, so the two transparent sources come first. */}
+                    <source src={heroVideoSrc.replace(/\.mp4$/, '.webm')} type="video/webm" />
+                    <source src={heroVideoSrc.replace(/\.mp4$/, '-alpha.mp4')} type='video/mp4; codecs="hvc1"' />
                     <source src={heroVideoSrc} type="video/mp4" />
                   </video>
                   {/* Light-bloom over the media so the world glows from within the frame. */}

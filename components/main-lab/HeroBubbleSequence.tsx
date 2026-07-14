@@ -4,7 +4,7 @@ import { useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
-import { ArrowRight, Library, ListChecks, Users, type LucideIcon } from 'lucide-react';
+import { Library, ListChecks, Users, type LucideIcon } from 'lucide-react';
 import type { WorldTheme } from './theme';
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
@@ -38,7 +38,6 @@ type Beat = {
   text: string;
   Icon: LucideIcon;
   tag: string;
-  cta?: { label: string; href: string };
 };
 
 const BEATS: Beat[] = [
@@ -59,7 +58,6 @@ const BEATS: Beat[] = [
     text: 'Interactive and collaborative by design — whole-class teaching you lead, not solo screen time.',
     Icon: Users,
     tag: 'Pedagogy-first',
-    cta: { label: 'See how', href: '#pedagogy' },
   },
 ];
 
@@ -78,14 +76,18 @@ export function HeroBubbleSequence({ t, layout = 'alternating' }: { t: WorldThem
 
         gsap.set(beats, { opacity: 0, y: 24 });
         gsap.set(rules, { scaleX: 0, transformOrigin: 'left center' });
+        gsap.set('[data-beat-icon]', { opacity: 0, scale: 0.6, y: 10, transformOrigin: 'left center' });
 
         // Each beat is fully independent — ONE ScrollTrigger per beat, using the
         // beat's own position as it crosses the viewport as the single source of
         // truth. A single timeline handles fade-in → hold → fade-out entirely
         // within that one scrubbed range, so there is no cross-beat coordination
         // to drift out of sync — clean in, clean out, always tied 1:1 to scroll.
+        // Within each beat the icon pops first, then the divider draws under the
+        // heading — a small staggered build so each beat "assembles" as it lands.
         beats.forEach((beat, i) => {
           const rule = rules[i];
+          const icon = beat.querySelector<HTMLElement>('[data-beat-icon]');
           const tl = gsap.timeline({
             scrollTrigger: {
               trigger: beat,
@@ -94,8 +96,9 @@ export function HeroBubbleSequence({ t, layout = 'alternating' }: { t: WorldThem
               scrub: 0.3,
             },
           });
-          tl.fromTo(beat, { opacity: 0, y: 24 }, { opacity: 1, y: 0, ease: 'none', duration: 0.3 }, 0)
-            .fromTo(rule, { scaleX: 0 }, { scaleX: 1, ease: 'none', duration: 0.3 }, 0.02)
+          tl.fromTo(beat, { opacity: 0, y: 24 }, { opacity: 1, y: 0, ease: 'none', duration: 0.3 }, 0);
+          if (icon) tl.fromTo(icon, { opacity: 0, scale: 0.6, y: 10 }, { opacity: 1, scale: 1, y: 0, ease: 'back.out(2)', duration: 0.3 }, 0.02);
+          tl.fromTo(rule, { scaleX: 0 }, { scaleX: 1, ease: 'none', duration: 0.3 }, 0.1)
             .to(rule, { scaleX: 0, ease: 'none', duration: 0.3 }, 0.68)
             .to(beat, { opacity: 0, y: -24, ease: 'none', duration: 0.3 }, 0.7);
         });
@@ -104,6 +107,7 @@ export function HeroBubbleSequence({ t, layout = 'alternating' }: { t: WorldThem
       mm.add('(prefers-reduced-motion: reduce)', () => {
         gsap.set('[data-beat]', { opacity: 1, y: 0 });
         gsap.set('[data-beat-rule]', { scaleX: 1 });
+        gsap.set('[data-beat-icon]', { opacity: 1, scale: 1, y: 0 });
       });
     },
     { scope: root }
@@ -113,57 +117,48 @@ export function HeroBubbleSequence({ t, layout = 'alternating' }: { t: WorldThem
     <div ref={root} className={stack ? 'flex flex-col gap-40 sm:gap-56' : 'grid sm:grid-cols-3 gap-12'}>
       {BEATS.map((beat, i) => (
         <div key={i} data-beat className="flex flex-col" style={{ willChange: 'opacity, transform' }}>
-          {/* Icon + animated accent rule — draws out as this beat becomes active. */}
-          <div className="flex items-center gap-4 mb-5">
-            <span
-              data-character
-              className="flex items-center justify-center rounded-xl shrink-0"
-              style={{
-                width: '3rem',
-                height: '3rem',
-                backgroundColor: `${t.accent}1f`,
-                border: `1px solid ${t.light}40`,
-                boxShadow: `inset 0 0 12px ${t.light}22`,
-              }}
-            >
-              <beat.Icon className="size-6" style={{ color: t.lightCore }} />
-            </span>
-            <span
-              data-beat-rule
-              aria-hidden
-              className="h-px flex-1 rounded-full"
-              style={{ background: `linear-gradient(90deg, ${t.light}, ${t.light}00)` }}
-            />
-          </div>
+          {/* Bare icon — no chip or border; pops in per beat (see GSAP above).
+              Keeps data-character so final art can swap in later. */}
+          <beat.Icon
+            data-beat-icon
+            data-character
+            className="size-8 mb-4 shrink-0"
+            style={{ color: t.lightCore, filter: `drop-shadow(0 0 10px ${t.light}66)` }}
+          />
 
           {/* Title — large, the editorial hook. */}
-          <h3 className="font-bold leading-[1.12] mb-3" style={{ fontSize: 'clamp(1.4rem, 2.2vw, 2rem)', color: t.heroText }}>
+          <h3 className="font-bold leading-[1.1] mb-4" style={{ fontSize: 'clamp(1.45rem, 2.1vw, 1.95rem)', color: t.heroText }}>
             {beat.title}
           </h3>
 
-          {/* Supporting line. */}
-          <p className="leading-relaxed max-w-lg" style={{ fontSize: 'clamp(1rem, 1.3vw, 1.15rem)', color: t.heroTextStrong }}>
+          {/* Divider — animated accent rule, drawn beneath the heading. */}
+          <span
+            data-beat-rule
+            aria-hidden
+            className="block h-px w-full max-w-lg rounded-full mb-5"
+            style={{ background: `linear-gradient(90deg, ${t.light}, ${t.light}00)` }}
+          />
+
+          {/* Supporting line — sized up so it carries the message on its own. */}
+          <p className="font-medium leading-relaxed max-w-lg" style={{ fontSize: 'clamp(1.15rem, 1.65vw, 1.4rem)', color: t.heroText }}>
             {beat.text}
           </p>
 
-          {/* Proof tag + optional CTA. */}
-          <div className="mt-5 flex items-center gap-5 flex-wrap">
+          {/* Selling-point badge — a soft neutral chip (translucent fill +
+              hairline border) with a leading amber accent bar. The chip
+              separates it from the white body copy so it stands out, while
+              staying quiet enough to read as supporting; the bar is the one
+              spark of colour. */}
+          <div className="mt-7">
             <span
-              className="inline-flex items-center text-[11px] font-semibold tracking-wide uppercase px-2.5 py-1 rounded-full"
-              style={{ backgroundColor: `${t.light}14`, color: t.lightCore, border: `1px solid ${t.light}33` }}
+              className="inline-flex items-center gap-3 rounded-lg py-2.5 pl-4 pr-5"
+              style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.14)' }}
             >
-              {beat.tag}
+              <span aria-hidden className="rounded-full shrink-0" style={{ width: '4px', height: '1.15em', backgroundColor: t.lightCore }} />
+              <span className="text-[15px] font-semibold tracking-[0.06em] uppercase" style={{ color: t.heroText }}>
+                {beat.tag}
+              </span>
             </span>
-            {beat.cta && (
-              <a
-                href={beat.cta.href}
-                data-arrow
-                className="inline-flex items-center gap-1.5 text-sm font-semibold transition-colors hover:underline"
-                style={{ color: t.accent }}
-              >
-                {beat.cta.label} <ArrowRight className="size-3.5 arrow-icon" />
-              </a>
-            )}
           </div>
         </div>
       ))}
